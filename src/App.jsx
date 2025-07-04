@@ -1,96 +1,74 @@
-import { useEffect, useState, useReducer } from "react";
+import { useState } from "react";
+import Table from "./components/Table";
+import InputWithLabel from "./components/InputWithLabel";
+import AddNewClient from "./components/AddNewClient";
+import AddNewClientModel from "./components/AddNewClientModel";
 
 import { dummydata } from "./dummydata";
 
 export default function App() {
+  const [clients, setClients] = useState(dummydata);
   const [searchTerm, setSearchTerm] = useState("");
-  const handleSearch = (e) => setSearchTerm(e.target.value);
+  const [isModelOpen, setIsModelOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    nrc: "",
+    phone: "",
+    address: "",
+    plotSize: "",
+    plotNumber: "",
+    siteName: "",
+    amountPaid: 0,
+    dateBought: "",
+  });
 
-  const searchedClients = dummydata.filter((data) =>
-    data.name.includes(searchTerm.toLowerCase()),
+  const handleSearch = (e) => setSearchTerm(e.target.value);
+  const handleModelView = () => setIsModelOpen(!isModelOpen);
+  const handleFormChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    const newClient = {
+      id: 4521,
+      name: formData.name,
+      nrc: formData.nrc,
+      phone: formData.phone,
+      address: formData.address,
+      plotSize: formData["plot-size"],
+      plotNumber: formData["plot-number"],
+      siteName: formData["site-name"],
+      amountPaid: formData["amount-paid"],
+      dateBought: formData["date-bought"],
+    };
+    setClients([...clients, newClient]);
+    setIsModelOpen(!isModelOpen);
+  };
+
+  const searchedClients = clients.filter((data) =>
+    data.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
   return (
     <div className="App p-8">
       <InputWithLabel
         id="search"
-        phText="search with name"
+        phText="search by name..."
         value={searchTerm}
-        onSearch={handleSearch}
+        onChange={handleSearch}
       />
+      <AddNewClient onClick={handleModelView}>
+        {isModelOpen && (
+          <AddNewClientModel
+            onSubmit={handleFormSubmit}
+            onChange={handleFormChange}
+          />
+        )}
+      </AddNewClient>
       <Table clients={searchedClients} />
     </div>
   );
 }
-
-{
-  /* Table component */
-}
-const Table = ({ clients }) => {
-  return (
-    <div className="grid content-center items-center my-4">
-      <table className="border-collapse min-w-3/6 text-left border border-gray-300">
-        <thead className="border-b border-gray-300 bg-rose-50">
-          <tr className="[&>th]:p-3 [&>th]:font-normal">
-            <th>
-              <input type="checkbox" />
-            </th>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Plot Size</th>
-            <th>Plot No.</th>
-            <th>Site Name</th>
-            <th>Amount Paid</th>
-            <th>Date Bought</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody className="">
-          {clients.map((client) => (
-            <tr
-              key={client.id}
-              className="[&>td]:p-3 border-b border-b-gray-300"
-            >
-              <td>
-                <input type="checkbox" />
-              </td>
-              <td>{client.id}</td>
-              <td>{client.name}</td>
-              <td>{client.phone}</td>
-              <td>{client.address}</td>
-              <td>{client.plotSize}</td>
-              <td>{client.plotNumber}</td>
-              <td>{client.siteName}</td>
-              <td>{client.amountPaid}</td>
-              <td>{client.dateBought}</td>
-              <td>
-                <button className="cursor-pointer">...</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
-{
-  /* Input component */
-}
-const InputWithLabel = ({ id, type = "text", phText, value, onSearch }) => {
-  return (
-    <label htmlFor={id}>
-      <input
-        className="p-1 border border-gray-300"
-        type={type}
-        placeholder={phText}
-        value={value}
-        onChange={onSearch}
-      />
-    </label>
-  );
-};
 
 function reducer(state, action) {
   switch (action.type) {
@@ -99,10 +77,12 @@ function reducer(state, action) {
         ...state,
         clients: action.payload,
       };
-    case "GET_CLIENT":
+    case "SEARCH_CLIENT":
       return {
         ...state,
-        client: state.client.find((client) => client.id === action.payload.id),
+        client: state.clients.filter((client) =>
+          client.name.includes(action.payload.toLowerCase()),
+        ),
       };
     case "ADD_CLIENT":
       return {
