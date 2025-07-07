@@ -2,69 +2,26 @@ import { useState } from "react";
 import Table from "./components/Table";
 import InputWithLabel from "./components/InputWithLabel";
 import AddNewClient from "./components/AddNewClient";
-import AddNewClientModel from "./components/AddNewClientModel";
 
 import { dummydata } from "./dummydata";
 
 export default function App() {
   const [clients, setClients] = useState(dummydata);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isModelOpen, setIsModelOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    nrc: "",
-    phone: "",
-    address: "",
-    plotSize: "",
-    plotNumber: "",
-    siteName: "",
-    amountPaid: 0,
-    dateBought: "",
-  });
 
   const handleSearch = (e) => setSearchTerm(e.target.value);
-  const handleModelView = () => setIsModelOpen(!isModelOpen);
-  const handleFormChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-
-    const newClient = {
-      id: 4521,
-      name: formData.name,
-      nrc: formData.nrc,
-      phone: formData.phone,
-      address: formData.address,
-      plotSize: formData["plot-size"],
-      plotNumber: formData["plot-number"],
-      siteName: formData["site-name"],
-      amountPaid: formData["amount-paid"],
-      dateBought: formData["date-bought"],
-    };
-    setClients([...clients, newClient]);
-    setIsModelOpen(!isModelOpen);
-  };
 
   const searchedClients = clients.filter((data) =>
-    data.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    data.name.toLowerCase().includes(searchTerm.trim().toLowerCase()),
   );
   return (
     <div className="App p-8">
       <InputWithLabel
-        id="search"
         phText="search by name..."
         value={searchTerm}
         onChange={handleSearch}
       />
-      <AddNewClient onClick={handleModelView}>
-        {isModelOpen && (
-          <AddNewClientModel
-            onSubmit={handleFormSubmit}
-            onChange={handleFormChange}
-          />
-        )}
-      </AddNewClient>
+      <AddNewClient clients={clients} updateClients={setClients} />
       <Table clients={searchedClients} />
     </div>
   );

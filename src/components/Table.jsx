@@ -14,6 +14,7 @@ const Table = ({ clients }) => {
             </th>
             <th>ID</th>
             <th>Name</th>
+            <th>NRC</th>
             <th>Phone</th>
             <th>Address</th>
             <th>Plot Size</th>
@@ -28,13 +29,14 @@ const Table = ({ clients }) => {
           {clients.map((client) => (
             <tr
               key={client.id}
-              className="[&>td]:p-3 border-b border-b-gray-300"
+              className="[&>td]:p-3 [&>td]:max-w-[13ch] [&>td]:overflow-hidden [&>td]:text-ellipsis [&>td]:whitespace-nowrap border-b border-b-gray-300"
             >
               <td>
                 <input type="checkbox" />
               </td>
               <td>{client.id}</td>
               <td>{client.name}</td>
+              <td>{client.nrc}</td>
               <td>{client.phone}</td>
               <td>{client.address}</td>
               <td>{client.plotSize}</td>
@@ -42,7 +44,7 @@ const Table = ({ clients }) => {
               <td>{client.siteName}</td>
               <td>{client.amountPaid}</td>
               <td>{client.dateBought}</td>
-              <td>
+              <td className="text-center relative">
                 <button
                   className="cursor-pointer"
                   onClick={() => setIsModalOpen(!isModalOpen)}

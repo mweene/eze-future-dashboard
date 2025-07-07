@@ -5,6 +5,7 @@ const InputWithLabel = ({
   value,
   onChange,
   maxLength,
+  required = true,
 }) => {
   return (
     <div className="grid">
@@ -19,6 +20,7 @@ const InputWithLabel = ({
         onChange={onChange}
         maxLength={maxLength}
         name={id}
+        required={required}
       />
     </div>
   );

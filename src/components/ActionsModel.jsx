@@ -1,5 +1,5 @@
 const ActionsModel = () => {
-  return <div className="">ActionsModel</div>;
+  return <div className="absolute">ActionsModel</div>;
 };
 
 export default ActionsModel;

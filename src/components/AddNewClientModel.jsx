@@ -1,6 +1,6 @@
 import InputWithLabel from "./InputWithLabel";
 
-const AddNewClientModel = ({ onSubmit, onChange }) => {
+const AddNewClientModel = ({ onSubmit, onChange, isFormInvalid }) => {
   return (
     <form onSubmit={onSubmit} className="p-4 border absolute bg-white">
       <div className="flex gap-8 mb-4">
@@ -8,6 +8,11 @@ const AddNewClientModel = ({ onSubmit, onChange }) => {
           <InputWithLabel
             id="name"
             phText="enter client name..."
+            onChange={onChange}
+          />
+          <InputWithLabel
+            id="nrc"
+            phText="enter client nrc..."
             onChange={onChange}
           />
           <InputWithLabel
@@ -54,7 +59,14 @@ const AddNewClientModel = ({ onSubmit, onChange }) => {
           />
         </div>
       </div>
-      <button className="py-2.5 px-4 text-white bg-gray-950 cursor-pointer">
+      <button className="py-2.5 px-4 text-gray-600 border border-gray-400 cursor-pointer mr-2">
+        cancel
+      </button>
+      <button
+        type="submit"
+        className="py-2.5 px-4 text-white bg-gray-950 cursor-pointer"
+        disabled={isFormInvalid}
+      >
         submit
       </button>
     </form>
