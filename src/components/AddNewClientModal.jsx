@@ -1,8 +1,11 @@
 import InputWithLabel from "./InputWithLabel";
 
-const AddNewClientModel = ({ onSubmit, onChange, isFormInvalid }) => {
+const AddNewClientModal = ({ onSubmit, onChange, isFormInvalid }) => {
   return (
-    <form onSubmit={onSubmit} className="p-4 border absolute bg-white">
+    <form
+      onSubmit={onSubmit}
+      className="p-4 border absolute bg-white right-0 my-1.5 z-10"
+    >
       <div className="flex gap-8 mb-4">
         <div className="grid gap-1">
           <InputWithLabel
@@ -73,4 +76,4 @@ const AddNewClientModel = ({ onSubmit, onChange, isFormInvalid }) => {
   );
 };
 
-export default AddNewClientModel;
+export default AddNewClientModal;

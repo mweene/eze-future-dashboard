@@ -1,14 +1,12 @@
 import { useState } from "react";
-import ActionsModel from "./ActionsModel";
+import ActionsModal from "./ActionsModal";
 
 const Table = ({ clients }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <div className="grid content-center items-center my-4">
       <table className="border-collapse min-w-3/6 text-left border border-gray-300">
         <thead className="border-b border-gray-300 bg-rose-50">
-          <tr className="[&>th]:p-3 [&>th]:font-normal">
+          <tr className="[&>th]:p-3 [&>th]:font-normal [&>th]:capitalize">
             <th>
               <input type="checkbox" />
             </th>
@@ -26,33 +24,8 @@ const Table = ({ clients }) => {
           </tr>
         </thead>
         <tbody className="">
-          {clients.map((client) => (
-            <tr
-              key={client.id}
-              className="[&>td]:p-3 [&>td]:max-w-[13ch] [&>td]:overflow-hidden [&>td]:text-ellipsis [&>td]:whitespace-nowrap border-b border-b-gray-300"
-            >
-              <td>
-                <input type="checkbox" />
-              </td>
-              <td>{client.id}</td>
-              <td>{client.name}</td>
-              <td>{client.nrc}</td>
-              <td>{client.phone}</td>
-              <td>{client.address}</td>
-              <td>{client.plotSize}</td>
-              <td>{client.plotNumber}</td>
-              <td>{client.siteName}</td>
-              <td>{client.amountPaid}</td>
-              <td>{client.dateBought}</td>
-              <td className="text-center relative">
-                <button
-                  className="cursor-pointer"
-                  onClick={() => setIsModalOpen(!isModalOpen)}
-                >
-                  {isModalOpen ? <ActionsModel /> : "..."}
-                </button>
-              </td>
-            </tr>
+          {clients.map((c) => (
+            <TableRow key={c.id} client={c} />
           ))}
         </tbody>
       </table>
@@ -61,3 +34,35 @@ const Table = ({ clients }) => {
 };
 
 export default Table;
+
+const TableRow = ({ client }) => {
+  const [isModelOpen, setIsModelOpen] = useState(false);
+  return (
+    <tr
+      className="[&>td]:p-3 [&>td]:max-w-[13ch] [&>td]:capitalize [&>td]:overflow-hidden
+      [&>td]:text-ellipsis [&>td]:whitespace-nowrap border-b border-b-gray-300 relative"
+    >
+      <td>
+        <input type="checkbox" />
+      </td>
+      <td>{client.id}</td>
+      <td>{client.name}</td>
+      <td>{client.nrc}</td>
+      <td>{client.phone}</td>
+      <td>{client.address}</td>
+      <td>{client.plotSize}</td>
+      <td>{client.plotNumber}</td>
+      <td>{client.siteName}</td>
+      <td>{client.amountPaid}</td>
+      <td>{client.dateBought}</td>
+      <td className="text-center">
+        <button
+          className="cursor-pointer after:content-[''] p-0.5 border border-gray-300"
+          onClick={() => setIsModelOpen((prev) => !prev)}
+        >
+          {isModelOpen ? <ActionsModal /> : "..."}
+        </button>
+      </td>
+    </tr>
+  );
+};

@@ -6,6 +6,7 @@ const InputWithLabel = ({
   onChange,
   maxLength,
   required = true,
+  styles = "p-2 border border-gray-300",
 }) => {
   return (
     <div className="grid">
@@ -13,7 +14,7 @@ const InputWithLabel = ({
         {id}
       </label>
       <input
-        className="p-2 border border-gray-300"
+        className={styles}
         type={type}
         placeholder={phText}
         value={value}

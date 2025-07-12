@@ -1,9 +1,12 @@
+import { Search } from "lucide-react";
 import { useState } from "react";
 import Table from "./components/Table";
 import InputWithLabel from "./components/InputWithLabel";
 import AddNewClient from "./components/AddNewClient";
+import ExportClientData from "./components/ExportClientData";
 
 import { dummydata } from "./dummydata";
+import FilterClientData from "./components/FilterClientData";
 
 export default function App() {
   const [clients, setClients] = useState(dummydata);
@@ -16,12 +19,26 @@ export default function App() {
   );
   return (
     <div className="App p-8">
-      <InputWithLabel
-        phText="search by name..."
-        value={searchTerm}
-        onChange={handleSearch}
-      />
-      <AddNewClient clients={clients} updateClients={setClients} />
+      <div className="flex place-content-between">
+        <div className="flex gap-3 place-items-center">
+          <div className="flex gap-1.5 items-center border border-gray-300 p-2">
+            <Search size={19} />
+            <InputWithLabel
+              phText="search by name..."
+              styles="border-none outline-none"
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </div>
+
+          <FilterClientData data={""} />
+        </div>
+
+        <div className="flex gap-3">
+          <ExportClientData clients={clients} />
+          <AddNewClient clients={clients} updateClients={setClients} />
+        </div>
+      </div>
       <Table clients={searchedClients} />
     </div>
   );

@@ -1,5 +1,6 @@
+import { CirclePlus } from "lucide-react";
 import { useState } from "react";
-import AddNewClientModel from "./AddNewClientModel";
+import AddNewClientModal from "./AddNewClientModal";
 
 const AddNewClient = ({ clients, updateClients }) => {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const AddNewClient = ({ clients, updateClients }) => {
     e.preventDefault();
 
     const newClient = {
-      id: crypto.randomUUID(),
+      id: crypto.randomUUID().slice(0, 4),
       name: formData.name.trim(),
       nrc: formData.nrc.trim(),
       phone: formData.phone.trim(),
@@ -41,13 +42,14 @@ const AddNewClient = ({ clients, updateClients }) => {
   return (
     <div className="relative">
       <button
-        className="bg-rose-200 text-gray-950 py-2.5 px-4 cursor-pointer"
+        className="bg-rose-200 text-gray-950 py-2.5 px-4 cursor-pointer flex gap-1.5 items-center"
         onClick={() => setIsOpen((prev) => !prev)}
       >
+        <CirclePlus size={19} />
         Add client
       </button>
       {isOpen && (
-        <AddNewClientModel
+        <AddNewClientModal
           onChange={handleFormChange}
           onSubmit={handleFormSubmit}
         />
