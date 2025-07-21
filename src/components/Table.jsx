@@ -2,11 +2,18 @@ import { useState } from "react";
 import ActionsModal from "./ActionsModal";
 
 const Table = ({ clients }) => {
+  const [showClientDetails, setShowClientDetails] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showClientDelete, setShowClientDelete] = useState(false);
+  const handleClientDetails = () => setShowClientDetails((prev) => !prev);
+  const handleEdit = () => setShowEdit((prev) => !prev);
+  const handleClientDelete = () => setShowClientDelete((prev) => !prev);
+
   return (
-    <div className="grid content-center items-center my-4">
+    <div className="grid content-center items-center my-4 bg-white">
       <table className="border-collapse min-w-3/6 text-left border border-gray-300">
-        <thead className="border-b border-gray-300 bg-rose-50">
-          <tr className="[&>th]:p-3 [&>th]:font-normal [&>th]:capitalize">
+        <thead className="border-b border-gray-200 bg-gray-200">
+          <tr className="[&>th]:p-3 [&>th]:font-medium [&>th]:capitalize">
             <th>
               <input type="checkbox" />
             </th>
@@ -25,22 +32,34 @@ const Table = ({ clients }) => {
         </thead>
         <tbody className="">
           {clients.map((c) => (
-            <TableRow key={c.id} client={c} />
+            <TableRow
+              key={c.id}
+              client={c}
+              onRevealDetails={handleClientDetails}
+              onClick={handleClientDetails}
+              onEdit={handleEdit}
+              onDelete={handleClientDelete}
+            />
           ))}
         </tbody>
       </table>
+      {showClientDetails && <p>Details</p>}
+      {showEdit && <p>Edit</p>}
+      {showClientDelete && <p>Delete</p>}
     </div>
   );
 };
 
 export default Table;
 
-const TableRow = ({ client }) => {
+const TableRow = ({ client, onClick, onEdit, onDelete }) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
+  const handleModalReveal = () => setIsModelOpen((prev) => !prev);
+
   return (
     <tr
       className="[&>td]:p-3 [&>td]:max-w-[13ch] [&>td]:capitalize [&>td]:overflow-hidden
-      [&>td]:text-ellipsis [&>td]:whitespace-nowrap border-b border-b-gray-300 relative"
+      [&>td]:text-ellipsis [&>td]:whitespace-nowrap border-b border-b-gray-300 hover:bg-gray-50 relative"
     >
       <td>
         <input type="checkbox" />
@@ -57,11 +76,20 @@ const TableRow = ({ client }) => {
       <td>{client.dateBought}</td>
       <td className="text-center">
         <button
-          className="cursor-pointer after:content-[''] p-0.5 border border-gray-300"
+          className="cursor-pointer p-1 bg-gray-50 border border-gray-300"
           onClick={() => setIsModelOpen((prev) => !prev)}
         >
-          {isModelOpen ? <ActionsModal /> : "..."}
+          ...
         </button>
+        {isModelOpen && (
+          <ActionsModal
+            client={client}
+            onReveal={handleModalReveal}
+            onClick={onClick}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        )}
       </td>
     </tr>
   );

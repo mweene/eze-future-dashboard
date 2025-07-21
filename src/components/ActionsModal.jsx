@@ -1,18 +1,27 @@
-import { UserPen, UserRound, UserRoundX } from "lucide-react";
-const ActionsModal = () => {
+import { UserRoundPen, UserRound, UserRoundX, X } from "lucide-react";
+import ClientDetailsModal from "./ClientDetailsModal";
+
+const ActionsModal = ({ onReveal, onClick, onEdit, onDelete, client }) => {
   return (
-    <div className="absolute top-0 right-0 border bg-white my-5 mx-4 p-3 z-10">
-      <div className="flex flex-col gap-1">
-        <EditClientRecord>
-          <UserRound size={18} />
+    <div className="absolute top-0 right-0 border border-gray-400 bg-white my-5 mx-4 p-3 z-10 grid gap-2.5">
+      <button
+        className="cursor-pointer bg-gray-50 w-fit justify-self-end border border-gray-300"
+        onClick={onReveal}
+      >
+        <X size={19} />
+      </button>
+
+      <div className="flex flex-col gap-1.5">
+        <EditClientRecord onClick={onClick}>
+          <UserRound size={16} />
           Details
         </EditClientRecord>
-        <EditClientRecord>
-          <UserPen size={18} />
+        <EditClientRecord onClick={onEdit}>
+          <UserRoundPen size={16} />
           Edit
         </EditClientRecord>
-        <EditClientRecord>
-          <UserRoundX size={18} color="#e11633" />
+        <EditClientRecord onClick={onDelete}>
+          <UserRoundX size={16} />
           Delete
         </EditClientRecord>
       </div>
@@ -22,10 +31,13 @@ const ActionsModal = () => {
 
 export default ActionsModal;
 
-const EditClientRecord = ({ children }) => {
+const EditClientRecord = ({ onClick, children }) => {
   return (
-    <button className="py-1 px-1.5 bg-gray-200 flex gap-1 items-baseline-last text-sm">
+    <div
+      className="py-1 px-1.5 border border-gray-200 hover:bg-gray-100 flex gap-1 items-baseline-last text-sm cursor-pointer"
+      onClick={onClick}
+    >
       {children}
-    </button>
+    </div>
   );
 };

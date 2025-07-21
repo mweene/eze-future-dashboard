@@ -18,14 +18,14 @@ export default function App() {
     data.name.toLowerCase().includes(searchTerm.trim().toLowerCase()),
   );
   return (
-    <div className="App p-8">
-      <div className="flex place-content-between">
+    <div className="App p-8 bg-gray-50">
+      <div className="flex place-content-between gap-2">
         <div className="flex gap-3 place-items-center">
-          <div className="flex gap-1.5 items-center border border-gray-300 p-2">
-            <Search size={19} />
+          <div className="flex gap-1.5 items-center border border-gray-600 p-2">
+            <Search size={16} />
             <InputWithLabel
-              phText="search by name..."
-              styles="border-none outline-none"
+              phText="Search by name..."
+              styles="border-transparent outline-none"
               value={searchTerm}
               onChange={handleSearch}
             />

@@ -1,4 +1,4 @@
-import { CirclePlus } from "lucide-react";
+import { UserRoundPlus } from "lucide-react";
 import { useState } from "react";
 import AddNewClientModal from "./AddNewClientModal";
 
@@ -16,6 +16,7 @@ const AddNewClient = ({ clients, updateClients }) => {
   });
 
   const [isOpen, setIsOpen] = useState(false);
+  const handleModalView = () => setIsOpen((prev) => !prev);
   const handleFormChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -42,14 +43,15 @@ const AddNewClient = ({ clients, updateClients }) => {
   return (
     <div className="relative">
       <button
-        className="bg-rose-200 text-gray-950 py-2.5 px-4 cursor-pointer flex gap-1.5 items-center"
+        className="bg-gray-950 text-white py-2.5 px-4 cursor-pointer flex gap-1.5 items-center"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <CirclePlus size={19} />
-        Add client
+        <UserRoundPlus size={16} />
+        Add New Client
       </button>
       {isOpen && (
         <AddNewClientModal
+          onReveal={handleModalView}
           onChange={handleFormChange}
           onSubmit={handleFormSubmit}
         />
