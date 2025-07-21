@@ -6,7 +6,7 @@ const AddNewClientModal = ({ onSubmit, onChange, onReveal }) => {
     <div className="bg-white border absolute right-0 my-1.5 px-5 py-2 z-10">
       <div className="flex place-content-between border-b border-gray-300 px-2 py-4 mb-4">
         <h2 className="text-xl">Add New Client</h2>
-        <button className="cursor-pointer bg-gray-200" onClick={onReveal}>
+        <button className="cursor-pointer" onClick={onReveal}>
           <X />
         </button>
       </div>

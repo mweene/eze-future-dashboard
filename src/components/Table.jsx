@@ -1,14 +1,7 @@
 import { useState } from "react";
 import ActionsModal from "./ActionsModal";
 
-const Table = ({ clients }) => {
-  const [showClientDetails, setShowClientDetails] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [showClientDelete, setShowClientDelete] = useState(false);
-  const handleClientDetails = () => setShowClientDetails((prev) => !prev);
-  const handleEdit = () => setShowEdit((prev) => !prev);
-  const handleClientDelete = () => setShowClientDelete((prev) => !prev);
-
+const Table = ({ clients, showClientDetails, onDelete }) => {
   return (
     <div className="grid content-center items-center my-4 bg-white">
       <table className="border-collapse min-w-3/6 text-left border border-gray-300">
@@ -23,7 +16,6 @@ const Table = ({ clients }) => {
             <th>Phone</th>
             <th>Address</th>
             <th>Plot Size</th>
-            <th>Plot No.</th>
             <th>Site Name</th>
             <th>Amount Paid</th>
             <th>Date Bought</th>
@@ -35,24 +27,19 @@ const Table = ({ clients }) => {
             <TableRow
               key={c.id}
               client={c}
-              onRevealDetails={handleClientDetails}
-              onClick={handleClientDetails}
-              onEdit={handleEdit}
-              onDelete={handleClientDelete}
+              onShowDetails={showClientDetails}
+              onDelete={onDelete}
             />
           ))}
         </tbody>
       </table>
-      {showClientDetails && <p>Details</p>}
-      {showEdit && <p>Edit</p>}
-      {showClientDelete && <p>Delete</p>}
     </div>
   );
 };
 
 export default Table;
 
-const TableRow = ({ client, onClick, onEdit, onDelete }) => {
+const TableRow = ({ client, onShowDetails, onDelete }) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const handleModalReveal = () => setIsModelOpen((prev) => !prev);
 
@@ -70,7 +57,6 @@ const TableRow = ({ client, onClick, onEdit, onDelete }) => {
       <td>{client.phone}</td>
       <td>{client.address}</td>
       <td>{client.plotSize}</td>
-      <td>{client.plotNumber}</td>
       <td>{client.siteName}</td>
       <td>{client.amountPaid}</td>
       <td>{client.dateBought}</td>
@@ -85,8 +71,7 @@ const TableRow = ({ client, onClick, onEdit, onDelete }) => {
           <ActionsModal
             client={client}
             onReveal={handleModalReveal}
-            onClick={onClick}
-            onEdit={onEdit}
+            onShowDetails={onShowDetails}
             onDelete={onDelete}
           />
         )}

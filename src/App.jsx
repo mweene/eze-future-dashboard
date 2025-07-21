@@ -1,5 +1,5 @@
-import { Search } from "lucide-react";
 import { useState } from "react";
+import { Search } from "lucide-react";
 import Table from "./components/Table";
 import InputWithLabel from "./components/InputWithLabel";
 import AddNewClient from "./components/AddNewClient";
@@ -11,6 +11,18 @@ import FilterClientData from "./components/FilterClientData";
 export default function App() {
   const [clients, setClients] = useState(dummydata);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showClientDetails, setShowClientDetails] = useState(false);
+
+  const [client, setClient] = useState({});
+  const handleShowClientDetails = (c) => {
+    setClient(c);
+    setShowClientDetails((prev) => !prev);
+  };
+
+  const handleDeleteRecord = (c) => {
+    const newClients = clients.filter((client) => client.id !== c.id);
+    setClients(newClients);
+  };
 
   const handleSearch = (e) => setSearchTerm(e.target.value);
 
@@ -18,7 +30,7 @@ export default function App() {
     data.name.toLowerCase().includes(searchTerm.trim().toLowerCase()),
   );
   return (
-    <div className="App p-8 bg-gray-50">
+    <div className="App p-8 bg-gray-50 relative">
       <div className="flex place-content-between gap-2">
         <div className="flex gap-3 place-items-center">
           <div className="flex gap-1.5 items-center border border-gray-600 p-2">
@@ -39,10 +51,24 @@ export default function App() {
           <AddNewClient clients={clients} updateClients={setClients} />
         </div>
       </div>
-      <Table clients={searchedClients} />
+      <Table
+        clients={searchedClients}
+        showClientDetails={handleShowClientDetails}
+        onDelete={handleDeleteRecord}
+      />
+      {showClientDetails && <ClientDetails client={client} />}
     </div>
   );
 }
+
+const ClientDetails = ({ client }) => {
+  return (
+    <div className="absolute p-4 bg-amber-300 top-0">
+      <h1>{client.name}</h1>
+      <p>{client.phone}</p>
+    </div>
+  );
+};
 
 function reducer(state, action) {
   switch (action.type) {
