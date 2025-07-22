@@ -1,5 +1,5 @@
-import { UserRoundPlus } from "lucide-react";
 import { useState } from "react";
+import { UserRoundPlus, ChevronDown } from "lucide-react";
 import AddNewClientModal from "./AddNewClientModal";
 
 const AddNewClient = ({ clients, updateClients }) => {
@@ -48,6 +48,7 @@ const AddNewClient = ({ clients, updateClients }) => {
       >
         <UserRoundPlus size={16} />
         Add New Client
+        <ChevronDown size={16} />
       </button>
       {isOpen && (
         <AddNewClientModal

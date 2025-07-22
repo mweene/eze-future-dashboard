@@ -1,14 +1,16 @@
 import { useState } from "react";
+import { EllipsisVertical } from "lucide-react";
 import ActionsModal from "./ActionsModal";
+import InputWithLabel from "./InputWithLabel";
 
 const Table = ({ clients, showClientDetails, onDelete }) => {
   return (
     <div className="grid content-center items-center my-4 bg-white">
       <table className="border-collapse min-w-3/6 text-left border border-gray-300">
-        <thead className="border-b border-gray-200 bg-gray-200">
+        <thead className="border-b border-gray-200 bg-gray-100">
           <tr className="[&>th]:p-3 [&>th]:font-medium [&>th]:capitalize">
             <th>
-              <input type="checkbox" />
+              <InputWithLabel type="checkbox" />
             </th>
             <th>ID</th>
             <th>Name</th>
@@ -58,14 +60,14 @@ const TableRow = ({ client, onShowDetails, onDelete }) => {
       <td>{client.address}</td>
       <td>{client.plotSize}</td>
       <td>{client.siteName}</td>
-      <td>{client.amountPaid}</td>
+      <td>K{client.amountPaid}</td>
       <td>{client.dateBought}</td>
       <td className="text-center">
         <button
-          className="cursor-pointer p-1 bg-gray-50 border border-gray-300"
+          className="cursor-pointer py-1 border border-gray-200 hover:bg-gray-300"
           onClick={() => setIsModelOpen((prev) => !prev)}
         >
-          ...
+          <EllipsisVertical size={17} />
         </button>
         {isModelOpen && (
           <ActionsModal

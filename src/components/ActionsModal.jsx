@@ -9,12 +9,12 @@ const ActionsModal = ({
   client,
 }) => {
   return (
-    <div className="absolute top-0 right-0 border border-gray-400 bg-white my-5 mx-4 p-3 z-10 grid gap-2.5">
+    <div className="absolute top-0 right-0 border border-gray-300 bg-white mr-6 mt-7 mx-4 p-3 z-10 grid gap-2.5 shadow-gray-300">
       <button
         className="cursor-pointer bg-gray-50 w-fit justify-self-end border border-gray-300"
         onClick={onReveal}
       >
-        <X size={19} />
+        <X size={17} />
       </button>
 
       <div className="flex flex-col gap-1.5">
