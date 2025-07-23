@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import Table from "./components/Table";
 import InputWithLabel from "./components/InputWithLabel";
 import AddNewClient from "./components/AddNewClient";
@@ -12,13 +12,6 @@ import FilterClientData from "./components/FilterClientData";
 export default function App() {
   const [clients, setClients] = useState(dummydata);
   const [searchTerm, setSearchTerm] = useState("");
-  const [showClientDetails, setShowClientDetails] = useState(false);
-
-  const [client, setClient] = useState({});
-  const handleShowClientDetails = (c) => {
-    setClient(c);
-    setShowClientDetails((prev) => !prev);
-  };
 
   const handleDeleteRecord = (c) => {
     const newClients = clients.filter((client) => client.id !== c.id);
@@ -54,13 +47,25 @@ export default function App() {
           </div>
         </div>
         {Object.entries(clients)?.length > 0 && (
-          <Table
-            clients={searchedClients}
-            showClientDetails={handleShowClientDetails}
-            onDelete={handleDeleteRecord}
-          />
+          <Table clients={searchedClients} onDelete={handleDeleteRecord} />
         )}
-        {showClientDetails && <ClientDetailsModal client={client} />}
+
+        <section className="flex place-content-between place-items-center">
+          <p className="text-gray-600">
+            Showing <span className="text-black">Page 1 of 23 Pages</span>
+          </p>
+          <div className="flex items-center gap-8">
+            <p className="border border-gray-300 py-1 px-2">1</p>
+            <p>2</p>
+            <p>...</p>
+            <p>22</p>
+            <p>23</p>
+          </div>
+          <div className="flex place-content-end">
+            <ChevronLeft color="gray" />
+            <ChevronRight />
+          </div>
+        </section>
       </div>
     </div>
   );

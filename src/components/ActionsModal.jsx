@@ -1,15 +1,13 @@
+import { useState } from "react";
 import { UserRoundPen, UserRound, UserRoundX, X } from "lucide-react";
 import ClientDetailsModal from "./ClientDetailsModal";
 
-const ActionsModal = ({
-  onReveal,
-  onShowDetails,
-  onEdit,
-  onDelete,
-  client,
-}) => {
+const ActionsModal = ({ onReveal, onEdit, onDelete, client }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(true);
+
   return (
-    <div className="absolute top-0 right-0 border border-gray-300 bg-white mr-6 mt-7 mx-4 p-3 z-10 grid gap-2.5 shadow-gray-300">
+    <div className="absolute top-0 right-0 border border-gray-300 bg-white mr-6 mt-7 mx-4 p-3 grid gap-2.5 shadow shadow-gray-300 z-20">
       <button
         className="cursor-pointer bg-gray-50 w-fit justify-self-end border border-gray-300"
         onClick={onReveal}
@@ -18,9 +16,16 @@ const ActionsModal = ({
       </button>
 
       <div className="flex flex-col gap-1.5">
-        <EditClientRecord client={client} onClick={() => onShowDetails(client)}>
+        <EditClientRecord onClick={() => setIsOpen((prev) => !prev)}>
           <UserRound size={16} />
           Details
+          {isOpen && (
+            <ClientDetailsModal
+              client={client}
+              isOpen={isDetailsOpen}
+              handleIsOpen={() => setIsDetailsOpen((prev) => !prev)}
+            />
+          )}
         </EditClientRecord>
         <EditClientRecord onClick={onEdit}>
           <UserRoundPen size={16} />

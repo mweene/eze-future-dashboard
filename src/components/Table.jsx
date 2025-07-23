@@ -3,7 +3,7 @@ import { EllipsisVertical } from "lucide-react";
 import ActionsModal from "./ActionsModal";
 import InputWithLabel from "./InputWithLabel";
 
-const Table = ({ clients, showClientDetails, onDelete }) => {
+const Table = ({ clients, onDelete }) => {
   return (
     <div className="grid content-center items-center my-4 bg-white">
       <table className="border-collapse min-w-3/6 text-left border border-gray-300">
@@ -26,12 +26,7 @@ const Table = ({ clients, showClientDetails, onDelete }) => {
         </thead>
         <tbody className="">
           {clients.map((c) => (
-            <TableRow
-              key={c.id}
-              client={c}
-              onShowDetails={showClientDetails}
-              onDelete={onDelete}
-            />
+            <TableRow key={c.id} client={c} onDelete={onDelete} />
           ))}
         </tbody>
       </table>
@@ -41,7 +36,7 @@ const Table = ({ clients, showClientDetails, onDelete }) => {
 
 export default Table;
 
-const TableRow = ({ client, onShowDetails, onDelete }) => {
+const TableRow = ({ client, onDelete }) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const handleModalReveal = () => setIsModelOpen((prev) => !prev);
 
@@ -73,7 +68,6 @@ const TableRow = ({ client, onShowDetails, onDelete }) => {
           <ActionsModal
             client={client}
             onReveal={handleModalReveal}
-            onShowDetails={onShowDetails}
             onDelete={onDelete}
           />
         )}

@@ -3,16 +3,16 @@ import InputWithLabel from "./InputWithLabel";
 
 const AddNewClientModal = ({ onSubmit, onChange, onReveal }) => {
   return (
-    <div className="bg-white border absolute right-0 my-1.5 px-5 py-2 z-10">
-      <div className="flex place-content-between border-b border-gray-300 px-2 py-4 mb-4">
-        <h2 className="text-xl">Add New Client</h2>
+    <div className="text-[.93rem] bg-white border border-gray-300 absolute right-0 my-1.5 z-10 shadow shadow-gray-300">
+      <div className="flex place-content-between border-b border-gray-300 mb-2 p-4 bg-gray-50">
+        <h2 className="text-base">Add New Client Form</h2>
         <button className="cursor-pointer" onClick={onReveal}>
-          <X />
+          <X size={17} />
         </button>
       </div>
 
-      <form onSubmit={onSubmit} className="text-base">
-        <div className="flex gap-8 mb-4">
+      <form onSubmit={onSubmit} className="">
+        <div className="flex gap-8 m-4 p-4 border border-gray-200">
           <div className="grid gap-1">
             <InputWithLabel
               id="name"
@@ -66,21 +66,28 @@ const AddNewClientModal = ({ onSubmit, onChange, onReveal }) => {
               type="date"
               onChange={onChange}
             />
+            <InputWithLabel
+              id="comment"
+              type="textarea"
+              phText="write a short description"
+              maxLength={10}
+              onChange={onChange}
+            />
           </div>
         </div>
 
-        <div className="flex gap-3 place-content-center border-t border-gray-300 py-4">
+        <div className="flex gap-3 place-content-center border-t border-gray-300 bg-gray-50 p-4">
           <button
-            className="py-2.5 px-12 border border-gray-400 cursor-pointer mr-2"
+            className="py-2 px-20 border border-gray-400 bg-white cursor-pointer mr-2"
             onClick={onReveal}
           >
-            cancel
+            Cancel
           </button>
           <button
             type="submit"
-            className="py-2.5 px-12 text-white bg-gray-950 cursor-pointer"
+            className="py-2 px-20 text-white bg-gray-950 cursor-pointer"
           >
-            submit
+            Submit
           </button>
         </div>
       </form>

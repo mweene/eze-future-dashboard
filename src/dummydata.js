@@ -2,7 +2,7 @@ export const dummydata = [
   {
     id: 4513,
     name: "Harrison Mweene",
-    nrc: "4222477/12/1",
+    nrc: "422247/12/1",
     phone: "0979731009",
     address: "Garden Compound, Lusaka",
     plotSize: "20 x 20",
