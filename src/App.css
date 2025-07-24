@@ -1,0 +1,29 @@
+table {
+    & tbody {
+        & td span {
+            border: 1px solid;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+        }
+        & .fully.paid {
+            color: #060;
+            border-color: #57c857;
+            background-color: #dfd;
+        }
+        & .partial {
+            color: #c13400;
+            border-color: #ffab10;
+            background-color: #fff1d7;
+        }
+        & .pending {
+            color: #555;
+            border-color: #bbb;
+            background-color: #eee;
+        }
+        & .overdue {
+            color: #d50000;
+            border-color: #ffb2b2;
+            background-color: #ffe9e9;
+        }
+    }
+}

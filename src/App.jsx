@@ -1,13 +1,13 @@
 import { useState } from "react";
+import "./App.css";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import Table from "./components/Table";
 import InputWithLabel from "./components/InputWithLabel";
 import AddNewClient from "./components/AddNewClient";
 import ExportClientData from "./components/ExportClientData";
-import ClientDetailsModal from "./components/ClientDetailsModal";
+import FilterClientData from "./components/FilterClientData";
 
 import { dummydata } from "./dummydata";
-import FilterClientData from "./components/FilterClientData";
 
 export default function App() {
   const [clients, setClients] = useState(dummydata);
@@ -31,7 +31,7 @@ export default function App() {
             <div className="flex gap-1.5 items-center border border-gray-600 p-2">
               <Search size={16} />
               <InputWithLabel
-                phText="Search by name..."
+                phText="Search clients by Name,ID or NRC..."
                 styles="border-transparent outline-none"
                 value={searchTerm}
                 onChange={handleSearch}
@@ -52,7 +52,7 @@ export default function App() {
 
         <section className="flex place-content-between place-items-center">
           <p className="text-gray-600">
-            Showing <span className="text-black">Page 1 of 23 Pages</span>
+            Showing <span className="text-black">Page 1 of 53 Pages</span>
           </p>
           <div className="flex items-center gap-8">
             <p className="border border-gray-300 py-1 px-2">1</p>

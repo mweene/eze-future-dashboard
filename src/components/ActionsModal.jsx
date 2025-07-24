@@ -18,7 +18,7 @@ const ActionsModal = ({ onReveal, onEdit, onDelete, client }) => {
       <div className="flex flex-col gap-1.5">
         <EditClientRecord onClick={() => setIsOpen((prev) => !prev)}>
           <UserRound size={16} />
-          Details
+          View Details
           {isOpen && (
             <ClientDetailsModal
               client={client}
@@ -29,11 +29,11 @@ const ActionsModal = ({ onReveal, onEdit, onDelete, client }) => {
         </EditClientRecord>
         <EditClientRecord onClick={onEdit}>
           <UserRoundPen size={16} />
-          Edit
+          Edit Client
         </EditClientRecord>
         <EditClientRecord onClick={() => onDelete(client)}>
           <UserRoundX size={16} />
-          Delete
+          Delete Record
         </EditClientRecord>
       </div>
     </div>

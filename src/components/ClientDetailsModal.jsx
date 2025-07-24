@@ -17,16 +17,17 @@ const ClientDetailsModal = ({ isOpen, handleIsOpen, client }) => {
               className="flex gap-x-1 items-center"
               onClick={handleIsOpen}
             >
-              <X size={16} /> Client details
+              Client details
+              <X size={16} />
             </button>
           </section>
 
           <section className="m-4 p-4 border border-gray-200 grid gap-0.5">
             {Object.entries(client).map(([key, value]) => (
-              <p key={key} className="flex gap-4 place-content-between">
-                <span className="capitalize text-gray-600">{key}</span>
-                <span>{value}</span>
-              </p>
+              <div key={key} className="flex gap-4 place-content-between">
+                <p className="capitalize text-gray-600">{key}</p>
+                <p>{value}</p>
+              </div>
             ))}
           </section>
 

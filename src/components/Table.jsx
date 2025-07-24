@@ -8,7 +8,7 @@ const Table = ({ clients, onDelete }) => {
     <div className="grid content-center items-center my-4 bg-white">
       <table className="border-collapse min-w-3/6 text-left border border-gray-300">
         <thead className="border-b border-gray-200 bg-gray-100">
-          <tr className="[&>th]:p-3 [&>th]:font-medium [&>th]:capitalize">
+          <tr className="[&>th]:p-3 [&>th]:font-medium [&>th]:capitalize text-gray-600 ">
             <th>
               <InputWithLabel type="checkbox" />
             </th>
@@ -20,6 +20,7 @@ const Table = ({ clients, onDelete }) => {
             <th>Plot Size</th>
             <th>Site Name</th>
             <th>Amount Paid</th>
+            <th>Payment Status</th>
             <th>Date Bought</th>
             <th>Actions</th>
           </tr>
@@ -56,6 +57,9 @@ const TableRow = ({ client, onDelete }) => {
       <td>{client.plotSize}</td>
       <td>{client.siteName}</td>
       <td>K{client.amountPaid}</td>
+      <td>
+        <span className={client.paymentStatus}>{client.paymentStatus}</span>
+      </td>
       <td>{client.dateBought}</td>
       <td className="text-center">
         <button

@@ -67,8 +67,8 @@ const AddNewClientModal = ({ onSubmit, onChange, onReveal }) => {
               onChange={onChange}
             />
             <InputWithLabel
-              id="comment"
-              type="textarea"
+              id="payment-status"
+              type="text"
               phText="write a short description"
               maxLength={10}
               onChange={onChange}
