@@ -17,6 +17,7 @@ export default function App() {
   const handleDeleteRecord = (c) => {
     const newClients = clients.filter((client) => client.id !== c.id);
     setClients(newClients);
+    console.log(c);
   };
 
   const handleSearch = (e) => setSearchTerm(e.target.value);

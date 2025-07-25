@@ -34,7 +34,7 @@ const ActionsModal = ({ onReveal, onEdit, onDelete, client }) => {
           <UserRoundX size={16} />
           Delete Record
           {confirmDeleteAction && (
-            <ConfirmAction client={client} onDelete={onDelete} />
+            <ConfirmAction client={client} onClick={() => onDelete(client)} />
           )}
         </EditClientRecord>
       </div>
@@ -63,12 +63,14 @@ const EditClientRecord = ({ onClick, children }) => {
   );
 };
 
-const ConfirmAction = ({ client, onDelete }) => {
+const ConfirmAction = ({ client, onClick }) => {
   return (
-    <div className="absolute bg-pink-300">
+    <div className="absolute right-0 p-2 bg-pink-300">
       <h2>Are you sure you want to delete {client.name}?</h2>
       <p>this action cannot be reversed</p>
-      <button onClick={onDelete}>yes</button>
+      <button className="mx-0.5" onClick={onClick}>
+        yes
+      </button>
       <button>no</button>
     </div>
   );
