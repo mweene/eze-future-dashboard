@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { X } from "lucide-react";
 import InputWithLabel from "./InputWithLabel";
 
@@ -66,19 +67,13 @@ const AddNewClientModal = ({ onSubmit, onChange, onReveal }) => {
               type="date"
               onChange={onChange}
             />
-            <InputWithLabel
-              id="payment-status"
-              type="text"
-              phText="write a short description"
-              maxLength={10}
-              onChange={onChange}
-            />
+            <PaymentStatusSelect />
           </div>
         </div>
 
         <div className="flex gap-3 place-content-center border-t border-gray-300 bg-gray-50 p-4">
           <button
-            className="py-2 px-20 border border-gray-400 bg-white cursor-pointer mr-2"
+            className="py-2 px-20 border border-gray-300 bg-white cursor-pointer mr-2"
             onClick={onReveal}
           >
             Cancel
@@ -96,3 +91,30 @@ const AddNewClientModal = ({ onSubmit, onChange, onReveal }) => {
 };
 
 export default AddNewClientModal;
+
+const PaymentStatusSelect = () => {
+  const [status, setStatus] = useState("");
+
+  return (
+    <div>
+      <label htmlFor="payment-status" className="">
+        Payment status
+      </label>
+      <select
+        id="payment-status"
+        name="payment-status"
+        value={status}
+        onChange={(e) => setStatus(e.target.value)}
+        className="cursor-pointer border border-gray-300"
+      >
+        <option value="" disabled>
+          Select a status
+        </option>
+        <option value="fully_paid">Fully Paid</option>
+        <option value="partial">Partial</option>
+        <option value="pending">Pending</option>
+        <option value="overdue">Overdue</option>
+      </select>
+    </div>
+  );
+};

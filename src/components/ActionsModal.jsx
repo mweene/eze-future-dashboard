@@ -6,6 +6,10 @@ const ActionsModal = ({ onReveal, onEdit, onDelete, client }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(true);
 
+  const [confirmDeleteAction, setConfirmDeleteAction] = useState(false);
+
+  const handleIsOpen = () => setIsOpen((prev) => !prev);
+
   return (
     <div className="absolute top-0 right-0 border border-gray-300 bg-white mr-6 mt-7 mx-4 p-3 grid gap-2.5 shadow shadow-gray-300 z-20">
       <button
@@ -16,26 +20,32 @@ const ActionsModal = ({ onReveal, onEdit, onDelete, client }) => {
       </button>
 
       <div className="flex flex-col gap-1.5">
-        <EditClientRecord onClick={() => setIsOpen((prev) => !prev)}>
+        <EditClientRecord onClick={handleIsOpen}>
           <UserRound size={16} />
           View Details
-          {isOpen && (
-            <ClientDetailsModal
-              client={client}
-              isOpen={isDetailsOpen}
-              handleIsOpen={() => setIsDetailsOpen((prev) => !prev)}
-            />
-          )}
         </EditClientRecord>
         <EditClientRecord onClick={onEdit}>
           <UserRoundPen size={16} />
           Edit Client
         </EditClientRecord>
-        <EditClientRecord onClick={() => onDelete(client)}>
+        <EditClientRecord
+          onClick={() => setConfirmDeleteAction((prev) => !prev)}
+        >
           <UserRoundX size={16} />
           Delete Record
+          {confirmDeleteAction && (
+            <ConfirmAction client={client} onDelete={onDelete} />
+          )}
         </EditClientRecord>
       </div>
+
+      {isOpen && (
+        <ClientDetailsModal
+          client={client}
+          isOpen={isDetailsOpen}
+          handleIsOpen={() => setIsDetailsOpen((prev) => !prev)}
+        />
+      )}
     </div>
   );
 };
@@ -49,6 +59,17 @@ const EditClientRecord = ({ onClick, children }) => {
       onClick={onClick}
     >
       {children}
+    </div>
+  );
+};
+
+const ConfirmAction = ({ client, onDelete }) => {
+  return (
+    <div className="absolute bg-pink-300">
+      <h2>Are you sure you want to delete {client.name}?</h2>
+      <p>this action cannot be reversed</p>
+      <button onClick={onDelete}>yes</button>
+      <button>no</button>
     </div>
   );
 };

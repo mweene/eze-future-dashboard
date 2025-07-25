@@ -16,7 +16,6 @@ const Table = ({ clients, onDelete }) => {
             <th>Name</th>
             <th>NRC</th>
             <th>Phone</th>
-            <th>Address</th>
             <th>Plot Size</th>
             <th>Site Name</th>
             <th>Amount Paid</th>
@@ -53,7 +52,6 @@ const TableRow = ({ client, onDelete }) => {
       <td>{client.name}</td>
       <td>{client.nrc}</td>
       <td>{client.phone}</td>
-      <td>{client.address}</td>
       <td>{client.plotSize}</td>
       <td>{client.siteName}</td>
       <td>K{client.amountPaid}</td>
