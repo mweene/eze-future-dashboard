@@ -4,6 +4,18 @@ import ActionsModal from "./ActionsModal";
 import InputWithLabel from "./InputWithLabel";
 
 const Table = ({ clients, onDelete }) => {
+  const clientTableData = clients.map((c) => ({
+    id: c.id,
+    name: c.name,
+    nrc: c.nrc,
+    phone: c.phone,
+    plotSize: c.plotDetails.plotSize,
+    siteName: c.plotDetails.siteName,
+    amountPaid: c.plotDetails.amountPaid,
+    paymentStatus: c.plotDetails.paymentStatus,
+    dateBought: c.plotDetails.dateBought,
+  }));
+
   return (
     <div className="grid content-center items-center my-4 bg-white">
       <table className="border-collapse min-w-3/6 text-left border border-gray-300">
@@ -25,8 +37,13 @@ const Table = ({ clients, onDelete }) => {
           </tr>
         </thead>
         <tbody className="">
-          {clients.map((c) => (
-            <TableRow key={c.id} client={c} onDelete={onDelete} />
+          {clientTableData.map((c) => (
+            <TableRow
+              key={c.id}
+              fullClientData={clients.find((client) => client.id === c.id)}
+              client={c}
+              onDelete={onDelete}
+            />
           ))}
         </tbody>
       </table>
@@ -36,7 +53,7 @@ const Table = ({ clients, onDelete }) => {
 
 export default Table;
 
-const TableRow = ({ client, onDelete }) => {
+const TableRow = ({ fullClientData, client, onDelete }) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const handleModalReveal = () => setIsModelOpen((prev) => !prev);
 
@@ -68,7 +85,7 @@ const TableRow = ({ client, onDelete }) => {
         </button>
         {isModelOpen && (
           <ActionsModal
-            client={client}
+            client={fullClientData}
             onReveal={handleModalReveal}
             onDelete={onDelete}
           />

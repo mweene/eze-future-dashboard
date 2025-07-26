@@ -6,7 +6,7 @@ const ClientDetailsModal = ({ isOpen, handleIsOpen, client }) => {
       {isOpen && (
         <div
           key={client.id}
-          className="absolute bg-white border border-gray-300 top-0 right-0 w-96 m-4 mt-2 mr-32 shadow shadow-gray-300 z-10"
+          className="absolute bg-white border border-gray-300 top-0 right-0 m-4 mt-2 mr-32 shadow shadow-gray-300 z-10"
         >
           <section className="flex gap-4 place-content-between border-b border-gray-200 px-4 pt-3 pb-2 bg-gray-50">
             <button className="flex gap-1.5 items-center border border-gray-300 bg-white py-0.5 px-2">
@@ -23,12 +23,23 @@ const ClientDetailsModal = ({ isOpen, handleIsOpen, client }) => {
           </section>
 
           <section className="m-4 p-4 border border-gray-200 grid gap-0.5">
-            {Object.entries(client).map(([key, value]) => (
-              <div key={key} className="flex gap-4 place-content-between">
-                <p className="capitalize text-gray-600">{key}</p>
-                <p>{value}</p>
-              </div>
-            ))}
+            <>
+              {Object.entries(client).map(([key, value]) => {
+                if (value !== null && typeof value === "object")
+                  return Object.entries(value).map(([k, v]) => (
+                    <p key={k}>
+                      <span>{k}</span>
+                      <span>{v}</span>
+                    </p>
+                  ));
+                return (
+                  <p key={key}>
+                    <span>{key}</span>
+                    <span>{value}</span>
+                  </p>
+                );
+              })}
+            </>
           </section>
 
           <section className="flex gap-2 place-content-end p-2 border-t border-gray-200 [&>button]:p-0.5 [&>button]:border bg-gray-50">

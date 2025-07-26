@@ -65,13 +65,13 @@ const EditClientRecord = ({ onClick, children }) => {
 
 const ConfirmAction = ({ client, onClick }) => {
   return (
-    <div className="absolute right-0 p-2 bg-pink-300">
+    <div className="absolute right-0 bottom-0 mr-36 p-4 bg-white border border-gray-300">
       <h2>Are you sure you want to delete {client.name}?</h2>
       <p>this action cannot be reversed</p>
-      <button className="mx-0.5" onClick={onClick}>
+      <button className="mx-0.5 p-0.5 border" onClick={onClick}>
         yes
       </button>
-      <button>no</button>
+      <button className="p-0.5 border">no</button>
     </div>
   );
 };

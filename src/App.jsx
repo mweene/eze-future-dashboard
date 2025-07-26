@@ -8,10 +8,10 @@ import ExportClientData from "./components/ExportClientData";
 import FilterClientData from "./components/FilterClientData";
 import SidePanel from "./components/SidePanel";
 
-import { dummydata } from "./dummydata";
+import { clientsData } from "./dummydata";
 
 export default function App() {
-  const [clients, setClients] = useState(dummydata);
+  const [clients, setClients] = useState(clientsData);
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleDeleteRecord = (c) => {
@@ -49,6 +49,7 @@ export default function App() {
               <AddNewClient clients={clients} updateClients={setClients} />
             </div>
           </div>
+
           {Object.entries(clients)?.length > 0 && (
             <Table clients={searchedClients} onDelete={handleDeleteRecord} />
           )}
@@ -57,15 +58,15 @@ export default function App() {
             <p className="text-gray-600">
               Showing <span className="text-black">Page 1 of 53 Pages</span>
             </p>
-            <div className="flex items-center gap-8">
-              <p className="border border-gray-300 py-1 px-2">1</p>
-              <p>2</p>
-              <p>...</p>
-              <p>22</p>
-              <p>23</p>
-            </div>
-            <div className="flex place-content-end">
-              <ChevronLeft color="gray" />
+            <div className="flex items-center">
+              <ChevronLeft />
+              <div className="flex items-center gap-8">
+                <p className="border border-gray-300 py-0.5 px-2">1</p>
+                <p>2</p>
+                <p>...</p>
+                <p>22</p>
+                <p>23</p>
+              </div>
               <ChevronRight />
             </div>
           </section>
