@@ -1,120 +1,158 @@
-import { useState } from "react";
-import { X } from "lucide-react";
 import InputWithLabel from "./InputWithLabel";
+import SelectMultipleOptions from "./SeleteMultipleOptions";
+import { X } from "lucide-react";
 
 const AddNewClientModal = ({ onSubmit, onChange, onReveal }) => {
   return (
-    <div className="text-[.93rem] bg-white border border-gray-300 absolute right-0 my-1.5 z-10 shadow shadow-gray-300">
-      <div className="flex place-content-between border-b border-gray-300 mb-2 p-4 bg-gray-50">
-        <h2 className="text-base">Add New Client Form</h2>
-        <button className="cursor-pointer" onClick={onReveal}>
+    <form
+      className=" m-4 bg-white border border-gray-300 w-3/4 items-center absolute right-0 top-0 z-10 mt-16"
+      onSubmit={onSubmit}
+    >
+      <section className="flex place-content-between">
+        <h2>Add New Client</h2>
+        <button className="flex gap-1 items-center">
           <X size={17} />
+          Close
         </button>
+      </section>
+
+      <div className="grid grid-cols-2 gap-4 m-4">
+        <div className="grid gap-4 p-4 border border-gray-300">
+          <section>
+            <h3 className="capitalize text-base">buyer's information</h3>
+            <div className="grid gap-2">
+              <InputWithLabel phText="Full name" onChange={onChange} />
+              <RadioOptions onChange={onChange} />
+              <InputWithLabel
+                phText="NRC e.g 226711/10/1"
+                onChange={onChange}
+              />
+              <InputWithLabel phText="Phone Number" onChange={onChange} />
+              <InputWithLabel type="email" phText="Email" onChange={onChange} />
+              <InputWithLabel
+                phText="Residential Address"
+                onChange={onChange}
+              />
+            </div>
+          </section>
+
+          <section>
+            <h3 className="capitalize text-base">witness's information</h3>
+            <div className="grid gap-2">
+              <InputWithLabel phText="Full Name" onChange={onChange} />
+              <RadioOptions onChange={onChange} />
+              <InputWithLabel
+                phText="NRC e.g 226711/10/1"
+                onChange={onChange}
+              />
+              <InputWithLabel phText="Phone Number" onChange={onChange} />
+              <InputWithLabel type="email" phText="Email" onChange={onChange} />
+              <InputWithLabel
+                phText="Residential Address"
+                onChange={onChange}
+              />
+            </div>
+          </section>
+        </div>
+
+        <div className="grid gap-4 p-4 border border-gray-300">
+          <section>
+            <h3 className="capitalize text-base">plot information</h3>
+            <div className="grid gap-2">
+              <InputWithLabel
+                phText="Plot Size e.g 20 x 20"
+                onChange={onChange}
+              />
+              <InputWithLabel
+                type="number"
+                phText="Plot Number"
+                onChange={onChange}
+              />
+              <InputWithLabel
+                phText="Site Name e.g A, A+"
+                onChange={onChange}
+              />
+              <InputWithLabel
+                type="email"
+                phText="enter email"
+                onChange={onChange}
+              />
+              <InputWithLabel
+                type="number"
+                phText="Grand Price e.g 3500"
+                onChange={onChange}
+              />
+              <InputWithLabel
+                type="number"
+                phText="Amount Paid e.g 1500"
+                onChange={onChange}
+              />
+              <InputWithLabel
+                type="number"
+                phText="Balance e.g 2000"
+                onChange={onChange}
+              />
+              <SelectMultipleOptions
+                label="Allocated Buyer"
+                options={["Yes", "No"]}
+                onChange={onChange}
+              />
+              <InputWithLabel
+                phText="Payment Status e.g fully paid, partial, pending, overdue "
+                onChange={onChange}
+              />
+              <InputWithLabel
+                type="date"
+                phText="Date Bought"
+                onChange={onChange}
+              />
+            </div>
+          </section>
+
+          <section>
+            <h3 className="capitalize text-base">Buyers's documents</h3>
+            <div className="">
+              <InputWithLabel type="file" multiple={true} onChange={onChange} />
+            </div>
+          </section>
+        </div>
       </div>
 
-      <form onSubmit={onSubmit} className="">
-        <div className="flex gap-8 m-4 p-4 border border-gray-200">
-          <div className="grid gap-1">
-            <InputWithLabel
-              id="name"
-              phText="enter client name..."
-              onChange={onChange}
-            />
-            <InputWithLabel
-              id="nrc"
-              phText="enter client nrc..."
-              onChange={onChange}
-            />
-            <InputWithLabel
-              id="phone"
-              phText="enter phone number..."
-              maxLength={10}
-              onChange={onChange}
-            />
-            <InputWithLabel
-              id="address"
-              phText="enter client address..."
-              onChange={onChange}
-            />
-            <InputWithLabel
-              id="plot-size"
-              phText="e.g 20 x 20"
-              onChange={onChange}
-            />
-          </div>
-
-          <div className="grid gap-1">
-            <InputWithLabel
-              id="plot-number"
-              phText="enter plot number..."
-              type="number"
-              onChange={onChange}
-            />
-            <InputWithLabel
-              id="site-name"
-              phText="enter site name..."
-              onChange={onChange}
-            />
-            <InputWithLabel
-              id="amount-paid"
-              phText="enter grand amount..."
-              type="number"
-              onChange={onChange}
-            />
-            <InputWithLabel
-              id="date-bought"
-              phText="enter date bought..."
-              type="date"
-              onChange={onChange}
-            />
-            <PaymentStatusSelect />
-          </div>
-        </div>
-
-        <div className="flex gap-3 place-content-center border-t border-gray-300 bg-gray-50 p-4">
-          <button
-            className="py-2 px-20 border border-gray-300 bg-white cursor-pointer mr-2"
-            onClick={onReveal}
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="py-2 px-20 text-white bg-gray-950 cursor-pointer"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+      <section>
+        <button className="border border-gray-300 p-2">Close</button>
+        <button className="border border-gray-300 p-2" type="submit">
+          Submit
+        </button>
+      </section>
+    </form>
   );
 };
 
 export default AddNewClientModal;
 
-const PaymentStatusSelect = () => {
-  const [status, setStatus] = useState("");
-
+const RadioOptions = ({ onChange }) => {
   return (
     <div>
-      <label htmlFor="payment-status" className="">
-        Payment status
+      <label htmlFor="sex">
+        <input
+          type="radio"
+          id="sex"
+          name="sex"
+          value="male"
+          onChange={onChange}
+        />
+        Male
       </label>
-      <select
-        id="payment-status"
-        name="payment-status"
-        value={status}
-        onChange={(e) => setStatus(e.target.value)}
-        className="cursor-pointer border border-gray-300"
-      >
-        <option value="" disabled>
-          Select a status
-        </option>
-        <option value="fully_paid">Fully Paid</option>
-        <option value="partial">Partial</option>
-        <option value="pending">Pending</option>
-        <option value="overdue">Overdue</option>
-      </select>
+      <label htmlFor="sex">
+        <input
+          type="radio"
+          id="sex"
+          name="sex"
+          value="female"
+          onChange={onChange}
+        />
+        Female
+      </label>
     </div>
   );
 };

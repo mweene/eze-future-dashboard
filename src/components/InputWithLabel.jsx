@@ -6,6 +6,7 @@ const InputWithLabel = ({
   onChange,
   maxLength,
   required = true,
+  multiple = false,
   styles = "p-2 border border-gray-300",
 }) => {
   const defaultStyles = "p-2 border border-300";
@@ -23,6 +24,7 @@ const InputWithLabel = ({
         maxLength={maxLength}
         name={id}
         required={required}
+        multiple={multiple}
       />
     </div>
   );

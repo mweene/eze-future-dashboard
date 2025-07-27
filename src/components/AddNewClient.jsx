@@ -41,7 +41,7 @@ const AddNewClient = ({ clients, updateClients }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="">
       <button
         className="bg-gray-950 text-white py-2.5 px-4 cursor-pointer flex gap-1.5 items-center"
         onClick={() => setIsOpen((prev) => !prev)}

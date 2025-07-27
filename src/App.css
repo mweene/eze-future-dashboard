@@ -1,6 +1,6 @@
 table {
     & tbody {
-        & td span {
+        & .payment_status span {
             border: 1px solid;
             padding: 0.25rem;
             border-radius: 0.25rem;

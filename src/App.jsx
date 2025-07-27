@@ -1,14 +1,16 @@
 import { useState } from "react";
 import "./App.css";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import Table from "./components/Table";
 import InputWithLabel from "./components/InputWithLabel";
 import AddNewClient from "./components/AddNewClient";
 import ExportClientData from "./components/ExportClientData";
 import FilterClientData from "./components/FilterClientData";
 import SidePanel from "./components/SidePanel";
+import SelectPaymentStatus from "./components/SeleteMultipleOptions";
 
 import { clientsData } from "./dummydata";
+import SelectMultipleOptions from "./components/SeleteMultipleOptions";
 
 export default function App() {
   const [clients, setClients] = useState(clientsData);

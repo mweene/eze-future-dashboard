@@ -22,19 +22,23 @@ const ClientDetailsModal = ({ isOpen, handleIsOpen, client }) => {
             </button>
           </section>
 
-          <section className="m-4 p-4 border border-gray-200 grid gap-0.5">
+          <section className="m-4 p-4 border border-gray-200 grid gap-0.5 h-64 overflow-scroll">
             <>
               {Object.entries(client).map(([key, value]) => {
+                <h3>
+                  {key}
+                  {value}
+                </h3>;
                 if (value !== null && typeof value === "object")
                   return Object.entries(value).map(([k, v]) => (
-                    <p key={k}>
-                      <span>{k}</span>
+                    <p key={k} className="flex place-content-between">
+                      <span className="">{k}:</span>
                       <span>{v}</span>
                     </p>
                   ));
                 return (
-                  <p key={key}>
-                    <span>{key}</span>
+                  <p key={key} className="flex place-content-between">
+                    <span>{key}:</span>
                     <span>{value}</span>
                   </p>
                 );

@@ -72,7 +72,7 @@ const TableRow = ({ fullClientData, client, onDelete }) => {
       <td>{client.plotSize}</td>
       <td>{client.siteName}</td>
       <td>K{client.amountPaid}</td>
-      <td>
+      <td className="payment_status">
         <span className={client.paymentStatus}>{client.paymentStatus}</span>
       </td>
       <td>{client.dateBought}</td>
