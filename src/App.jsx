@@ -6,11 +6,8 @@ import InputWithLabel from "./components/InputWithLabel";
 import AddNewClient from "./components/AddNewClient";
 import ExportClientData from "./components/ExportClientData";
 import FilterClientData from "./components/FilterClientData";
-import SidePanel from "./components/SidePanel";
-import SelectPaymentStatus from "./components/SeleteMultipleOptions";
 
 import { clientsData } from "./dummydata";
-import SelectMultipleOptions from "./components/SeleteMultipleOptions";
 
 export default function App() {
   const [clients, setClients] = useState(clientsData);
@@ -19,7 +16,6 @@ export default function App() {
   const handleDeleteRecord = (c) => {
     const newClients = clients.filter((client) => client.id !== c.id);
     setClients(newClients);
-    console.log(c);
   };
 
   const handleSearch = (e) => setSearchTerm(e.target.value);

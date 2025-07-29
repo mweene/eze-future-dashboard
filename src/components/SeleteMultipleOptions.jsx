@@ -1,12 +1,13 @@
-const SelectMultipleOptions = ({ status, label, options, onChange }) => {
+const SelectMultipleOptions = ({ status, label, name, options, onChange }) => {
+  const fieldName = name || label;
   return (
     <div>
-      <label htmlFor={label} className="">
+      <label htmlFor={fieldName} className="">
         {label}
       </label>
       <select
-        id={label}
-        name={label}
+        id={fieldName}
+        name={fieldName}
         value={status}
         onChange={onChange}
         className="cursor-pointer border border-gray-300"

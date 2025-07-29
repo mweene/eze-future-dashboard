@@ -33,11 +33,11 @@ export const clientsData = [
     },
 
     documents: {
-      nrc: "https://gdrive.com/file/1234567890",
-      letterOfSale: "https://gdrive.com/file/1232547899",
-      landAgreement: "https://gdrive.com/file/3232547853",
-      allocationForm: "https://gdrive.com/file/3232547855",
-      authorizationLetter: "https://gdrive.com/file/3232547854",
+      nrcLink: "https://gdrive.com/file/1234567890",
+      letterOfSaleLink: "https://gdrive.com/file/1232547899",
+      landAgreementLink: "https://gdrive.com/file/3232547853",
+      allocationFormLink: "https://gdrive.com/file/3232547855",
+      authorizationLetterLink: "https://gdrive.com/file/3232547854",
     },
   },
 
@@ -75,11 +75,11 @@ export const clientsData = [
     },
 
     documents: {
-      nrc: "https://gdrive.com/file/1234567890",
-      letterOfSale: "https://gdrive.com/file/1232547899",
-      landAgreement: "https://gdrive.com/file/3232547853",
-      allocationForm: "https://gdrive.com/file/3232547855",
-      authorizationLetter: "https://gdrive.com/file/3232547854",
+      nrcLink: "https://gdrive.com/file/1234567890",
+      letterOfSaleLink: "https://gdrive.com/file/1232547899",
+      landAgreementLink: "https://gdrive.com/file/3232547853",
+      allocationFormLink: "https://gdrive.com/file/3232547855",
+      authorizationLetterLink: "https://gdrive.com/file/3232547854",
     },
   },
 
@@ -117,11 +117,11 @@ export const clientsData = [
     },
 
     documents: {
-      nrc: "https://gdrive.com/file/1234567890",
-      letterOfSale: "https://gdrive.com/file/1232547899",
-      landAgreement: "https://gdrive.com/file/3232547853",
-      allocationForm: "https://gdrive.com/file/3232547855",
-      authorizationLetter: "https://gdrive.com/file/3232547854",
+      nrcLink: "https://gdrive.com/file/1234567890",
+      letterOfSaleLink: "https://gdrive.com/file/1232547899",
+      landAgreementLink: "https://gdrive.com/file/3232547853",
+      allocationFormLink: "https://gdrive.com/file/3232547855",
+      authorizationLetterLink: "https://gdrive.com/file/3232547854",
     },
   },
 ];

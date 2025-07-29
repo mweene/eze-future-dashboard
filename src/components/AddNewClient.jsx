@@ -2,23 +2,67 @@ import { useState } from "react";
 import { Plus, ChevronDown } from "lucide-react";
 import AddNewClientModal from "./AddNewClientModal";
 
-const AddNewClient = ({ clients, updateClients }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    nrc: "",
-    phone: "",
-    address: "",
+const defaultForm = {
+  id: "",
+  name: "",
+  sex: "",
+  nrc: "",
+  phone: "",
+  email: "",
+  address: "",
+  plotDetails: {
     plotSize: "",
     plotNumber: "",
     siteName: "",
+    grandPrice: 0,
     amountPaid: 0,
+    balance: 0,
+    allocated: "no",
+    allocationDate: "",
+    paymentStatus: "",
     dateBought: "",
-  });
+    dateUpdated: "",
+  },
+  witness: {
+    name: "",
+    sex: "",
+    nrc: "",
+    email: "",
+    phone: "",
+    address: "",
+    relationship: "",
+  },
+  documents: {
+    nrcLink: "",
+    letterOfSaleLink: "",
+    landAgreementLink: "",
+    allocationFormLink: "",
+    authorizationLetterLink: "",
+  },
+};
+
+const AddNewClient = ({ clients, updateClients }) => {
+  const [formData, setFormData] = useState(defaultForm);
 
   const [isOpen, setIsOpen] = useState(false);
   const handleModalView = () => setIsOpen((prev) => !prev);
   const handleFormChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+
+    // Handle nested properties (e.g., "plotDetails.plotSize")
+    if (name.includes(".")) {
+      const [parentKey, childKey] = name.split(".");
+      setFormData((prev) => ({
+        ...prev,
+        [parentKey]: {
+          ...prev[parentKey],
+          [childKey]: value,
+        },
+      }));
+    } else {
+      // Handle flat properties
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleFormSubmit = (e) => {
@@ -27,14 +71,40 @@ const AddNewClient = ({ clients, updateClients }) => {
     const newClient = {
       id: crypto.randomUUID().slice(0, 4),
       name: formData.name.trim(),
+      sex: formData.sex,
       nrc: formData.nrc.trim(),
       phone: formData.phone.trim(),
+      email: formData.email.trim(),
       address: formData.address.trim(),
-      plotSize: formData["plot-size"].trim(),
-      plotNumber: formData["plot-number"],
-      siteName: formData["site-name"].trim(),
-      amountPaid: formData["amount-paid"].trim(),
-      dateBought: formData["date-bought"],
+      plotDetails: {
+        plotSize: formData.plotDetails.plotSize,
+        plotNumber: formData.plotDetails.plotNumber,
+        siteName: formData.plotDetails.siteName,
+        grandPrice: formData.plotDetails.grandPrice,
+        amountPaid: formData.plotDetails.amountPaid,
+        balance: formData.plotDetails.balance,
+        allocated: formData.plotDetails.allocated,
+        allocationDate: formData.plotDetails.allocationDate,
+        paymentStatus: formData.plotDetails.paymentStatus,
+        dateBought: formData.plotDetails.dateBought,
+        dateUpdated: formData.plotDetails.dateUpdated,
+      },
+      witness: {
+        name: formData.witness.name,
+        sex: formData.witness.sex,
+        nrc: formData.witness.nrc,
+        email: formData.witness.email,
+        phone: formData.witness.phone,
+        address: formData.witness.address,
+        relationship: formData.witness.relationship,
+      },
+      documents: {
+        nrcLink: formData.documents.nrcLink,
+        letterOfSaleLink: formData.documents.letterOfSaleLink,
+        landAgreementLink: formData.documents.landAgreementLink,
+        allocationFormLink: formData.documents.allocationFormLink,
+        authorizationLetterLink: formData.documents.authorizationLetterLink,
+      },
     };
     updateClients([...clients, newClient]);
     setIsOpen((prev) => !prev);

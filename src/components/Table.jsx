@@ -15,10 +15,11 @@ const Table = ({ clients, onDelete }) => {
     paymentStatus: c.plotDetails.paymentStatus,
     dateBought: c.plotDetails.dateBought,
   }));
+  console.log(clientTableData);
 
   return (
     <div className="grid content-center items-center my-4 bg-white">
-      <table className="border-collapse min-w-3/6 text-left border border-gray-300">
+      <table className="border-collapse min-w-2/3 text-left border border-gray-300">
         <thead className="border-b border-gray-200 bg-gray-100">
           <tr className="[&>th]:p-3 [&>th]:font-medium [&>th]:capitalize text-gray-600 ">
             <th>

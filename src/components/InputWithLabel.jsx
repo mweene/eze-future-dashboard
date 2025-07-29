@@ -1,6 +1,7 @@
 const InputWithLabel = ({
   id,
   type = "text",
+  label,
   phText,
   value,
   onChange,
@@ -13,7 +14,7 @@ const InputWithLabel = ({
   return (
     <div className="grid">
       <label htmlFor={id} className="capitalize">
-        {id}
+        {label}
       </label>
       <input
         className={styles || defaultStyles}
