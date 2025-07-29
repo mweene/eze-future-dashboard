@@ -20,8 +20,10 @@ export default function App() {
 
   const handleSearch = (e) => setSearchTerm(e.target.value);
 
-  const searchedClients = clients.filter((data) =>
-    data.name.toLowerCase().includes(searchTerm.trim().toLowerCase()),
+  const searchedClients = clients.filter(
+    (data) =>
+      data.name.toLowerCase().includes(searchTerm.trim().toLowerCase()) ||
+      data.id.toString().includes(searchTerm.trim()),
   );
   return (
     <div className="App m-4 bg-gray-50 h-full text-[.94rem]">
@@ -32,7 +34,7 @@ export default function App() {
               <div className="flex gap-1.5 items-center border border-gray-400 text-gray-500 p-2">
                 <Search size={16} />
                 <InputWithLabel
-                  phText="Search clients by Name,ID or NRC..."
+                  phText="Search clients by Name or ID"
                   styles="border-transparent outline-none"
                   value={searchTerm}
                   onChange={handleSearch}

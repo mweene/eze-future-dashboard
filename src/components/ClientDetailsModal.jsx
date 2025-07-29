@@ -6,7 +6,7 @@ const ClientDetailsModal = ({ isOpen, handleIsOpen, client }) => {
       {isOpen && (
         <div
           key={client.id}
-          className="absolute bg-white border border-gray-300 top-0 right-0 m-4 mt-2 mr-32 shadow shadow-gray-300 z-10"
+          className="absolute bg-white border border-gray-300 top-0 right-0 m-4 mt-2 mr-32 w-[35rem] shadow shadow-gray-300 z-10"
         >
           <section className="flex gap-4 place-content-between border-b border-gray-200 px-4 pt-3 pb-2 bg-gray-50">
             <button className="flex gap-1.5 items-center border border-gray-300 bg-white py-0.5 px-2">

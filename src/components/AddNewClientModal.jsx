@@ -11,8 +11,8 @@ const AddNewClientModal = ({ onSubmit, onChange, onReveal }) => {
       <section className="flex place-content-between p-4 bg-gray-50 border-b border-gray-200">
         <h2>Add New Client</h2>
         <button className="flex gap-1 items-center" onClick={onReveal}>
-          <X size={17} />
           Close
+          <X size={17} />
         </button>
       </section>
 
