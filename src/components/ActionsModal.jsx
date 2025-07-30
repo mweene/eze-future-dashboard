@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { UserRoundPen, UserRound, UserRoundX, X } from "lucide-react";
+import { UserRoundPen, UserRound, UserRoundX, X, Edit } from "lucide-react";
 import ClientDetailsModal from "./ClientDetailsModal";
 
-const ActionsModal = ({ onReveal, onEdit, onDelete, client }) => {
+const ActionsModal = ({
+  onRevealActionModal,
+  onRevealEditModal,
+  onDelete,
+  client,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(true);
 
@@ -14,7 +19,7 @@ const ActionsModal = ({ onReveal, onEdit, onDelete, client }) => {
     <div className="absolute top-0 right-0 border border-gray-300 bg-white mr-6 mt-7 mx-4 p-3 grid gap-2.5 shadow shadow-gray-300 z-20">
       <button
         className="cursor-pointer bg-gray-50 w-fit justify-self-end border border-gray-300"
-        onClick={onReveal}
+        onClick={onRevealActionModal}
       >
         <X size={17} />
       </button>
@@ -24,7 +29,7 @@ const ActionsModal = ({ onReveal, onEdit, onDelete, client }) => {
           <UserRound size={16} />
           View Details
         </EditClientRecord>
-        <EditClientRecord onClick={onEdit}>
+        <EditClientRecord onClick={onRevealEditModal}>
           <UserRoundPen size={16} />
           Edit Client
         </EditClientRecord>

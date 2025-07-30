@@ -2,6 +2,7 @@ import { useState } from "react";
 import { EllipsisVertical } from "lucide-react";
 import ActionsModal from "./ActionsModal";
 import InputWithLabel from "./InputWithLabel";
+import EditClientModal from "./EditClientModal";
 
 const Table = ({ clients, onDelete }) => {
   const clientTableData = clients.map((c) => ({
@@ -15,7 +16,6 @@ const Table = ({ clients, onDelete }) => {
     paymentStatus: c.plotDetails.paymentStatus,
     dateBought: c.plotDetails.dateBought,
   }));
-  console.log(clientTableData);
 
   return (
     <div className="grid content-center items-center my-4 bg-white">
@@ -56,6 +56,7 @@ export default Table;
 
 const TableRow = ({ fullClientData, client, onDelete }) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModelOpen] = useState(false);
   const handleModalReveal = () => setIsModelOpen((prev) => !prev);
 
   return (
@@ -87,10 +88,12 @@ const TableRow = ({ fullClientData, client, onDelete }) => {
         {isModelOpen && (
           <ActionsModal
             client={fullClientData}
-            onReveal={handleModalReveal}
+            onRevealActionModal={handleModalReveal}
             onDelete={onDelete}
+            onRevealEditModal={() => setIsEditModelOpen((prev) => !prev)}
           />
         )}
+        {isEditModalOpen && <EditClientModal client={fullClientData} />}
       </td>
     </tr>
   );
