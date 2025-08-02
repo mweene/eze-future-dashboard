@@ -10,14 +10,13 @@ const InputWithLabel = ({
   multiple = false,
   styles = "p-2 border border-gray-300",
 }) => {
-  const defaultStyles = "p-2 border border-300";
   return (
     <div className="grid">
       <label htmlFor={id} className="capitalize">
         {label}
       </label>
       <input
-        className={styles || defaultStyles}
+        className={styles}
         type={type}
         placeholder={phText}
         value={value}
