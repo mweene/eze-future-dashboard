@@ -2,9 +2,8 @@ import { useState } from "react";
 import { EllipsisVertical } from "lucide-react";
 import ActionsModal from "./ActionsModal";
 import InputWithLabel from "./InputWithLabel";
-import EditClientModal from "./EditClientModal";
 
-const Table = ({ clients, onDelete }) => {
+const Table = ({ clients, onEdit, onDelete }) => {
   const clientTableData = clients.map((c) => ({
     id: c.id,
     name: c.name,
@@ -43,6 +42,7 @@ const Table = ({ clients, onDelete }) => {
               key={c.id}
               fullClientData={clients.find((client) => client.id === c.id)}
               client={c}
+              onEdit={onEdit}
               onDelete={onDelete}
             />
           ))}
@@ -54,10 +54,9 @@ const Table = ({ clients, onDelete }) => {
 
 export default Table;
 
-const TableRow = ({ fullClientData, client, onDelete }) => {
-  const [isModelOpen, setIsModelOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModelOpen] = useState(false);
-  const handleModalReveal = () => setIsModelOpen((prev) => !prev);
+const TableRow = ({ fullClientData, client, onDelete, onEdit }) => {
+  const [isActionModalOpen, setIsActionModalOpen] = useState(false);
+  const handleModalReveal = () => setIsActionModalOpen((prev) => !prev);
 
   return (
     <tr
@@ -81,19 +80,18 @@ const TableRow = ({ fullClientData, client, onDelete }) => {
       <td className="text-center">
         <button
           className="cursor-pointer py-1 border border-gray-200 hover:bg-gray-300"
-          onClick={() => setIsModelOpen((prev) => !prev)}
+          onClick={() => setIsActionModalOpen((prev) => !prev)}
         >
           <EllipsisVertical size={17} />
         </button>
-        {isModelOpen && (
+        {isActionModalOpen && (
           <ActionsModal
             client={fullClientData}
             onRevealActionModal={handleModalReveal}
+            onEdit={onEdit}
             onDelete={onDelete}
-            onRevealEditModal={() => setIsEditModelOpen((prev) => !prev)}
           />
         )}
-        {isEditModalOpen && <EditClientModal client={fullClientData} />}
       </td>
     </tr>
   );

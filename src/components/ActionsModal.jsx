@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { UserRoundPen, UserRound, UserRoundX, X, Edit } from "lucide-react";
 import ClientDetailsModal from "./ClientDetailsModal";
+import EditClientModal from "./EditClientModal";
 
-const ActionsModal = ({
-  onRevealActionModal,
-  onRevealEditModal,
-  onDelete,
-  client,
-}) => {
+const ActionsModal = ({ onRevealActionModal, onDelete, onEdit, client }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(true);
+  const [isEditClientModalOpen, setIsEditClientModalOpen] = useState(false);
 
   const [confirmDeleteAction, setConfirmDeleteAction] = useState(false);
 
@@ -29,28 +26,37 @@ const ActionsModal = ({
           <UserRound size={16} />
           View Details
         </EditClientRecord>
-        <EditClientRecord onClick={onRevealEditModal}>
+
+        <EditClientRecord
+          onClick={() => setIsEditClientModalOpen((prev) => !prev)}
+        >
           <UserRoundPen size={16} />
           Edit Client
         </EditClientRecord>
+
         <EditClientRecord
           onClick={() => setConfirmDeleteAction((prev) => !prev)}
         >
           <UserRoundX size={16} />
           Delete Record
-          {confirmDeleteAction && (
-            <ConfirmAction client={client} onClick={() => onDelete(client)} />
-          )}
         </EditClientRecord>
-      </div>
 
-      {isOpen && (
-        <ClientDetailsModal
-          client={client}
-          isOpen={isDetailsOpen}
-          handleIsOpen={() => setIsDetailsOpen((prev) => !prev)}
-        />
-      )}
+        {isOpen && (
+          <ClientDetailsModal
+            client={client}
+            isOpen={isDetailsOpen}
+            handleIsOpen={() => setIsDetailsOpen((prev) => !prev)}
+          />
+        )}
+
+        {isEditClientModalOpen && (
+          <EditClientModal client={client} onEdit={onEdit} />
+        )}
+
+        {confirmDeleteAction && (
+          <ConfirmAction client={client} onClick={() => onDelete(client)} />
+        )}
+      </div>
     </div>
   );
 };

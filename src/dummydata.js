@@ -1,6 +1,6 @@
 export const clientsData = [
   {
-    id: 2311,
+    id: "2311",
     name: "Martin Zulu",
     sex: "male",
     nrc: "236700/17/1",
@@ -42,7 +42,7 @@ export const clientsData = [
   },
 
   {
-    id: 2312,
+    id: "2312",
     name: "Petronella Nayame",
     sex: "female",
     nrc: "236700/17/1",
@@ -84,7 +84,7 @@ export const clientsData = [
   },
 
   {
-    id: 2313,
+    id: "2313",
     name: "Paul Tiki",
     sex: "male",
     nrc: "543401/11/1",

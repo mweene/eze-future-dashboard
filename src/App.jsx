@@ -13,6 +13,14 @@ export default function App() {
   const [clients, setClients] = useState(clientsData);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const handleEditClientRecord = (c) => {
+    const newClients = clients.map((client) =>
+      String(client.id) === String(c.id) ? c : client,
+    );
+    setClients(newClients);
+    console.log(c);
+  };
+
   const handleDeleteRecord = (c) => {
     const newClients = clients.filter((client) => client.id !== c.id);
     setClients(newClients);
@@ -51,7 +59,11 @@ export default function App() {
           </div>
 
           {Object.entries(clients)?.length > 0 && (
-            <Table clients={searchedClients} onDelete={handleDeleteRecord} />
+            <Table
+              clients={searchedClients}
+              onDelete={handleDeleteRecord}
+              onEdit={handleEditClientRecord}
+            />
           )}
 
           <section className="flex place-content-between place-items-center">
