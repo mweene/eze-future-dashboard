@@ -10,6 +10,8 @@ const ActionsModal = ({ onRevealActionModal, onDelete, onEdit, client }) => {
 
   const [confirmDeleteAction, setConfirmDeleteAction] = useState(false);
 
+  const [closeModal, setCloseModal] = useState(true);
+
   const handleIsOpen = () => setIsOpen((prev) => !prev);
 
   return (
@@ -50,7 +52,12 @@ const ActionsModal = ({ onRevealActionModal, onDelete, onEdit, client }) => {
         )}
 
         {isEditClientModalOpen && (
-          <EditClientModal client={client} onEdit={onEdit} />
+          <EditClientModal
+            client={client}
+            onEdit={onEdit}
+            onClose={closeModal}
+            handleOnClose={setCloseModal}
+          />
         )}
 
         {confirmDeleteAction && (
