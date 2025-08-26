@@ -1,32 +1,23 @@
 const InputWithLabel = ({
-  id,
-  type = "text",
   label,
-  phText,
+  placeholder,
   value,
   onChange,
-  maxLength,
-  required = true,
-  multiple = false,
-  styles = "p-2 border border-gray-300",
+  type = "text",
 }) => {
   return (
-    <div className="grid">
-      <label htmlFor={id} className="capitalize">
-        {label}
+    <>
+      <label htmlFor={label}>
+        <input
+          type={type}
+          id={label}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          className="p-2 border border-gray-400 my-2"
+        />
       </label>
-      <input
-        className={styles}
-        type={type}
-        placeholder={phText}
-        value={value}
-        onChange={onChange}
-        maxLength={maxLength}
-        name={id}
-        required={required}
-        multiple={multiple}
-      />
-    </div>
+    </>
   );
 };
 

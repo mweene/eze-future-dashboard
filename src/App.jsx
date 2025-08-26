@@ -1,99 +1,34 @@
 import { useState, useEffect } from "react";
-import "./App.css";
-import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
-import Table from "./components/Table";
+import ClientsTable from "./components/ClientsTable";
 import InputWithLabel from "./components/InputWithLabel";
-import AddNewClient from "./components/AddNewClient";
-import ExportClientData from "./components/ExportClientData";
-import FilterClientData from "./components/FilterClientData";
+import "./App.css";
 
 export default function App() {
   const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
   useEffect(() => {
-    fetch("http://localhost:3000/api/clients")
+    fetch("http://localhost:5000/api/clients")
       .then((response) => response.json())
-      .then((data) => {
-        setClients(data.clients);
-      })
-      .catch((error) => {
-        console.error("Error fetching clients:", error);
-      });
+      .then((data) => setClients(data));
   }, []);
 
-  const handleEditClientRecord = (c) => {
-    const newClients = clients.map((client) =>
-      String(client.id) === String(c.id) ? c : client,
-    );
-    setClients(newClients);
-    console.log(c);
-  };
-
-  const handleDeleteRecord = (c) => {
-    const newClients = clients.filter((client) => client.id !== c.id);
-    setClients(newClients);
-  };
-
-  const handleSearch = (e) => setSearchTerm(e.target.value);
-
   const searchedClients = clients.filter(
-    (data) =>
-      data.name.toLowerCase().includes(searchTerm.trim().toLowerCase()) ||
-      data.id.toString().includes(searchTerm.trim().toLocaleLowerCase()),
+    (client) =>
+      client.name.toLowerCase().includes(searchTerm.trim().toLowerCase()) ||
+      client.id.toString().includes(searchTerm.trim().toLocaleLowerCase()),
   );
   return (
-    <div className="App m-4 bg-gray-50 h-full text-[.94rem]">
+    <div className="App p-4 bg-gray-50 h-full">
       {clients.length > 0 ? (
-        <div>
-          <div className="relative p-4 border border-gray-300 bg-white">
-            <div className="flex place-content-between gap-2">
-              <div className="flex gap-3 place-items-center">
-                <div className="flex gap-1.5 items-center border border-gray-400 text-gray-500 p-2">
-                  <Search size={16} />
-                  <InputWithLabel
-                    phText="Search by Name or ID"
-                    styles="border-transparent outline-none"
-                    value={searchTerm}
-                    onChange={handleSearch}
-                  />
-                </div>
-
-                <FilterClientData data={""} />
-              </div>
-
-              <div className="flex gap-3">
-                <ExportClientData clients={clients} />
-                <AddNewClient clients={clients} updateClients={setClients} />
-              </div>
-            </div>
-
-            {Object.entries(clients)?.length > 0 && (
-              <Table
-                clients={searchedClients}
-                onDelete={handleDeleteRecord}
-                onEdit={handleEditClientRecord}
-              />
-            )}
-
-            <section className="flex place-content-between place-items-center">
-              <p className="text-gray-600">
-                Showing <span className="text-black">Page 1 of 53 Pages</span>
-              </p>
-              <div className="flex items-center">
-                <ChevronLeft />
-                <div className="flex items-center gap-8">
-                  <p className="border border-gray-300 py-0.5 px-2">1</p>
-                  <p>2</p>
-                  <p>...</p>
-                  <p>22</p>
-                  <p>23</p>
-                </div>
-                <ChevronRight />
-              </div>
-            </section>
-          </div>
-        </div>
+        <>
+          <InputWithLabel
+            label="search"
+            placeholder="search clients by id or name"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <ClientsTable clients={searchedClients} />
+        </>
       ) : (
         <p>Loading...</p>
       )}

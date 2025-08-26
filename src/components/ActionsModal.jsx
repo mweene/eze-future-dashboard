@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UserRoundPen, UserRound, UserRoundX, X, Edit } from "lucide-react";
+import { FilePenLine, FileUser, Trash2, X } from "lucide-react";
 import ClientDetailsModal from "./ClientDetailsModal";
 import EditClientModal from "./EditClientModal";
 
@@ -25,22 +25,22 @@ const ActionsModal = ({ onRevealActionModal, onDelete, onEdit, client }) => {
 
       <div className="flex flex-col gap-1.5">
         <EditClientRecord onClick={handleIsOpen}>
-          <UserRound size={16} />
+          <FileUser size={16} />
           View Details
         </EditClientRecord>
 
         <EditClientRecord
           onClick={() => setIsEditClientModalOpen((prev) => !prev)}
         >
-          <UserRoundPen size={16} />
+          <FilePenLine size={16} />
           Edit Client
         </EditClientRecord>
 
         <EditClientRecord
           onClick={() => setConfirmDeleteAction((prev) => !prev)}
         >
-          <UserRoundX size={16} />
-          Delete Record
+          <Trash2 size={16} color="red" />
+          <span className="text-red-500">Delete Record</span>
         </EditClientRecord>
 
         {isOpen && (
