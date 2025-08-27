@@ -1,20 +1,23 @@
 const InputWithLabel = ({
   label,
+  id,
   placeholder,
   value,
   onChange,
   type = "text",
+  styles,
 }) => {
   return (
     <>
-      <label htmlFor={label}>
+      <label htmlFor={label} className="capitalize">
+        {label}
         <input
           type={type}
-          id={label}
+          id={id}
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          className="p-2 border border-gray-400 my-2"
+          className={`p-2 border border-gray-400 w-full ${styles}`}
         />
       </label>
     </>
