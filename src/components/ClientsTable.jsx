@@ -6,7 +6,7 @@ const ClientsTable = ({ clients, onDelete }) => {
     <>
       <table className="border-collapse min-w-2/3 w-full text-left border border-gray-300">
         <thead className="border-b border-gray-200 bg-gray-100">
-          <tr className="[&>th]:capitalize [&>th]:p-2">
+          <tr className="[&>th]:capitalize [&>th]:font-normal [&>th]:text-neutral-700 [&>th]:p-2">
             <th>
               <input type="checkbox" />
             </th>
