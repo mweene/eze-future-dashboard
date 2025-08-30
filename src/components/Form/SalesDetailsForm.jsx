@@ -1,17 +1,6 @@
-import { useState } from "react";
 import InputWithLabel from "../InputWithLabel";
 
-export default function SalesDetailsForm({ salesFormData }) {
-  const [formData, setFormData] = useState(salesFormData);
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.id]: e.target.value,
-    }));
-  };
-
-  const handleSumbit = () => console.log(formData);
-
+export default function SalesDetailsForm({ salesFormData, onChange }) {
   return (
     <>
       <div className="border-b border-gray-300 pb-2 mb-2">
@@ -23,20 +12,22 @@ export default function SalesDetailsForm({ salesFormData }) {
           label="grand price"
           id="price"
           placeholder="total cost of plot"
-          onChange={handleChange}
+          value={salesFormData?.price || ""}
+          onChange={onChange}
         />
         <InputWithLabel
           label="amount paid"
           id="amount_paid"
           placeholder="enter amount paid"
-          onChange={handleChange}
+          value={salesFormData?.amount_paid || ""}
+          onChange={onChange}
         />
         <InputWithLabel
           label="balance"
           id="balance"
           placeholder="enter balance"
-          onChange={handleChange}
-          onClick={handleSumbit}
+          value={salesFormData?.balance || ""}
+          onChange={onChange}
         />
       </div>
     </>

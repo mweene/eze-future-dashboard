@@ -1,18 +1,6 @@
-import { useState } from "react";
 import InputWithLabel from "../InputWithLabel";
 
-export default function ClientDetailsForm({ clientFormData }) {
-  const [formData, setFormData] = useState(clientFormData);
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.id]: e.target.value,
-    }));
-  };
-
-  const handleSumbit = () => console.log(formData);
-
+export default function ClientDetailsForm({ clientFormData, onChange }) {
   return (
     <>
       <div className="border-b border-neutral-300 pb-2 mb-2">
@@ -24,21 +12,24 @@ export default function ClientDetailsForm({ clientFormData }) {
         label="name"
         id="name"
         styles="grid"
-        onChange={handleChange}
+        value={clientFormData?.name || ""}
+        onChange={onChange}
       />
       <InputWithLabel
         placeholder="enter your nrc"
         label="nrc"
         id="nrc"
         styles="grid"
-        onChange={handleChange}
+        value={clientFormData?.nrc || ""}
+        onChange={onChange}
       />
       <InputWithLabel
         placeholder="enter your phone"
         label="phone"
         id="phone"
         styles="grid"
-        onChange={handleChange}
+        value={clientFormData?.phone || ""}
+        onChange={onChange}
       />
       <InputWithLabel
         placeholder="enter your email"
@@ -46,15 +37,16 @@ export default function ClientDetailsForm({ clientFormData }) {
         type="email"
         id="email"
         styles="grid"
-        onChange={handleChange}
+        value={clientFormData?.email || ""}
+        onChange={onChange}
       />
       <InputWithLabel
         placeholder="enter your adress"
         label="address"
         id="address"
         styles="grid"
-        onChange={handleChange}
-        onClick={handleSumbit}
+        value={clientFormData?.address || ""}
+        onChange={onChange}
       />
     </>
   );

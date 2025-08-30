@@ -28,7 +28,7 @@ export default function AddNewClient({ onOpenAddClient, addClientHandler }) {
       amount_paid: "",
       balance: "",
     },
-    witnes: {
+    witness: {
       name: "",
       nrc: "",
       phone: "",
@@ -42,18 +42,68 @@ export default function AddNewClient({ onOpenAddClient, addClientHandler }) {
     },
   });
 
-  const getData = (type) => {
-    const client = {};
-    if (type === "client") {
-      Object.keys(formData).forEach((key) => {
-        if (typeof formData[key] === "object") return;
-        client[key] = formData[key];
-      });
-      return client;
-    }
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+
+    setFormData((prev) => {
+      switch (steps) {
+        case 0: // Client info - top level properties
+          return {
+            ...prev,
+            [id]: value,
+          };
+        case 1: // Plots info
+          return {
+            ...prev,
+            plots: {
+              ...prev.plots,
+              [id]: value,
+            },
+          };
+        case 2: // Sales info
+          return {
+            ...prev,
+            sales: {
+              ...prev.sales,
+              [id]: value,
+            },
+          };
+        case 3: // Witness info
+          return {
+            ...prev,
+            witness: {
+              ...prev.witness,
+              [id]: value,
+            },
+          };
+        case 4: // Documents info
+          return {
+            ...prev,
+            documents: {
+              ...prev.documents,
+              [id]: value,
+            },
+          };
+        default:
+          return prev;
+      }
+    });
   };
 
-  const clientFormData = getData("client");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const getClientData = () => {
+      const client = {};
+      const clientKeys = Object.keys(formData).filter(
+        (key) => typeof formData[key] !== "object",
+      );
+      for (let k of clientKeys) {
+        client[k] = formData[k];
+      }
+      return client;
+    };
+    addClientHandler(getClientData());
+  };
 
   return (
     <>
@@ -83,23 +133,43 @@ export default function AddNewClient({ onOpenAddClient, addClientHandler }) {
               <li className={steps === 4 ? "font-semibold text-[1.07rem]" : ""}>
                 documents
               </li>
+              <li className={steps === 5 ? "font-semibold text-[1.07rem]" : ""}>
+                review and submit
+              </li>
             </ul>
           </div>
-          <form action="" className="grid">
+          <form action="" className="grid" onSubmit={handleSubmit}>
             {steps === 0 && (
               <ClientDetailsForm
-                addClientHandler={addClientHandler}
-                clientFormData={clientFormData}
+                clientFormData={formData}
+                onChange={handleChange}
               />
             )}
-            {steps === 1 && <PlotDetailsForm plotFormData={formData.plots} />}
-            {steps === 2 && <SalesDetailsForm salesFormData={formData.sales} />}
+            {steps === 1 && (
+              <PlotDetailsForm
+                onChange={handleChange}
+                plotFormData={formData.plots}
+              />
+            )}
+            {steps === 2 && (
+              <SalesDetailsForm
+                onChange={handleChange}
+                salesFormData={formData.sales}
+              />
+            )}
             {steps === 3 && (
-              <WitnessDetailsForm witnessFormData={formData.witnes} />
+              <WitnessDetailsForm
+                onChange={handleChange}
+                witnessFormData={formData.witness}
+              />
             )}
             {steps === 4 && (
-              <DocumentsDetailsForm documentsFormData={formData.documents} />
+              <DocumentsDetailsForm
+                onChange={handleChange}
+                documentsFormData={formData.documents}
+              />
             )}
+            {steps === 5 && <ReviewAndSubmitForm />}
 
             <div className="flex place-content-between my-4">
               <button
@@ -111,11 +181,8 @@ export default function AddNewClient({ onOpenAddClient, addClientHandler }) {
                 <ChevronLeft size={17} />
                 back
               </button>
-              {steps === 4 ? (
-                <button
-                  className="bg-gray-950 text-white py-1 px-4 capitalize"
-                  type="button"
-                >
+              {steps > 4 ? (
+                <button className="bg-gray-950 text-white py-1 px-4 flex gap-1 capitalize place-content-between place-items-center">
                   submit
                 </button>
               ) : (
@@ -131,6 +198,17 @@ export default function AddNewClient({ onOpenAddClient, addClientHandler }) {
             </div>
           </form>
         </div>
+      </div>
+    </>
+  );
+}
+
+function ReviewAndSubmitForm() {
+  return (
+    <>
+      <div className="">
+        <h2>review form</h2>
+        <p>make sure that all the details are correct before submitting</p>
       </div>
     </>
   );
