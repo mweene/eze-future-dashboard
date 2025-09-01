@@ -11,7 +11,6 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 export default function AddNewClient({ onOpenAddClient, addClientHandler }) {
   const [steps, setSteps] = useState(0);
   const [formData, setFormData] = useState({
-    id: crypto.randomUUID().slice(0, 2),
     name: "",
     nrc: "",
     phone: "",
@@ -24,7 +23,7 @@ export default function AddNewClient({ onOpenAddClient, addClientHandler }) {
       site_plan_link: "",
     },
     sales: {
-      price: "",
+      total_cost: "",
       amount_paid: "",
       balance: "",
     },
@@ -92,31 +91,21 @@ export default function AddNewClient({ onOpenAddClient, addClientHandler }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const getClientData = () => {
-      const client = {};
-      const clientKeys = Object.keys(formData).filter(
-        (key) => typeof formData[key] !== "object",
-      );
-      for (let k of clientKeys) {
-        client[k] = formData[k];
-      }
-      return client;
-    };
-    addClientHandler(getClientData());
+    addClientHandler(formData);
   };
 
   return (
     <>
-      <div className="absolute top-0 right-0 m-4 mt-8 p-4 border z-10 shadow shadow-gray-300 bg-white w-[40rem] h-fit">
+      <div className="absolute top-0 right-0 m-4 mt-8 p-4 border z-10 shadow shadow-neutral-300 bg-white w-[40rem] h-fit">
         <button
-          className="py-1 px-4 mb-4 capitalize border border-gray-400 text-gray-700 flex gap-1 place-content-between place-items-center"
+          className="py-1 px-4 mb-4 capitalize border border-neutral-400 text-neutral-700 flex gap-1 place-content-between place-items-center"
           onClick={() => onOpenAddClient((prev) => !prev)}
         >
           <X size={17} />
           close
         </button>
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-gray-100 border border-gray-200 p-4">
+          <div className="bg-neutral-100 border border-neutral-200 p-4">
             <ul className="[&>li]:capitalize grid gap-2">
               <li className={steps === 0 ? "font-semibold text-[1.07rem]" : ""}>
                 client's information
@@ -175,21 +164,21 @@ export default function AddNewClient({ onOpenAddClient, addClientHandler }) {
               <button
                 type="button"
                 disabled={steps === 0 ? true : false}
-                className="py-1 px-4 border border-gray-400 text-gray-700 capitalize flex gap-1 place-content-between place-items-center"
+                className="py-1 px-4 border border-neutral-400 text-neutral-700 capitalize flex gap-1 place-content-between place-items-center"
                 onClick={() => setSteps((prev) => prev - 1)}
               >
                 <ChevronLeft size={17} />
                 back
               </button>
               {steps > 4 ? (
-                <button className="bg-gray-950 text-white py-1 px-4 flex gap-1 capitalize place-content-between place-items-center">
+                <button className="bg-neutral-950 text-white py-1 px-4 flex gap-1 capitalize place-content-between place-items-center">
                   submit
                 </button>
               ) : (
                 <button
                   type="button"
                   onClick={() => setSteps((prev) => prev + 1)}
-                  className="bg-gray-950 text-white py-1 px-4 flex gap-1 capitalize place-content-between place-items-center"
+                  className="bg-neutral-950 text-white py-1 px-4 flex gap-1 capitalize place-content-between place-items-center"
                 >
                   next
                   <ChevronRight size={17} />

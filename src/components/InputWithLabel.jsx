@@ -20,7 +20,7 @@ const InputWithLabel = ({
           onChange={onChange}
           onClick={onClick}
           placeholder={placeholder}
-          className={`p-2 border border-gray-400 w-full ${styles}`}
+          className={`p-2 border border-neutral-300 w-full ${styles}`}
         />
       </label>
     </>

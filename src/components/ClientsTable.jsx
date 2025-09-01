@@ -4,8 +4,8 @@ import { EllipsisVertical, X } from "lucide-react";
 const ClientsTable = ({ clients, onDelete }) => {
   return (
     <>
-      <table className="border-collapse min-w-2/3 w-full text-left border border-gray-300">
-        <thead className="border-b border-gray-200 bg-gray-100">
+      <table className="border-collapse min-w-2/3 w-full text-left border border-neutral-300">
+        <thead className="border-b border-neutral-300 bg-neutral-100">
           <tr className="[&>th]:capitalize [&>th]:font-normal [&>th]:text-neutral-700 [&>th]:p-2">
             <th>
               <input type="checkbox" />
@@ -45,7 +45,7 @@ const ClientsTableRow = ({ client, onDelete }) => {
     <>
       <tr
         className="[&>td]:p-2 [&>td]:max-w-[13ch] [&>td]:capitalize [&>td]:overflow-hidden
-      [&>td]:text-ellipsis [&>td]:whitespace-nowrap border-b border-b-gray-300 hover:bg-gray-200 relative"
+      [&>td]:text-ellipsis [&>td]:whitespace-nowrap border-b border-b-neutral-300 hover:bg-neutral-200 relative"
       >
         <td>
           <input type="checkbox" />
@@ -76,7 +76,7 @@ const ClientsTableRow = ({ client, onDelete }) => {
 
 const Actions = ({ client, handleIsOpen, onViewDetails, onDelete }) => {
   return (
-    <div className="absolute top-0 right-0 m-4 p-2 z-20 bg-white border border-gray-400">
+    <div className="absolute top-0 right-0 m-4 p-2 z-20 bg-white border border-neutral-400">
       <button onClick={handleIsOpen}>
         <X size={17} />
       </button>

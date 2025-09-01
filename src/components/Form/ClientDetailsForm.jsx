@@ -4,7 +4,7 @@ export default function ClientDetailsForm({ clientFormData, onChange }) {
   return (
     <>
       <div className="border-b border-neutral-300 pb-2 mb-2">
-        <h3 className="capitalize text-2xl font-semibold">clinet's info</h3>
+        <h3 className="capitalize text-2xl font-semibold">client's info</h3>
         <p className="text-neutral-600">provide client's information below</p>
       </div>
       <InputWithLabel
