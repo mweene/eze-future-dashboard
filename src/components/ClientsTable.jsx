@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ClientForm from "./ClientForm";
 import { EllipsisVertical, X } from "lucide-react";
 
 const ClientsTable = ({ clients, onDelete }) => {
@@ -34,12 +35,22 @@ const ClientsTable = ({ clients, onDelete }) => {
 };
 
 const ClientsTableRow = ({ client, onDelete }) => {
+  const [fullClientDetails, setFullClientDetails] = useState({});
   const [isActionsOpen, setIsActionOpen] = useState(false);
-  const onViewDetails = (client) => {
-    fetch(`http://localhost:5000/api/clients/${client.id}`)
+  const [isClientDetailsModalOpen, setIsClientDetailsModalOpen] =
+    useState(false);
+  const [isUpdateClientModalOpen, setIsUpdateClientModalOpen] = useState(false);
+
+  const onViewDetails = (client_id) => {
+    fetch(`http://localhost:5000/api/clients/${client_id}`)
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data);
+        setFullClientDetails(data);
+      })
       .catch((err) => console.error(err.message));
+
+    setIsClientDetailsModalOpen((prev) => !prev);
   };
   return (
     <>
@@ -57,15 +68,34 @@ const ClientsTableRow = ({ client, onDelete }) => {
         <td>{client.email}</td>
         <td>{client.address}</td>
         <td>
-          <button onClick={() => setIsActionOpen((prev) => !prev)}>
+          <button
+            onClick={() => setIsActionOpen((prev) => !prev)}
+            className="px-0.5 py-1  border border-neutral-300"
+          >
             <EllipsisVertical size={17} />
           </button>
           {isActionsOpen && (
             <Actions
               client={client}
-              handleIsOpen={() => setIsActionOpen((prev) => !prev)}
-              onViewDetails={onViewDetails}
+              handleIsOpen={() => {
+                setFullClientDetails((prev) => !prev);
+                setIsActionOpen((prev) => !prev);
+              }}
+              onOpenClientDetails={onViewDetails}
               onDelete={onDelete}
+              onOpenUpdateModal={() =>
+                setIsUpdateClientModalOpen((prev) => !prev)
+              }
+            />
+          )}
+          {isClientDetailsModalOpen && (
+            <ViewClientDetailsModal clientDetails={fullClientDetails} />
+          )}
+          {isUpdateClientModalOpen && (
+            <ClientForm
+              mode="edit"
+              client={fullClientDetails}
+              onClose={() => setIsUpdateClientModalOpen((prev) => !prev)}
             />
           )}
         </td>
@@ -74,18 +104,68 @@ const ClientsTableRow = ({ client, onDelete }) => {
   );
 };
 
-const Actions = ({ client, handleIsOpen, onViewDetails, onDelete }) => {
+const Actions = ({
+  client,
+  handleIsOpen,
+  onOpenClientDetails,
+  onOpenUpdateModal,
+  onDelete,
+}) => {
   return (
     <div className="absolute top-0 right-0 m-4 p-2 z-20 bg-white border border-neutral-400">
       <button onClick={handleIsOpen}>
         <X size={17} />
       </button>
       <div className="grid gap-2">
-        <button onClick={() => onViewDetails(client)}>view details</button>
-        <button>update</button>
+        <button onClick={() => onOpenClientDetails(client.id)}>
+          view details
+        </button>
+        <button onClick={onOpenUpdateModal}>update</button>
         <button onClick={() => onDelete(client)}>delete</button>
       </div>
     </div>
+  );
+};
+
+const ViewClientDetailsModal = ({ clientDetails }) => {
+  return (
+    <>
+      <ul className="absolute top-0 right-0 mt-12 mr-30 p-4 bg-indigo-700 text-white z-20 grid gap-1.5">
+        {Object.entries(clientDetails).map(([key, value]) => {
+          if (key === "documents" && Array.isArray(value) && value.length > 0) {
+            const docObj = value[0];
+            return Object.entries(docObj).map(([docKey, docValue]) => (
+              <li key={`${key}-${docKey}`}>
+                <span>{docKey}: </span>
+                <span>{String(docValue)}</span>
+              </li>
+            ));
+          }
+
+          // Handle nested objects
+          if (
+            typeof value === "object" &&
+            value !== null &&
+            !Array.isArray(value)
+          ) {
+            return Object.entries(value).map(([nestedKey, nestedValue]) => (
+              <li key={`${key}-${nestedKey}`}>
+                <span>{nestedKey}: </span>
+                <span>{String(nestedValue)}</span>
+              </li>
+            ));
+          }
+
+          // Handle primitive values
+          return (
+            <li key={key}>
+              <span>{key}: </span>
+              <span>{String(value)}</span>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 };
 

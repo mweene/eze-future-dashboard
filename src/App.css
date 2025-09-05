@@ -1,3 +1,7 @@
+.overflow-hidden {
+    overflow: hidden;
+}
+
 table {
     & tbody {
         & .payment_status span {

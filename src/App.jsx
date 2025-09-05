@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ClientsTable from "./components/ClientsTable";
-import AddNewClient from "./components/AddNewClient";
+import ClientForm from "./components/ClientForm";
 import InputWithLabel from "./components/InputWithLabel";
 import { Plus, Funnel } from "lucide-react";
 import "./App.css";
@@ -55,8 +55,11 @@ export default function App() {
         );
         const data = await response.text();
         if (response.ok) {
-          console.log("resource deleted successfully");
-          console.log(data);
+          console.log("resource deleted successfully", "data:", data);
+          const newClients = clients.filter(
+            (client) => client.id !== client_id,
+          );
+          setClients(newClients);
         }
       })();
     } catch (error) {
@@ -90,9 +93,10 @@ export default function App() {
               add new client
             </button>
             {OpenAddClient && (
-              <AddNewClient
-                onOpenAddClient={setOpenAddClient}
+              <ClientForm
+                onClose={setOpenAddClient}
                 addClientHandler={addClientHandler}
+                mode="add"
               />
             )}
           </div>
