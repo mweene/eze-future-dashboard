@@ -3,10 +3,6 @@ import InputWithLabel from "../InputWithLabel";
 export default function PlotDetailsForm({ plotFormData, onChange }) {
   return (
     <>
-      <div className="border-b border-gray-300 pb-2 mb-2">
-        <h3 className="capitalize text-2xl font-semibold">plot info</h3>
-        <p className="text-gray-600">provide plot information below</p>
-      </div>
       <InputWithLabel
         label="plot number"
         id="plot_number"
@@ -31,6 +27,7 @@ export default function PlotDetailsForm({ plotFormData, onChange }) {
       <InputWithLabel
         label="site plan link"
         id="site_plan_link"
+        type="link"
         placeholder="site plan link e.g https://gdrive.com/kj5nalkkl"
         value={plotFormData?.site_plan_link || ""}
         onChange={onChange}

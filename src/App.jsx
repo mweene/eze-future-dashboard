@@ -68,25 +68,26 @@ export default function App() {
   };
 
   return (
-    <div className="App p-4 h-full w-4xl text-neutral-950 bg-white">
+    <div className="App p-4 h-full w-4xl text-neutral-950">
       {clients.length > 0 ? (
-        <>
-          <div className="flex place-content-between place-items-center my-3 relative">
+        <div className="border border-neutral-200 bg-white p-4 rounded-2xl">
+          <div className="flex place-content-between place-items-center mb-3 relative">
             <div className="flex gap-2">
               <InputWithLabel
                 id="search"
+                type="search"
                 placeholder="search clients by id or name"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <button className="border border-neutral-300 text-neutral-500 px-4 flex place-items-center gap-1">
+              <button className="border border-neutral-300 text-neutral-500 px-4 flex place-items-center gap-1 rounded-xl">
                 <Funnel size={17} />
                 Filter
               </button>
             </div>
 
             <button
-              className="bg-neutral-950 text-white py-2.5 px-6 capitalize flex gap-2 place-items-center"
+              className="bg-neutral-950 text-white py-2.5 px-4 capitalize flex gap-1.5 place-items-center rounded-xl"
               onClick={() => setOpenAddClient((prev) => !prev)}
             >
               <Plus size={19} />
@@ -104,7 +105,7 @@ export default function App() {
             clients={searchedClients}
             onDelete={deleteClientHandler}
           />
-        </>
+        </div>
       ) : (
         <p>Loading...</p>
       )}

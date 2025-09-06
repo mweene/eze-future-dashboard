@@ -2,6 +2,10 @@
     overflow: hidden;
 }
 
+.add-form {
+    grid-template-columns: 1fr 2fr;
+}
+
 table {
     & tbody {
         & .payment_status span {
