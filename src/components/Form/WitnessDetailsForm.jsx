@@ -3,7 +3,7 @@ import InputWithLabel from "../InputWithLabel";
 export default function WitnessDetailsForm({ witnessFormData, onChange }) {
   return (
     <>
-      <div>
+      <div className="grid gap-2">
         <InputWithLabel
           label="name"
           id="name"

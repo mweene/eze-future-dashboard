@@ -41,17 +41,34 @@ const ClientsTableRow = ({ client, onDelete }) => {
     useState(false);
   const [isUpdateClientModalOpen, setIsUpdateClientModalOpen] = useState(false);
 
+  //change this later
+  const [updateClient, setUpdateClient] = useState({});
+
   const onViewDetails = (client_id) => {
     fetch(`http://localhost:5000/api/clients/${client_id}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setFullClientDetails(data);
       })
       .catch((err) => console.error(err.message));
 
     setIsClientDetailsModalOpen((prev) => !prev);
   };
+
+  //change this aswell
+  const onFetchClientData = async (client_id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/clients/${client_id}`,
+      );
+      const data = await response.json();
+      setUpdateClient(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <tr
@@ -70,7 +87,7 @@ const ClientsTableRow = ({ client, onDelete }) => {
         <td>
           <button
             onClick={() => setIsActionOpen((prev) => !prev)}
-            className="px-0.5 py-1 border border-neutral-300 rounded-md"
+            className="px-0.5 py-1 border border-neutral-300 rounded-md hover:bg-white"
           >
             <EllipsisVertical size={17} />
           </button>
@@ -82,6 +99,7 @@ const ClientsTableRow = ({ client, onDelete }) => {
                 setIsActionOpen((prev) => !prev);
               }}
               onOpenClientDetails={onViewDetails}
+              onFetch={onFetchClientData}
               onDelete={onDelete}
               onOpenUpdateModal={() =>
                 setIsUpdateClientModalOpen((prev) => !prev)
@@ -92,12 +110,13 @@ const ClientsTableRow = ({ client, onDelete }) => {
             <ViewClientDetailsModal
               clientDetails={fullClientDetails}
               isOpen={true}
+              onClose={setIsClientDetailsModalOpen}
             />
           )}
           {isUpdateClientModalOpen && (
             <ClientForm
               mode="edit"
-              client={fullClientDetails}
+              client={updateClient}
               onClose={() => setIsUpdateClientModalOpen((prev) => !prev)}
             />
           )}
@@ -112,6 +131,7 @@ const Actions = ({
   handleIsOpen,
   onOpenClientDetails,
   onOpenUpdateModal,
+  onFetch,
   onDelete,
 }) => {
   return (
@@ -133,7 +153,7 @@ const Actions = ({
           className="p-1 border border-neutral-300 text-neutral-600 rounded-md capitalize"
           onClick={() => {
             onOpenUpdateModal();
-            console.log(client);
+            onFetch(client.id);
           }}
         >
           update
@@ -149,7 +169,7 @@ const Actions = ({
   );
 };
 
-const ViewClientDetailsModal = ({ clientDetails, isOpen }) => {
+const ViewClientDetailsModal = ({ clientDetails, isOpen, onClose }) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -159,12 +179,17 @@ const ViewClientDetailsModal = ({ clientDetails, isOpen }) => {
     return () => (document.body.style.overflow = "auto");
   }, [isOpen]);
   return (
-    <div className="fixed inset-0 bg-neutral-300/40 backdrop-blur-xs grid z-20">
+    <div className="fixed inset-0 bg-neutral-700/60 grid z-20">
       <div className="bg-white m-4 w-fit rounded-xl grid justify-self-end border border-neutral-300 overflow-auto">
-        <button className="flex">
-          <X />
-          Close
-        </button>
+        <div className="flex place-items-center place-content-between p-4 border-b border-neutral-300">
+          <h3 className="capitalize text-neutral-500">full client details</h3>
+          <button
+            className="flex place-items-center p-1 border border-neutral-200 bg-neutral-100 rounded-md"
+            onClick={() => onClose((prev) => !prev)}
+          >
+            <X size={17} color="gray" />
+          </button>
+        </div>
         <ul className="grid gap-1.5 p-6 overflow-auto">
           {Object.entries(clientDetails).map(([key, value]) => {
             if (

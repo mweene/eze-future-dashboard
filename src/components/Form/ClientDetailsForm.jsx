@@ -2,7 +2,7 @@ import InputWithLabel from "../InputWithLabel";
 
 export default function ClientDetailsForm({ clientFormData, onChange }) {
   return (
-    <>
+    <div className="grid gap-2">
       <InputWithLabel
         placeholder="enter your name"
         label="name"
@@ -45,6 +45,6 @@ export default function ClientDetailsForm({ clientFormData, onChange }) {
         value={clientFormData?.address || ""}
         onChange={onChange}
       />
-    </>
+    </div>
   );
 }

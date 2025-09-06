@@ -3,7 +3,7 @@ import InputWithLabel from "../InputWithLabel";
 export default function SalesDetailsForm({ salesFormData, onChange }) {
   return (
     <>
-      <div>
+      <div className="grid gap-2">
         <InputWithLabel
           label="total cost"
           id="total_cost"

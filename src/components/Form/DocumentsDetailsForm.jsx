@@ -3,7 +3,7 @@ import InputWithLabel from "../InputWithLabel";
 export default function DocumentsDetailsForm({ documentsFormData, onChange }) {
   return (
     <>
-      <div>
+      <div className="grid gap-2">
         <InputWithLabel
           label="nrc link"
           id="nrc_link"

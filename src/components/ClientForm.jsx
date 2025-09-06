@@ -105,7 +105,7 @@ export default function ClientForm({ mode, isOpen = true, onClose, client }) {
     },
     edit: (e) => {
       e.preventDefault();
-      console.log("client info updated");
+      console.log(client);
     },
   };
 
@@ -113,11 +113,11 @@ export default function ClientForm({ mode, isOpen = true, onClose, client }) {
 
   return (
     <>
-      <div className="fixed inset-0 z-20 bg-neutral-300/35 backdrop-blur-xs grid">
-        <div className="m-4 justify-self-end bg-white h-fit w-[45rem] p-4 border border-neutral-300 rounded-xl">
-          <div className="flex place-content-between">
+      <div className="fixed inset-0 z-30 bg-neutral-700/60 grid">
+        <div className="m-4 justify-self-end bg-white h-fit w-[45rem] border border-neutral-300 rounded-xl">
+          <div className="flex place-content-between p-4 border-b border-neutral-200">
             <h3 className="capitalize font-semibold">
-              {mode === "add" ? "add new client" : "edit client info"}
+              {mode === "add" ? "add new client" : "edit client"}
             </h3>
             <button
               onClick={() => onClose((prev) => !prev)}
@@ -127,7 +127,7 @@ export default function ClientForm({ mode, isOpen = true, onClose, client }) {
             </button>
           </div>
 
-          <div className="add-form grid gap-4 bg-white">
+          <div className="add-form grid gap-4 bg-white m-4">
             <div className="bg-neutral-100 border border-neutral-200 rounded-md p-4">
               <ul className="[&>li]:capitalize grid gap-2">
                 <li
@@ -171,14 +171,14 @@ export default function ClientForm({ mode, isOpen = true, onClose, client }) {
             >
               {steps === 0 && (
                 <ClientDetailsForm
-                  clientFormData={mode === "add" ? formData : client}
+                  clientFormData={mode === "add" ? formData : client.client}
                   onChange={handleChange}
                 />
               )}
               {steps === 1 && (
                 <PlotDetailsForm
                   onChange={handleChange}
-                  plotFormData={mode === "add" ? formData.plots : client.plots}
+                  plotFormData={mode === "add" ? formData.plots : client.plot}
                 />
               )}
               {steps === 2 && (
@@ -199,7 +199,7 @@ export default function ClientForm({ mode, isOpen = true, onClose, client }) {
                 <DocumentsDetailsForm
                   onChange={handleChange}
                   documentsFormData={
-                    mode === "add" ? formData.documents : client.documents
+                    mode === "add" ? formData.documents : client.documents[0]
                   }
                 />
               )}
@@ -241,7 +241,7 @@ export default function ClientForm({ mode, isOpen = true, onClose, client }) {
 function ReviewAndSubmitForm() {
   return (
     <>
-      <div className="">
+      <div className="w-full">
         <h2>review form</h2>
         <p>make sure that all the details are correct before submitting</p>
       </div>

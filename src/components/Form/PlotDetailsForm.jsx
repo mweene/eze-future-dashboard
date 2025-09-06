@@ -2,7 +2,7 @@ import InputWithLabel from "../InputWithLabel";
 
 export default function PlotDetailsForm({ plotFormData, onChange }) {
   return (
-    <>
+    <div className="grid gap-2">
       <InputWithLabel
         label="plot number"
         id="plot_number"
@@ -32,6 +32,6 @@ export default function PlotDetailsForm({ plotFormData, onChange }) {
         value={plotFormData?.site_plan_link || ""}
         onChange={onChange}
       />
-    </>
+    </div>
   );
 }
