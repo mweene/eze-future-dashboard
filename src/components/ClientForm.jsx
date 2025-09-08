@@ -8,7 +8,14 @@ import {
 } from "./Form";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
-export default function ClientForm({ mode, isOpen = true, onClose, client }) {
+export default function ClientForm({
+  mode,
+  isOpen = true,
+  onClose,
+  client,
+  onAddClient,
+  onUpdateClient,
+}) {
   const [steps, setSteps] = useState(0);
   const [formData, setFormData] = useState({
     name: "",
@@ -101,6 +108,7 @@ export default function ClientForm({ mode, isOpen = true, onClose, client }) {
   const submitHandlers = {
     add: (e) => {
       e.preventDefault();
+      onAddClient(formData);
       console.log(formData);
     },
     edit: (e) => {
@@ -116,7 +124,7 @@ export default function ClientForm({ mode, isOpen = true, onClose, client }) {
       <div className="fixed inset-0 z-30 bg-neutral-700/60 grid">
         <div className="m-4 justify-self-end bg-white h-fit w-[45rem] border border-neutral-300 rounded-xl">
           <div className="flex place-content-between p-4 border-b border-neutral-200">
-            <h3 className="capitalize font-semibold">
+            <h3 className="capitalize text-neutral-500">
               {mode === "add" ? "add new client" : "edit client"}
             </h3>
             <button

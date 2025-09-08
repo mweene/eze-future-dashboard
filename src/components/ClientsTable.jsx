@@ -134,6 +134,7 @@ const Actions = ({
   onFetch,
   onDelete,
 }) => {
+  const [onConfirmDelete, setOnConfirmDelete] = useState(false);
   return (
     <div className="absolute top-0 right-0 m-4 p-2 z-20 bg-white border border-neutral-300 rounded-xl grid shadow shadow-neutral-200">
       <button
@@ -160,9 +161,15 @@ const Actions = ({
         </button>
         <button
           className="p-1 border border-red-900/70 bg-red-900 text-white rounded-md capitalize"
-          onClick={() => onDelete(client)}
+          onClick={() => setOnConfirmDelete((prev) => !prev)}
         >
           delete
+          {onConfirmDelete && (
+            <DeleteConfirmationModal
+              onDelete={() => onDelete(client)}
+              onCancel={() => setOnConfirmDelete}
+            />
+          )}
         </button>
       </div>
     </div>
@@ -229,6 +236,31 @@ const ViewClientDetailsModal = ({ clientDetails, isOpen, onClose }) => {
             );
           })}
         </ul>
+      </div>
+    </div>
+  );
+};
+
+const DeleteConfirmationModal = ({ onDelete, onCancel }) => {
+  return (
+    <div className="absolute bottom-0 right-0 mb-[-4.5rem] mr-16 p-4 z-30 bg-red-50 text-red-950 border border-red-950/20 rounded-xl">
+      <div className="mb-3">
+        <p>Are you sure you want to delete</p>
+        <p>this action cannot be reversed</p>
+      </div>
+      <div className="flex gap-2 place-content-center">
+        <a
+          className="border border-neutral-300 py-0.5 px-2 rounded-lg text-neutral-700 bg-white/20"
+          onClick={() => onCancel((prev) => !prev)}
+        >
+          cancel
+        </a>
+        <a
+          className="border border-red-950/20 py-0.5 px-2 rounded-lg text-red-950 bg-red-200"
+          onClick={onDelete}
+        >
+          delete client
+        </a>
       </div>
     </div>
   );

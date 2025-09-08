@@ -4,6 +4,7 @@ import ClientForm from "./components/ClientForm";
 import InputWithLabel from "./components/InputWithLabel";
 import { Plus, Funnel } from "lucide-react";
 import "./App.css";
+import ClientForm2 from "./components/ClientForm2";
 
 export default function App() {
   const [clients, setClients] = useState([]);
@@ -48,6 +49,7 @@ export default function App() {
   const deleteClientHandler = (client) => {
     try {
       const client_id = client.id;
+      console.log(client);
       (async () => {
         const response = await fetch(
           `http://localhost:5000/api/clients/${client_id}`,
@@ -109,6 +111,8 @@ export default function App() {
       ) : (
         <p>Loading...</p>
       )}
+      <ClientForm2 mode="edit" />
+      <ClientForm2 mode="add" />
     </div>
   );
 }
