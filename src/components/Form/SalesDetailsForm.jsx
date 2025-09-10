@@ -1,6 +1,6 @@
 import InputWithLabel from "../InputWithLabel";
 
-export default function SalesDetailsForm({ salesFormData, onChange }) {
+export default function SalesDetailsForm({ formData, onChange }) {
   return (
     <>
       <div className="grid gap-2">
@@ -9,7 +9,7 @@ export default function SalesDetailsForm({ salesFormData, onChange }) {
           id="total_cost"
           type="number"
           placeholder="total cost of plot"
-          value={salesFormData?.total_cost || ""}
+          value={formData?.total_cost || ""}
           onChange={onChange}
         />
         <InputWithLabel
@@ -17,7 +17,7 @@ export default function SalesDetailsForm({ salesFormData, onChange }) {
           id="amount_paid"
           type="number"
           placeholder="enter amount paid"
-          value={salesFormData?.amount_paid || ""}
+          value={formData?.amount_paid || ""}
           onChange={onChange}
         />
         <InputWithLabel
@@ -25,7 +25,7 @@ export default function SalesDetailsForm({ salesFormData, onChange }) {
           id="balance"
           type="number"
           placeholder="enter balance"
-          value={salesFormData?.balance || ""}
+          value={formData?.balance || ""}
           onChange={onChange}
         />
       </div>

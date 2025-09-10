@@ -1,27 +1,27 @@
 import InputWithLabel from "../InputWithLabel";
 
-export default function PlotDetailsForm({ plotFormData, onChange }) {
+export default function PlotDetailsForm({ formData, onChange }) {
   return (
     <div className="grid gap-2">
       <InputWithLabel
         label="plot number"
         id="plot_number"
         placeholder="plot number e.g A2, B34"
-        value={plotFormData?.plot_number || ""}
+        value={formData?.plot_number || ""}
         onChange={onChange}
       />
       <InputWithLabel
         label="plot size"
         id="plot_size"
         placeholder="plot size e.g 20m x 20m"
-        value={plotFormData?.plot_size || ""}
+        value={formData?.plot_size || ""}
         onChange={onChange}
       />
       <InputWithLabel
         label="location"
         id="location"
         placeholder="site location e.g 10 miles mungule"
-        value={plotFormData?.location || ""}
+        value={formData?.location || ""}
         onChange={onChange}
       />
       <InputWithLabel
@@ -29,7 +29,7 @@ export default function PlotDetailsForm({ plotFormData, onChange }) {
         id="site_plan_link"
         type="link"
         placeholder="site plan link e.g https://gdrive.com/kj5nalkkl"
-        value={plotFormData?.site_plan_link || ""}
+        value={formData?.site_plan_link || ""}
         onChange={onChange}
       />
     </div>

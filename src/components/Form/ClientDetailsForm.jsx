@@ -1,6 +1,6 @@
 import InputWithLabel from "../InputWithLabel";
 
-export default function ClientDetailsForm({ clientFormData, onChange }) {
+export default function ClientDetailsForm({ formData, onChange }) {
   return (
     <div className="grid gap-2">
       <InputWithLabel
@@ -8,7 +8,7 @@ export default function ClientDetailsForm({ clientFormData, onChange }) {
         label="name"
         id="name"
         styles="grid"
-        value={clientFormData?.name || ""}
+        value={formData?.name || ""}
         onChange={onChange}
       />
       <InputWithLabel
@@ -16,7 +16,7 @@ export default function ClientDetailsForm({ clientFormData, onChange }) {
         label="nrc"
         id="nrc"
         styles="grid"
-        value={clientFormData?.nrc || ""}
+        value={formData?.nrc || ""}
         onChange={onChange}
       />
       <InputWithLabel
@@ -25,7 +25,7 @@ export default function ClientDetailsForm({ clientFormData, onChange }) {
         id="phone"
         type="tel"
         styles="grid"
-        value={clientFormData?.phone || ""}
+        value={formData?.phone || ""}
         onChange={onChange}
       />
       <InputWithLabel
@@ -34,7 +34,7 @@ export default function ClientDetailsForm({ clientFormData, onChange }) {
         type="email"
         id="email"
         styles="grid"
-        value={clientFormData?.email || ""}
+        value={formData?.email || ""}
         onChange={onChange}
       />
       <InputWithLabel
@@ -42,7 +42,7 @@ export default function ClientDetailsForm({ clientFormData, onChange }) {
         label="address"
         id="address"
         styles="grid"
-        value={clientFormData?.address || ""}
+        value={formData?.address || ""}
         onChange={onChange}
       />
     </div>

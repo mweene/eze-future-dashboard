@@ -4,16 +4,22 @@ import ClientForm from "./components/ClientForm";
 import InputWithLabel from "./components/InputWithLabel";
 import { Plus, Funnel } from "lucide-react";
 import "./App.css";
-import ClientForm2 from "./components/ClientForm2";
+import { clientAPI } from "./api/clients";
 
 export default function App() {
   const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [OpenAddClient, setOpenAddClient] = useState(false);
   useEffect(() => {
-    fetch("http://localhost:5000/api/clients")
-      .then((response) => response.json())
-      .then((data) => setClients(data));
+    const fetchData = async () => {
+      try {
+        const clients = await clientAPI.fetchAllClients();
+        setClients(clients.data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    fetchData();
   }, []);
 
   const searchedClients = clients.filter(
@@ -111,8 +117,6 @@ export default function App() {
       ) : (
         <p>Loading...</p>
       )}
-      <ClientForm2 mode="edit" />
-      <ClientForm2 mode="add" />
     </div>
   );
 }

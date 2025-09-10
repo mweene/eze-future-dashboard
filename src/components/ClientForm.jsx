@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { clientAPI } from "../api/clients";
 import {
   ClientDetailsForm,
   SalesDetailsForm,
@@ -9,12 +10,10 @@ import {
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function ClientForm({
-  mode,
+  mode = "add",
+  client_id,
   isOpen = true,
   onClose,
-  client,
-  onAddClient,
-  onUpdateClient,
 }) {
   const [steps, setSteps] = useState(0);
   const [formData, setFormData] = useState({
@@ -23,7 +22,7 @@ export default function ClientForm({
     phone: "",
     email: "",
     address: "",
-    plots: {
+    plot: {
       plot_number: "",
       plot_size: "",
       location: "",
@@ -42,11 +41,55 @@ export default function ClientForm({
       relationship: "",
     },
     documents: {
-      nrc_link: "",
       contract: "",
-      other_docs: "",
+      id_copy: "",
+      other_doc: "",
     },
   });
+
+  useEffect(() => {
+    if (mode === "edit" && client_id) {
+      const fetchClient = async () => {
+        try {
+          const { data } = await clientAPI.fetchClient(client_id);
+          console.log(data);
+          setFormData({
+            name: data.client.name,
+            nrc: data.client.nrc,
+            phone: data.client.phone,
+            email: data.client.email,
+            address: data.client.address,
+            plot: {
+              plot_number: data.plot.plot_number,
+              plot_size: data.plot.plot_size,
+              location: data.plot.location,
+              site_plan_link: data.plot.site_plan_link,
+            },
+            sales: {
+              total_cost: data.sales.total_cost,
+              amount_paid: data.sales.amount_paid,
+              balance: data.sales.balance,
+            },
+            witness: {
+              name: data.witness.name,
+              nrc: data.witness.nrc,
+              phone: data.witness.phone,
+              address: data.witness.address,
+              relationship: data.witness.relationship,
+            },
+            documents: {
+              contract: data.documents[0].contract,
+              id_copy: data.documents[0].id_copy,
+              other_doc: data.documents[0].other_doc,
+            },
+          });
+        } catch (error) {
+          console.error(error.message);
+        }
+      };
+      fetchClient();
+    }
+  }, [mode, client_id]);
 
   useEffect(() => {
     if (isOpen) {
@@ -57,7 +100,7 @@ export default function ClientForm({
     return () => (document.body.style.overflow = "auto");
   }, [isOpen]);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { id, value } = e.target;
 
     setFormData((prev) => {
@@ -71,7 +114,7 @@ export default function ClientForm({
           return {
             ...prev,
             plots: {
-              ...prev.plots,
+              ...prev.plot,
               [id]: value,
             },
           };
@@ -105,16 +148,19 @@ export default function ClientForm({
     });
   };
 
-  const submitHandlers = {
-    add: (e) => {
-      e.preventDefault();
-      onAddClient(formData);
-      console.log(formData);
-    },
-    edit: (e) => {
-      e.preventDefault();
-      console.log(client);
-    },
+  const handlers = {
+    add: async (data) => clientAPI.addClient(data),
+    edit: async (client_id, data) => clientAPI.updateClient(client_id, data),
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await handlers[mode](client_id, formData);
+      console.log("success");
+    } catch (error) {
+      console.error("Failed to save client:", error);
+    }
   };
 
   if (!isOpen) return null;
@@ -170,45 +216,35 @@ export default function ClientForm({
                 </li>
               </ul>
             </div>
-            <form
-              action=""
-              className="grid pr-4"
-              onSubmit={
-                mode === "add" ? submitHandlers.add : submitHandlers.edit
-              }
-            >
+            <form action="" className="grid pr-4" onSubmit={handleSubmit}>
               {steps === 0 && (
                 <ClientDetailsForm
-                  clientFormData={mode === "add" ? formData : client.client}
+                  formData={formData}
                   onChange={handleChange}
                 />
               )}
               {steps === 1 && (
                 <PlotDetailsForm
                   onChange={handleChange}
-                  plotFormData={mode === "add" ? formData.plots : client.plot}
+                  formData={formData.plot}
                 />
               )}
               {steps === 2 && (
                 <SalesDetailsForm
                   onChange={handleChange}
-                  salesFormData={mode === "add" ? formData.sales : client.sales}
+                  formData={formData.sales}
                 />
               )}
               {steps === 3 && (
                 <WitnessDetailsForm
                   onChange={handleChange}
-                  witnessFormData={
-                    mode === "add" ? formData.witness : client.witness
-                  }
+                  formData={formData.witness}
                 />
               )}
               {steps === 4 && (
                 <DocumentsDetailsForm
                   onChange={handleChange}
-                  documentsFormData={
-                    mode === "add" ? formData.documents : client.documents[0]
-                  }
+                  formData={formData.documents[0]}
                 />
               )}
               {steps === 5 && <ReviewAndSubmitForm />}

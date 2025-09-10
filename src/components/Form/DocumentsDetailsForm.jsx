@@ -1,15 +1,15 @@
 import InputWithLabel from "../InputWithLabel";
 
-export default function DocumentsDetailsForm({ documentsFormData, onChange }) {
+export default function DocumentsDetailsForm({ formData, onChange }) {
   return (
     <>
       <div className="grid gap-2">
         <InputWithLabel
           label="nrc link"
-          id="nrc_link"
+          id="id_copy"
           type="link"
           placeholder="enter link to client's nrc"
-          value={documentsFormData?.nrc_link || ""}
+          value={formData?.id_copy || ""}
           onChange={onChange}
         />
         <InputWithLabel
@@ -17,15 +17,15 @@ export default function DocumentsDetailsForm({ documentsFormData, onChange }) {
           id="contract"
           type="link"
           placeholder="enter link to client's plot contract"
-          value={documentsFormData?.contract || ""}
+          value={formData?.contract || ""}
           onChange={onChange}
         />
         <InputWithLabel
-          label="other docs"
-          id="other_docs"
+          label="other doc"
+          id="other_doc"
           type="link"
           placeholder="enter other related documents"
-          value={documentsFormData?.other_docs || ""}
+          value={formData?.other_docs || ""}
           onChange={onChange}
         />
       </div>

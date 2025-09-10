@@ -41,9 +41,6 @@ const ClientsTableRow = ({ client, onDelete }) => {
     useState(false);
   const [isUpdateClientModalOpen, setIsUpdateClientModalOpen] = useState(false);
 
-  //change this later
-  const [updateClient, setUpdateClient] = useState({});
-
   const onViewDetails = (client_id) => {
     fetch(`http://localhost:5000/api/clients/${client_id}`)
       .then((res) => res.json())
@@ -53,20 +50,6 @@ const ClientsTableRow = ({ client, onDelete }) => {
       .catch((err) => console.error(err.message));
 
     setIsClientDetailsModalOpen((prev) => !prev);
-  };
-
-  //change this aswell
-  const onFetchClientData = async (client_id) => {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/clients/${client_id}`,
-      );
-      const data = await response.json();
-      setUpdateClient(data);
-      console.log(data);
-    } catch (error) {
-      console.log(error.message);
-    }
   };
 
   return (
@@ -99,7 +82,6 @@ const ClientsTableRow = ({ client, onDelete }) => {
                 setIsActionOpen((prev) => !prev);
               }}
               onOpenClientDetails={onViewDetails}
-              onFetch={onFetchClientData}
               onDelete={onDelete}
               onOpenUpdateModal={() =>
                 setIsUpdateClientModalOpen((prev) => !prev)
@@ -116,7 +98,7 @@ const ClientsTableRow = ({ client, onDelete }) => {
           {isUpdateClientModalOpen && (
             <ClientForm
               mode="edit"
-              client={updateClient}
+              client_id={client.id}
               onClose={() => setIsUpdateClientModalOpen((prev) => !prev)}
             />
           )}
@@ -131,7 +113,6 @@ const Actions = ({
   handleIsOpen,
   onOpenClientDetails,
   onOpenUpdateModal,
-  onFetch,
   onDelete,
 }) => {
   const [onConfirmDelete, setOnConfirmDelete] = useState(false);
@@ -154,7 +135,6 @@ const Actions = ({
           className="p-1 border border-neutral-300 text-neutral-600 rounded-md capitalize"
           onClick={() => {
             onOpenUpdateModal();
-            onFetch(client.id);
           }}
         >
           update

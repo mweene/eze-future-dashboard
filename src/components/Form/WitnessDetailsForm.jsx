@@ -1,6 +1,6 @@
 import InputWithLabel from "../InputWithLabel";
 
-export default function WitnessDetailsForm({ witnessFormData, onChange }) {
+export default function WitnessDetailsForm({ formData, onChange }) {
   return (
     <>
       <div className="grid gap-2">
@@ -8,14 +8,14 @@ export default function WitnessDetailsForm({ witnessFormData, onChange }) {
           label="name"
           id="name"
           placeholder="enter witness name"
-          value={witnessFormData?.name || ""}
+          value={formData?.name || ""}
           onChange={onChange}
         />
         <InputWithLabel
           label="nrc"
           id="nrc"
           placeholder="enter witness nrc"
-          value={witnessFormData?.nrc || ""}
+          value={formData?.nrc || ""}
           onChange={onChange}
         />
         <InputWithLabel
@@ -23,21 +23,21 @@ export default function WitnessDetailsForm({ witnessFormData, onChange }) {
           id="phone"
           type="tel"
           placeholder="enter witness phone number"
-          value={witnessFormData?.phone || ""}
+          value={formData?.phone || ""}
           onChange={onChange}
         />
         <InputWithLabel
           label="address"
           id="address"
           placeholder="enter witness residence"
-          value={witnessFormData?.address || ""}
+          value={formData?.address || ""}
           onChange={onChange}
         />
         <InputWithLabel
           label="relationship to client"
           id="relationship"
           placeholder="enter witness relation to the buyer"
-          value={witnessFormData?.relationship || ""}
+          value={formData?.relationship || ""}
           onChange={onChange}
         />
       </div>
