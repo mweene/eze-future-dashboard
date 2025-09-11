@@ -25,7 +25,7 @@ export default function DocumentsDetailsForm({ formData, onChange }) {
           id="other_doc"
           type="link"
           placeholder="enter other related documents"
-          value={formData?.other_docs || ""}
+          value={formData?.other_doc || ""}
           onChange={onChange}
         />
       </div>

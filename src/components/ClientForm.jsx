@@ -244,7 +244,7 @@ export default function ClientForm({
               {steps === 4 && (
                 <DocumentsDetailsForm
                   onChange={handleChange}
-                  formData={formData.documents[0]}
+                  formData={formData.documents}
                 />
               )}
               {steps === 5 && <ReviewAndSubmitForm />}

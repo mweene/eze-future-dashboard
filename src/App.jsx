@@ -9,6 +9,7 @@ import { clientAPI } from "./api/clients";
 export default function App() {
   const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState(null);
   const [OpenAddClient, setOpenAddClient] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
@@ -31,20 +32,10 @@ export default function App() {
   const addClientHandler = (client) => {
     setClients([...clients, client]);
     console.log(client);
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(client),
-    };
     const postClient = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5000/api/clients",
-          options,
-        );
-        if (!response.ok) console.error("response was beyond bad");
-        const data = await response.json();
-        console.log(data);
+        const response = await clientAPI.addClient(client);
+        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -57,10 +48,7 @@ export default function App() {
       const client_id = client.id;
       console.log(client);
       (async () => {
-        const response = await fetch(
-          `http://localhost:5000/api/clients/${client_id}`,
-          { method: "DELETE" },
-        );
+        const response = await clientAPI.deleteClient(client_id);
         const data = await response.text();
         if (response.ok) {
           console.log("resource deleted successfully", "data:", data);
@@ -73,6 +61,35 @@ export default function App() {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  //handle all client CRUD operations
+  const handlers = {
+    //get all client records
+    getAllClients: async () => clientAPI.fetchAllClients(),
+
+    // get a single client by id
+    getOneClient: async (client_id) => clientAPI.getOneClient(client_id),
+
+    //create a new client
+    addNewClient: async (clientData) => {
+      try {
+        const response = await clientAPI.addClient(clientData);
+        if (response.ok) {
+          setClients([...clients, clientData]);
+        }
+        console.log("successfully added client");
+      } catch (error) {
+        setError(error);
+        console.error(error.message);
+      }
+    },
+
+    //update exsiting client
+    updateClient: async (client_id, clientData) => {
+      if (clientData && client_id) {
+      }
+    },
   };
 
   return (
