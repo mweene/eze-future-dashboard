@@ -30,11 +30,10 @@ export default function App() {
   );
 
   const addClientHandler = (client) => {
-    setClients([...clients, client]);
-    console.log(client);
     const postClient = async () => {
       try {
         const response = await clientAPI.addClient(client);
+        setClients([...clients, client]);
         console.log(response);
       } catch (error) {
         console.error(error);
@@ -87,8 +86,7 @@ export default function App() {
 
     //update exsiting client
     updateClient: async (client_id, clientData) => {
-      if (clientData && client_id) {
-      }
+      if (clientData && client_id) return;
     },
   };
 

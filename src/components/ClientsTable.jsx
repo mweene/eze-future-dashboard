@@ -22,6 +22,7 @@ export default function ClientsTable({ clients, onDelete }) {
           {clients.map((client) => (
             <ClientsTableRow
               key={client.id}
+              checkboxkey={client.id}
               client={client}
               onDelete={onDelete}
             />

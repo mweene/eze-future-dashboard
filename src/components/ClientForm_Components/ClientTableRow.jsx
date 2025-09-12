@@ -5,7 +5,7 @@ import ViewClientDetailsModal from "./ViewClientDetails";
 import { X, EllipsisVertical } from "lucide-react";
 import { clientAPI } from "../../api/clients";
 
-export default function ClientsTableRow({ client, onDelete }) {
+export default function ClientsTableRow({ checkboxkey, client, onDelete }) {
   const [fullClientDetails, setFullClientDetails] = useState({});
   const [isActionsOpen, setIsActionOpen] = useState(false);
   const [isClientDetailsModalOpen, setIsClientDetailsModalOpen] =
@@ -29,7 +29,7 @@ export default function ClientsTableRow({ client, onDelete }) {
         className="[&>td]:p-2 [&>td]:max-w-[13ch] [&>td]:capitalize [&>td]:overflow-hidden
       [&>td]:text-ellipsis [&>td]:whitespace-nowrap border-b border-b-neutral-300 hover:bg-neutral-200 relative"
       >
-        <td>
+        <td key={checkboxkey}>
           <input type="checkbox" />
         </td>
         <td>{client.id}</td>
