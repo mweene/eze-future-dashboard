@@ -1,94 +1,93 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 import ClientsTable from "./components/ClientsTable";
 import ClientForm from "./components/ClientForm";
 import InputWithLabel from "./components/InputWithLabel";
-import { Plus, Funnel } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Funnel } from "lucide-react";
 import "./App.css";
-import { clientAPI } from "./api/clients";
 
 export default function App() {
   const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [error, setError] = useState(null);
   const [OpenAddClient, setOpenAddClient] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [clientsPerPage] = useState(12);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const url = `http://localhost:5000/api/clients`;
+  const handlers = {
+    addClient: async (formData) => {
+      try {
+        const response = await axios.post(url, formData);
+        return response.data.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    updateClient: async (client_id, formData) => {
+      try {
+        const response = await axios.put(`${url}/${client_id}`, formData);
+        return response;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    getAllClients: async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/clients?page=${currentPage}&limit=${clientsPerPage}`,
+        );
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    getOneClient: async (client_id) => {
+      console.log(client_id);
+      try {
+        const response = await axios.get(`${url}/${client_id}`);
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    deleteClient: async (client_id) => {
+      try {
+        const response = await axios.delete(`${url}/${client_id.id}`);
+        const newClients = clients.filter((c) => c.id !== client_id);
+        setClients(newClients);
+        console.log("client successfully deleted:", response);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const clients = await clientAPI.fetchAllClients();
-        setClients(clients.data);
+        const fetchedClients = await handlers.getAllClients();
+        setTotalPages(fetchedClients.pagination.totalPages);
+        setClients(fetchedClients.data);
       } catch (error) {
         console.error(error.message);
       }
     };
     fetchData();
-  }, []);
+  }, [currentPage, clientsPerPage]);
+
+  const handleNextPage = () => setCurrentPage((prev) => prev + 1);
+  const handlePrevPage = () => setCurrentPage((prev) => prev - 1);
 
   const searchedClients = clients.filter(
     (client) =>
       client.name.toLowerCase().includes(searchTerm.trim().toLowerCase()) ||
       client.id.toString().includes(searchTerm.trim().toLocaleLowerCase()),
   );
-
-  const addClientHandler = (client) => {
-    const postClient = async () => {
-      try {
-        const response = await clientAPI.addClient(client);
-        setClients([...clients, client]);
-        console.log(response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    postClient();
-  };
-
-  const deleteClientHandler = (client) => {
-    try {
-      const client_id = client.id;
-      console.log(client);
-      (async () => {
-        const response = await clientAPI.deleteClient(client_id);
-        const data = await response.text();
-        if (response.ok) {
-          console.log("resource deleted successfully", "data:", data);
-          const newClients = clients.filter(
-            (client) => client.id !== client_id,
-          );
-          setClients(newClients);
-        }
-      })();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  //handle all client CRUD operations
-  const handlers = {
-    //get all client records
-    getAllClients: async () => clientAPI.fetchAllClients(),
-
-    // get a single client by id
-    getOneClient: async (client_id) => clientAPI.getOneClient(client_id),
-
-    //create a new client
-    addNewClient: async (clientData) => {
-      try {
-        const response = await clientAPI.addClient(clientData);
-        if (response.ok) {
-          setClients([...clients, clientData]);
-        }
-        console.log("successfully added client");
-      } catch (error) {
-        setError(error);
-        console.error(error.message);
-      }
-    },
-
-    //update exsiting client
-    updateClient: async (client_id, clientData) => {
-      if (clientData && client_id) return;
-    },
-  };
 
   return (
     <div className="App p-4 h-full w-4xl text-neutral-950">
@@ -103,31 +102,63 @@ export default function App() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <button className="border border-neutral-300 text-neutral-500 px-4 flex place-items-center gap-1 rounded-xl">
+              <button className="border border-neutral-300 text-neutral-950 px-4 flex place-items-center gap-1 rounded-xl">
                 <Funnel size={17} />
                 Filter
               </button>
             </div>
 
             <button
-              className="bg-neutral-950 text-white py-2.5 px-4 capitalize flex gap-1.5 place-items-center rounded-xl"
+              className="bg-neutral-950 text-white py-2.5 px-5 capitalize flex gap-1.5 place-items-center rounded-xl"
               onClick={() => setOpenAddClient((prev) => !prev)}
             >
-              <Plus size={19} />
               add new client
+              <ChevronDown size={20} />
             </button>
             {OpenAddClient && (
               <ClientForm
                 onClose={setOpenAddClient}
-                addClientHandler={addClientHandler}
+                onAddClient={handlers.addClient}
+                onUpdateClient={handlers.updateClient}
                 mode="add"
               />
             )}
           </div>
           <ClientsTable
             clients={searchedClients}
-            onDelete={deleteClientHandler}
+            getOneClient={handlers.getOneClient}
+            onDelete={handlers.deleteClient}
+            onUpdateClient={handlers.updateClient}
           />
+
+          <div className="flex place-content-between place-items-center">
+            <div className="">
+              <span>
+                <span className="text-neutral-600">Showing </span>
+                Page {currentPage} of {totalPages} Pages
+              </span>
+            </div>
+            <div className="flex gap-2 place-items-center my-2">
+              <button
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+                className="flex place-items-center gap-1 border border-neutral-300 rounded-lg px-2 py-0.5"
+              >
+                <ChevronLeft size={19} />
+                Prev
+              </button>
+              <button
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+                className={
+                  "flex place-items-center gap-1 border border-neutral-300 rounded-lg px-2 py-0.5"
+                }
+              >
+                Next
+                <ChevronRight size={19} />
+              </button>
+            </div>
+          </div>
         </div>
       ) : (
         <p>Loading...</p>

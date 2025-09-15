@@ -2,10 +2,15 @@ import { useState } from "react";
 import Actions from "./Actions";
 import ClientForm from "../ClientForm";
 import ViewClientDetailsModal from "./ViewClientDetails";
-import { X, EllipsisVertical } from "lucide-react";
-import { clientAPI } from "../../api/clients";
+import { EllipsisVertical } from "lucide-react";
 
-export default function ClientsTableRow({ checkboxkey, client, onDelete }) {
+export default function ClientsTableRow({
+  checkboxkey,
+  client,
+  onDelete,
+  getOneClient,
+  onUpdateClient,
+}) {
   const [fullClientDetails, setFullClientDetails] = useState({});
   const [isActionsOpen, setIsActionOpen] = useState(false);
   const [isClientDetailsModalOpen, setIsClientDetailsModalOpen] =
@@ -15,8 +20,8 @@ export default function ClientsTableRow({ checkboxkey, client, onDelete }) {
 
   const onViewDetails = async (client_id) => {
     try {
-      const client = await clientAPI.fetchClient(client_id);
-      setFullClientDetails(client.data);
+      const client = await getOneClient(client_id);
+      setFullClientDetails(client);
       setIsClientDetailsModalOpen((prev) => !prev);
     } catch (error) {
       console.error(error.message);
@@ -73,6 +78,7 @@ export default function ClientsTableRow({ checkboxkey, client, onDelete }) {
               mode="edit"
               client_id={client.id}
               onClose={() => setIsUpdateClientModalOpen((prev) => !prev)}
+              onUpdateClient={onUpdateClient}
             />
           )}
         </td>

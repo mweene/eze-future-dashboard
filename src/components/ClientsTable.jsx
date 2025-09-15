@@ -1,6 +1,11 @@
 import ClientsTableRow from "./ClientForm_Components/ClientTableRow";
 
-export default function ClientsTable({ clients, onDelete }) {
+export default function ClientsTable({
+  clients,
+  onDelete,
+  getOneClient,
+  onUpdateClient,
+}) {
   return (
     <div className="rounded-xl border border-neutral-300 border-b-0 overflow-hidden">
       <table className=" min-w-full text-left">
@@ -25,6 +30,8 @@ export default function ClientsTable({ clients, onDelete }) {
               checkboxkey={client.id}
               client={client}
               onDelete={onDelete}
+              getOneClient={getOneClient}
+              onUpdateClient={onUpdateClient}
             />
           ))}
         </tbody>

@@ -14,6 +14,8 @@ export default function ClientForm({
   client_id,
   isOpen = true,
   onClose,
+  onAddClient,
+  onUpdateClient,
 }) {
   const [steps, setSteps] = useState(0);
   const [formData, setFormData] = useState({
@@ -22,7 +24,7 @@ export default function ClientForm({
     phone: "",
     email: "",
     address: "",
-    plot: {
+    plots: {
       plot_number: "",
       plot_size: "",
       location: "",
@@ -52,23 +54,22 @@ export default function ClientForm({
       const fetchClient = async () => {
         try {
           const { data } = await clientAPI.fetchClient(client_id);
-          console.log(data);
           setFormData({
             name: data.client.name,
             nrc: data.client.nrc,
             phone: data.client.phone,
             email: data.client.email,
             address: data.client.address,
-            plot: {
+            plots: {
               plot_number: data.plot.plot_number,
               plot_size: data.plot.plot_size,
               location: data.plot.location,
               site_plan_link: data.plot.site_plan_link,
             },
             sales: {
-              total_cost: data.sales.total_cost,
-              amount_paid: data.sales.amount_paid,
-              balance: data.sales.balance,
+              total_cost: data.sales.total_cost || "",
+              amount_paid: data.sales.amount_paid || "",
+              balance: data.sales.balance || "",
             },
             witness: {
               name: data.witness.name,
@@ -114,7 +115,7 @@ export default function ClientForm({
           return {
             ...prev,
             plots: {
-              ...prev.plot,
+              ...prev.plots,
               [id]: value,
             },
           };
@@ -148,18 +149,19 @@ export default function ClientForm({
     });
   };
 
-  const handlers = {
-    add: async (data) => clientAPI.addClient(data),
-    edit: async (client_id, data) => clientAPI.updateClient(client_id, data),
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await handlers[mode](client_id, formData);
-      console.log("success");
+      if (mode === "add") {
+        const response = await onAddClient(formData);
+        console.log(response);
+      } else if (mode === "edit") {
+        const response = await onUpdateClient(client_id, formData);
+        console.log(response);
+      }
     } catch (error) {
-      console.error("Failed to save client:", error);
+      console.error("Error submitting form:", error);
     }
   };
 
@@ -177,7 +179,7 @@ export default function ClientForm({
               onClick={() => onClose((prev) => !prev)}
               className="flex gap-0.5 place-items-center border border-neutral-200 bg-neutral-100 p-1 rounded-md"
             >
-              <X size={19} color="gray" />
+              <X size={19} />
             </button>
           </div>
 
@@ -216,6 +218,7 @@ export default function ClientForm({
                 </li>
               </ul>
             </div>
+
             <form action="" className="grid pr-4" onSubmit={handleSubmit}>
               {steps === 0 && (
                 <ClientDetailsForm
@@ -226,7 +229,7 @@ export default function ClientForm({
               {steps === 1 && (
                 <PlotDetailsForm
                   onChange={handleChange}
-                  formData={formData.plot}
+                  formData={formData.plots}
                 />
               )}
               {steps === 2 && (
@@ -253,7 +256,7 @@ export default function ClientForm({
                 <button
                   type="button"
                   disabled={steps === 0 ? true : false}
-                  className="py-1 px-4 border border-neutral-400 text-neutral-700 capitalize flex gap-1 place-content-between place-items-center rounded-lg text-center"
+                  className="py-1 px-4 border border-neutral-400 capitalize flex gap-1 place-content-between place-items-center rounded-lg text-center"
                   onClick={() => setSteps((prev) => prev - 1)}
                 >
                   <ChevronLeft size={17} />

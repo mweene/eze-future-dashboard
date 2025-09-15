@@ -15,7 +15,7 @@ export default function Actions({
         className="p-1 border border-neutral-200 bg-neutral-100 rounded-md justify-self-end"
         onClick={handleIsOpen}
       >
-        <X size={17} color="gray" />
+        <X size={17} />
       </button>
       <div className="grid gap-1 mt-4">
         <button
