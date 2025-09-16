@@ -32,7 +32,7 @@ export default function ClientsTableRow({
     <>
       <tr
         className="[&>td]:p-2 [&>td]:max-w-[13ch] [&>td]:capitalize [&>td]:overflow-hidden
-      [&>td]:text-ellipsis [&>td]:whitespace-nowrap border-b border-b-neutral-300 hover:bg-neutral-200 relative"
+      [&>td]:text-ellipsis [&>td]:whitespace-nowrap [&>td]:text-neutral-800 border-b border-b-neutral-300 hover:bg-neutral-200 relative"
       >
         <td key={checkboxkey}>
           <input type="checkbox" />

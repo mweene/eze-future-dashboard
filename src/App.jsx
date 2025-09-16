@@ -3,7 +3,13 @@ import { useState, useEffect } from "react";
 import ClientsTable from "./components/ClientsTable";
 import ClientForm from "./components/ClientForm";
 import InputWithLabel from "./components/InputWithLabel";
-import { ChevronDown, ChevronLeft, ChevronRight, Funnel } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Funnel,
+  SearchIcon,
+} from "lucide-react";
 import "./App.css";
 
 export default function App() {
@@ -11,7 +17,7 @@ export default function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [OpenAddClient, setOpenAddClient] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [clientsPerPage] = useState(12);
+  const [clientsPerPage] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
 
   const url = `http://localhost:5000/api/clients`;
@@ -46,7 +52,6 @@ export default function App() {
     },
 
     getOneClient: async (client_id) => {
-      console.log(client_id);
       try {
         const response = await axios.get(`${url}/${client_id}`);
         return response.data;
@@ -90,15 +95,12 @@ export default function App() {
   );
 
   return (
-    <div className="App p-4 h-full w-4xl text-neutral-950">
+    <div className="App p-2 h-full w-4xl text-neutral-950">
       {clients.length > 0 ? (
         <div className="border border-neutral-200 bg-white p-4 rounded-2xl">
           <div className="flex place-content-between place-items-center mb-3 relative">
             <div className="flex gap-2">
-              <InputWithLabel
-                id="search"
-                type="search"
-                placeholder="search clients by id or name"
+              <Search
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -131,14 +133,14 @@ export default function App() {
             onUpdateClient={handlers.updateClient}
           />
 
-          <div className="flex place-content-between place-items-center">
+          <div className="flex place-content-between place-items-center my-3">
             <div className="">
               <span>
                 <span className="text-neutral-600">Showing </span>
                 Page {currentPage} of {totalPages} Pages
               </span>
             </div>
-            <div className="flex gap-2 place-items-center my-2">
+            <div className="flex gap-2 place-items-center">
               <button
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
@@ -166,3 +168,22 @@ export default function App() {
     </div>
   );
 }
+
+const Search = ({ onChange, value }) => {
+  return (
+    <label
+      htmlFor="search"
+      className="border border-neutral-300 focus:border-neutral-950 focus:border-2 rounded-xl flex gap-1 place-items-center p-2"
+    >
+      <SearchIcon size={20} color="#a1a1a1" />
+      <input
+        id="search"
+        type="search"
+        placeholder="Search clients by id or name"
+        value={value}
+        onChange={onChange}
+        className="w-full outline-0"
+      />
+    </label>
+  );
+};

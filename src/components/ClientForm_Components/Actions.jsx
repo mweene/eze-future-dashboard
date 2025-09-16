@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { X, Edit, Trash2, UserRound } from "lucide-react";
 
 export default function Actions({
   client,
@@ -19,23 +19,26 @@ export default function Actions({
       </button>
       <div className="grid gap-1 mt-4">
         <button
-          className="py-1 px-4 border border-neutral-300 text-neutral-600 rounded-md capitalize"
+          className="rounded-md capitalize flex place-items-center gap-1 py-2 px-3 hover:bg-neutral-100"
           onClick={() => onOpenClientDetails(client.id)}
         >
-          details
+          <UserRound size={17} />
+          View details
         </button>
         <button
-          className="p-1 border border-neutral-300 text-neutral-600 rounded-md capitalize"
+          className="rounded-md capitalize flex place-items-center gap-1 py-2 px-3 hover:bg-neutral-100"
           onClick={() => {
             onOpenUpdateModal();
           }}
         >
+          <Edit size={17} />
           update
         </button>
         <button
-          className="p-1 border border-red-900/70 bg-red-900 text-white rounded-md capitalize"
+          className="rounded-md capitalize flex place-items-center gap-1 py-2 px-3 hover:bg-neutral-100"
           onClick={() => setOnConfirmDelete((prev) => !prev)}
         >
+          <Trash2 size={17} />
           delete
           {onConfirmDelete && (
             <DeleteConfirmationModal
