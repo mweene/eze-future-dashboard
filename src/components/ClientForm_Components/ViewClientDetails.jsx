@@ -6,7 +6,6 @@ export default function ViewClientDetailsModal({
   isOpen,
   onClose,
 }) {
-  console.log(clientDetails);
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -111,7 +110,7 @@ export default function ViewClientDetailsModal({
             <h3 className="text-xl mb-2">client's documents</h3>
 
             <div className="grid gap-1">
-              {Object.keys(clientDetails.documents[0]).map((key) => {
+              {Object.keys(clientDetails.documents).map((key) => {
                 if (
                   key === "id" ||
                   key === "created_at" ||
@@ -124,7 +123,7 @@ export default function ViewClientDetailsModal({
                   <span key={key} className="flex place-content-between">
                     <span className="">{key}</span>
                     <a
-                      href={clientDetails.documents[0][key]}
+                      href={clientDetails.documents[key]}
                       className="text-blue-700"
                       target="_blank"
                       rel="noopener noreferrer"

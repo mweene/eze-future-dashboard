@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import ClientsTable from "./components/ClientsTable";
 import ClientForm from "./components/ClientForm";
 import InputWithLabel from "./components/InputWithLabel";
+import FilterOptions from "./components/FilterOptions";
 import {
   ChevronDown,
   ChevronLeft,
@@ -15,7 +16,8 @@ import "./App.css";
 export default function App() {
   const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [OpenAddClient, setOpenAddClient] = useState(false);
+  const [openAddClient, setOpenAddClient] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [clientsPerPage] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
@@ -62,7 +64,7 @@ export default function App() {
 
     deleteClient: async (client_id) => {
       try {
-        const response = await axios.delete(`${url}/${client_id.id}`);
+        const response = await axios.delete(`${url}/${client_id}`);
         const newClients = clients.filter((c) => c.id !== client_id);
         setClients(newClients);
         console.log("client successfully deleted:", response);
@@ -91,7 +93,9 @@ export default function App() {
   const searchedClients = clients.filter(
     (client) =>
       client.name.toLowerCase().includes(searchTerm.trim().toLowerCase()) ||
-      client.id.toString().includes(searchTerm.trim().toLocaleLowerCase()),
+      client.client_id
+        .toString()
+        .includes(searchTerm.trim().toLocaleLowerCase()),
   );
 
   return (
@@ -99,15 +103,21 @@ export default function App() {
       {clients.length > 0 ? (
         <div className="border border-neutral-200 bg-white p-4 rounded-2xl">
           <div className="flex place-content-between place-items-center mb-3 relative">
-            <div className="flex gap-2">
-              <Search
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <button className="border border-neutral-300 text-neutral-950 px-4 flex place-items-center gap-1 rounded-xl">
-                <Funnel size={17} />
-                Filter
-              </button>
+            <div className="">
+              <div className="flex gap-2 relative">
+                <Search
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button
+                  className="border border-neutral-300 text-neutral-950 px-4 flex place-items-center gap-1 rounded-xl hover:border-neutral-950 hover:border-2"
+                  onClick={() => setOpenFilter((prev) => !prev)}
+                >
+                  <Funnel size={17} />
+                  Filter
+                </button>
+              </div>
+              {openFilter && <FilterOptions />}
             </div>
 
             <button
@@ -117,13 +127,8 @@ export default function App() {
               add new client
               <ChevronDown size={20} />
             </button>
-            {OpenAddClient && (
-              <ClientForm
-                onClose={setOpenAddClient}
-                onAddClient={handlers.addClient}
-                onUpdateClient={handlers.updateClient}
-                mode="add"
-              />
+            {openAddClient && (
+              <ClientForm onClose={setOpenAddClient} mode="add" />
             )}
           </div>
           <ClientsTable

@@ -3,6 +3,7 @@ import Actions from "./Actions";
 import ClientForm from "../ClientForm";
 import ViewClientDetailsModal from "./ViewClientDetails";
 import { EllipsisVertical } from "lucide-react";
+import { formatter } from "../../utils/index.js";
 
 export default function ClientsTableRow({
   checkboxkey,
@@ -37,12 +38,15 @@ export default function ClientsTableRow({
         <td key={checkboxkey}>
           <input type="checkbox" />
         </td>
-        <td>{client.id}</td>
+        <td>{client.client_id}</td>
         <td>{client.name}</td>
-        <td>{client.nrc}</td>
         <td>{client.phone}</td>
-        <td>{client.email}</td>
-        <td>{client.address}</td>
+        <td>{client.site_name}</td>
+        <td>{client.plot_size}</td>
+        <td>K{formatter(client.total_cost)}</td>
+        <td>K{formatter(client.amount_paid)}</td>
+        <td>K{formatter(client.balance)}</td>
+
         <td>
           <button
             onClick={() => setIsActionOpen((prev) => !prev)}
@@ -76,7 +80,7 @@ export default function ClientsTableRow({
           {isUpdateClientModalOpen && (
             <ClientForm
               mode="edit"
-              client_id={client.id}
+              client_id={client.client_id}
               onClose={() => setIsUpdateClientModalOpen((prev) => !prev)}
               onUpdateClient={onUpdateClient}
             />

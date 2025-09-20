@@ -25,6 +25,14 @@ export default function PlotDetailsForm({ formData, onChange }) {
         onChange={onChange}
       />
       <InputWithLabel
+        label="site name"
+        id="site_name"
+        type="text"
+        placeholder="site site e.g site A,H,N+"
+        value={formData?.site_name || ""}
+        onChange={onChange}
+      />
+      <InputWithLabel
         label="site plan link"
         id="site_plan_link"
         type="link"

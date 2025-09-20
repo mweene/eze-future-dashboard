@@ -54,6 +54,7 @@ export default function ClientForm({
       const fetchClient = async () => {
         try {
           const { data } = await clientAPI.fetchClient(client_id);
+          console.log(data);
           setFormData({
             name: data.client.name,
             nrc: data.client.nrc,
@@ -64,6 +65,7 @@ export default function ClientForm({
               plot_number: data.plot.plot_number,
               plot_size: data.plot.plot_size,
               location: data.plot.location,
+              site_name: data.plot.site_name,
               site_plan_link: data.plot.site_plan_link,
             },
             sales: {
@@ -79,9 +81,9 @@ export default function ClientForm({
               relationship: data.witness.relationship,
             },
             documents: {
-              contract: data.documents[0].contract,
-              id_copy: data.documents[0].id_copy,
-              other_doc: data.documents[0].other_doc,
+              contract: data.documents.contract,
+              id_copy: data.documents.id_copy,
+              other_doc: data.documents.other_doc,
             },
           });
         } catch (error) {

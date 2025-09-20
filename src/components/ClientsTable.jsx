@@ -16,18 +16,20 @@ export default function ClientsTable({
             </th>
             <th>id</th>
             <th>name</th>
-            <th>nrc</th>
             <th>phone</th>
-            <th>email</th>
-            <th>address</th>
+            <th>site name</th>
+            <th>plot size</th>
+            <th>total cost</th>
+            <th>amount paid</th>
+            <th>balance</th>
             <th>actions</th>
           </tr>
         </thead>
         <tbody>
           {clients.map((client) => (
             <ClientsTableRow
-              key={client.id}
-              checkboxkey={client.id}
+              key={client.client_id}
+              checkboxkey={client.client_id}
               client={client}
               onDelete={onDelete}
               getOneClient={getOneClient}

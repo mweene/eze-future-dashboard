@@ -20,7 +20,7 @@ export default function Actions({
       <div className="grid gap-1 mt-4">
         <button
           className="rounded-md capitalize flex place-items-center gap-1 py-2 px-3 hover:bg-neutral-100"
-          onClick={() => onOpenClientDetails(client.id)}
+          onClick={() => onOpenClientDetails(client.client_id)}
         >
           <UserRound size={17} />
           View details
@@ -42,7 +42,10 @@ export default function Actions({
           delete
           {onConfirmDelete && (
             <DeleteConfirmationModal
-              onDelete={() => onDelete(client)}
+              onDelete={() => {
+                console.log("am in the Actions component", client.client_id);
+                onDelete(client.client_id);
+              }}
               onCancel={() => setOnConfirmDelete}
             />
           )}
