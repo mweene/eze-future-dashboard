@@ -11,6 +11,7 @@ export default function ClientsTableRow({
   onDelete,
   getOneClient,
   onUpdateClient,
+  onCheckboxChange,
 }) {
   const [fullClientDetails, setFullClientDetails] = useState({});
   const [isActionsOpen, setIsActionOpen] = useState(false);
@@ -18,6 +19,13 @@ export default function ClientsTableRow({
     useState(false);
   const [isUpdateClientModalOpen, setIsUpdateClientModalOpen] = useState(false);
   const [onConfirmDelete, setOnConfirmDelete] = useState(false);
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleIsChecked = (e) => {
+    onCheckboxChange(client.client_id, e);
+    setIsChecked((prev) => !prev);
+  };
 
   const onViewDetails = async (client_id) => {
     try {
@@ -32,11 +40,15 @@ export default function ClientsTableRow({
   return (
     <>
       <tr
-        className="[&>td]:p-2 [&>td]:max-w-[13ch] [&>td]:capitalize [&>td]:overflow-hidden
-      [&>td]:text-ellipsis [&>td]:whitespace-nowrap [&>td]:text-neutral-800 border-b border-b-neutral-300 hover:bg-neutral-200 relative"
+        className={`[&>td]:p-2 [&>td]:max-w-[13ch] [&>td]:capitalize [&>td]:overflow-hidden
+        [&>td]:text-ellipsis [&>td]:whitespace-nowrap [&>td]:text-neutral-800 border-b border-b-neutral-300 hover:bg-neutral-200 relative ${isChecked ? "bg-neutral-200" : ""}`}
       >
         <td key={checkboxkey}>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={handleIsChecked}
+          />
         </td>
         <td>{client.client_id}</td>
         <td>{client.name}</td>

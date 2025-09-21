@@ -54,7 +54,6 @@ export default function ClientForm({
       const fetchClient = async () => {
         try {
           const { data } = await clientAPI.fetchClient(client_id);
-          console.log(data);
           setFormData({
             name: data.client.name,
             nrc: data.client.nrc,
