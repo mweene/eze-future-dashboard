@@ -99,9 +99,9 @@ export default function App() {
   );
 
   return (
-    <div className="App p-2 h-full w-4xl text-neutral-950">
+    <div className="App p-2 h-full text-neutral-950">
       {clients.length > 0 ? (
-        <div className="border border-neutral-200 bg-white p-4 rounded-2xl">
+        <div className="border border-neutral-200 bg-white p-4">
           <div className="flex place-content-between place-items-center mb-3 relative">
             <div className="">
               <div className="flex gap-2 relative">
@@ -138,7 +138,7 @@ export default function App() {
             onUpdateClient={handlers.updateClient}
           />
 
-          <div className="flex place-content-between place-items-center my-3">
+          <div className="flex place-content-between place-items-center mt-3">
             <div className="">
               <span>
                 <span className="text-neutral-600">Showing </span>

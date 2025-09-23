@@ -55,7 +55,6 @@ export default function ClientsTableRow({
         <td>{client.phone}</td>
         <td>{client.site_name}</td>
         <td>{client.plot_size}</td>
-        <td>K{formatter(client.total_cost)}</td>
         <td>K{formatter(client.amount_paid)}</td>
         <td>K{formatter(client.balance)}</td>
 
