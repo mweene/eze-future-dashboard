@@ -9,7 +9,13 @@ import {
   ChevronLeft,
   ChevronRight,
   Funnel,
+  MapPinned,
   SearchIcon,
+  HandCoins,
+  FileChartLine,
+  UsersRound,
+  LayoutPanelTop,
+  FolderClosed,
 } from "lucide-react";
 import "./App.css";
 
@@ -85,7 +91,7 @@ export default function App() {
       }
     };
     fetchData();
-  }, [currentPage, clientsPerPage]);
+  }, [clients, clientsPerPage]);
 
   const handleNextPage = () => setCurrentPage((prev) => prev + 1);
   const handlePrevPage = () => setCurrentPage((prev) => prev - 1);
@@ -99,9 +105,36 @@ export default function App() {
   );
 
   return (
-    <div className="App p-2 h-full text-neutral-950">
+    <div className="App p-2 h-full text-neutral-950 grid">
+      <div className="p-2">
+        <ul className="flex flex-col">
+          <li className="flex">
+            <UsersRound /> clients
+          </li>
+          <li className="flex">
+            <MapPinned />
+            sites
+          </li>
+          <li className="flex">
+            <HandCoins />
+            sales
+          </li>
+          <li className="flex">
+            <FileChartLine />
+            reports
+          </li>
+          <li className="flex">
+            <LayoutPanelTop />
+            site plans
+          </li>
+          <li className="flex">
+            <FolderClosed />
+            documents
+          </li>
+        </ul>
+      </div>
       {clients.length > 0 ? (
-        <div className="border border-neutral-200 bg-white p-4">
+        <div className="border border-neutral-200 bg-white p-4 rounded-xl">
           <div className="flex place-content-between place-items-center mb-3 relative">
             <div className="">
               <div className="flex gap-2 relative">
@@ -128,7 +161,11 @@ export default function App() {
               <ChevronDown size={20} />
             </button>
             {openAddClient && (
-              <ClientForm onClose={setOpenAddClient} mode="add" />
+              <ClientForm
+                onClose={setOpenAddClient}
+                mode="add"
+                onAddClient={handlers.addClient}
+              />
             )}
           </div>
           <ClientsTable
@@ -184,7 +221,7 @@ const Search = ({ onChange, value }) => {
       <input
         id="search"
         type="search"
-        placeholder="Search clients by id or name"
+        placeholder="Search for Clients"
         value={value}
         onChange={onChange}
         className="w-full outline-0"

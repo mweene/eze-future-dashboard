@@ -50,6 +50,15 @@ export default function ClientForm({
   });
 
   useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => (document.body.style.overflow = "auto");
+  }, [isOpen]);
+
+  useEffect(() => {
     if (mode === "edit" && client_id) {
       const fetchClient = async () => {
         try {
@@ -92,15 +101,6 @@ export default function ClientForm({
       fetchClient();
     }
   }, [mode, client_id]);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-    return () => (document.body.style.overflow = "auto");
-  }, [isOpen]);
 
   const handleChange = async (e) => {
     const { id, value } = e.target;
