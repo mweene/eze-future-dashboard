@@ -197,8 +197,7 @@ function DocumentsDetails({ register, errors }) {
         <div className="">
           <InputField
             label="Upload Client Files"
-            type="file"
-            multiple={true}
+            type="text"
             registration={register("googledrive_url")}
             error={errors.googledrive_url}
           />
@@ -216,7 +215,6 @@ function SalesDetails({ register, errors }) {
       try {
         const response = await fetch("http://localhost:4400/api/v1/sitenames");
         const data = await response.json();
-        console.log(data);
         setSiteNames(data.data);
       } catch (error) {
         console.error(error);
