@@ -10,7 +10,7 @@ export default function Button({
       type={type}
       disabled={disabled}
       onClick={onClick}
-      className={`p-1 border hover:bg-neutral-300 ${className}`}
+      className={`py-2 px-4 border border-neutral-400 hover:bg-neutral-300 rounded-xl ${className}`}
     >
       {children}
     </button>

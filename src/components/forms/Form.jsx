@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import InputField from "./InputField";
-import { SelectField } from "./SelectField";
+import SelectField from "./SelectField";
 import Button from "../simple/Button";
 import axios from "axios";
 
@@ -45,7 +45,7 @@ export default function Form({ onClose, formType }) {
   const isLastStep = currentStep === totalSteps;
 
   return (
-    <div className="p-6 absolute top-0 right-0 mt-14 w-2xl bg-white border">
+    <div className="p-6 absolute top-0 right-0 mt-14 mr-4 w-2xl bg-white border">
       <div className="flex place-content-between place-items-center">
         <Button onClick={onClose}>close</Button>
         <p>

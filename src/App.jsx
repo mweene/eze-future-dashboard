@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { Search, Filter, ClientsTable } from "./components";
-import Form from "./components/forms/Form";
 import Button from "./components/simple/Button";
-import "./App.css";
+import ClientForm from "./components/forms/ClientForm";
 import axios from "axios";
+import "./App.css";
 
 export default function App() {
   const [clients, setClients] = useState([]);
   const [pagination, setPagination] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [isClientFormOpen, setIsClientFormOpen] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -64,6 +64,7 @@ export default function App() {
 
   return (
     <div className="px-4 bg-neutral-100">
+      {isFormOpen && <ClientForm onClose={() => setIsFormOpen(false)} />}
       <div className="flex place-content-between relative py-2">
         <div className="flex gap-4">
           <Search value={searchTerm} onChange={handleChange} />
@@ -74,15 +75,12 @@ export default function App() {
           />
         </div>
         <Button
-          onClick={() => setIsClientFormOpen((prev) => !prev)}
+          onClick={() => setIsFormOpen((prev) => !prev)}
           className="p-1 border"
           data-cell="addclient"
         >
           add new client
         </Button>
-        {isClientFormOpen && (
-          <Form onClose={() => setIsClientFormOpen((prev) => !prev)} />
-        )}
       </div>
 
       <div className="table w-full bg-white">

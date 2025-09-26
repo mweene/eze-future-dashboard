@@ -20,7 +20,7 @@ export default function ClientsTable({ clients }) {
             <td>site name</td>
             <td>plot No</td>
             <td>plot size</td>
-            <td>payment status</td>
+            <td>status</td>
             <td>actions</td>
           </tr>
         </thead>

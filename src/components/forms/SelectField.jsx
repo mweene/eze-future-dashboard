@@ -1,7 +1,13 @@
-export const SelectField = ({ id, label, registration, error, options }) => {
+export default function SelectField({
+  id,
+  label,
+  registration,
+  error,
+  options,
+}) {
   return (
     <div className="grid" key={id}>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id}></label>
       <select
         name={id}
         id={id}
@@ -10,7 +16,7 @@ export const SelectField = ({ id, label, registration, error, options }) => {
         className="p-2 border overflow-scroll"
       >
         <option value="" disabled className="pointer-events-none">
-          --- Select a {id} ---
+          Select {label}
         </option>
         {options.map((option) => (
           <option key={option.name} value={option.name} className="text-black">
@@ -21,4 +27,4 @@ export const SelectField = ({ id, label, registration, error, options }) => {
       {error && <span className="text-red-900">{error.message}</span>}
     </div>
   );
-};
+}
