@@ -1,3 +1,3 @@
 export default function Reports() {
-  return <div>reports page</div>;
+  return <div className="h-full">reports page</div>;
 }

@@ -1,3 +1,3 @@
 export default function SitePlans() {
-  return <div>site plans page</div>;
+  return <div className="h-full">site plans page</div>;
 }

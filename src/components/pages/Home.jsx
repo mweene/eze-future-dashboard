@@ -1,13 +1,12 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ClientsTable from "../ClientsTable";
 import ClientForm from "../ClientForm";
-import FilterOptions from "../FilterOptions";
+import FilterOptions from "../Filters";
 import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  Funnel,
   MapPinned,
   SearchIcon,
   FileChartLine,
@@ -15,6 +14,7 @@ import {
   FolderClosed,
   File,
   BadgeDollarSign,
+  SlidersHorizontal,
 } from "lucide-react";
 
 export default function Home() {
@@ -27,6 +27,21 @@ export default function Home() {
   const [totalPages, setTotalPages] = useState(0);
 
   const url = `http://localhost:5000/api/clients`;
+
+  // Wrap fetchData in useCallback to prevent recreation on every render
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/clients?page=${currentPage}&limit=${clientsPerPage}`,
+      );
+      const data = response.data;
+      setTotalPages(data.pagination.totalPages);
+      setClients(data.data);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }, [currentPage, clientsPerPage]);
+
   const handlers = {
     addClient: async (formData) => {
       try {
@@ -41,17 +56,6 @@ export default function Home() {
       try {
         const response = await axios.put(`${url}/${client_id}`, formData);
         return response;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    getAllClients: async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/api/clients?page=${currentPage}&limit=${clientsPerPage}`,
-        );
-        return response.data;
       } catch (error) {
         console.error(error);
       }
@@ -79,17 +83,8 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedClients = await handlers.getAllClients();
-        setTotalPages(fetchedClients.pagination.totalPages);
-        setClients(fetchedClients.data);
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
     fetchData();
-  }, [clients, clientsPerPage]);
+  }, [fetchData]);
 
   const handleNextPage = () => setCurrentPage((prev) => prev + 1);
   const handlePrevPage = () => setCurrentPage((prev) => prev - 1);
@@ -103,7 +98,7 @@ export default function Home() {
   );
 
   return (
-    <div className="App h-full text-neutral-950">
+    <div className="h-full text-neutral-950 w-full">
       {clients.length > 0 ? (
         <div className="border border-neutral-200 bg-white p-4 rounded-xl">
           <div className="flex place-content-between place-items-center mb-3 relative">
@@ -117,11 +112,11 @@ export default function Home() {
                   className="border border-neutral-300 text-neutral-950 px-4 flex place-items-center gap-1 rounded-xl hover:border-neutral-950 hover:border-2"
                   onClick={() => setOpenFilter((prev) => !prev)}
                 >
-                  <Funnel size={17} />
-                  Filter
+                  <SlidersHorizontal size={17} />
+                  Filters
                 </button>
               </div>
-              {openFilter && <FilterOptions />}
+              {openFilter && <FilterOptions onClose={setOpenFilter} />}
             </div>
 
             <button

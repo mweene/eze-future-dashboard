@@ -1,5 +1,4 @@
 .App {
-    grid-template-columns: 1fr 7fr;
     gap: 0.75rem;
 }
 

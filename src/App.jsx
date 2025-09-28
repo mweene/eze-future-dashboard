@@ -6,11 +6,13 @@ import Sales from "./components/pages/Sales";
 import Reports from "./components/pages/Reports";
 import Documents from "./components/pages/Documents";
 import Navigation from "./components/Navigation";
+import Settings from "./components/pages/Settings";
+import Help from "./components/pages/Help";
 import "./App.css";
 
 export default function App() {
   return (
-    <div className="App p-4 grid">
+    <div className="App flex gap-8 h-full p-4 text-neutral-950">
       <Navigation />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -19,6 +21,8 @@ export default function App() {
         <Route path="/sales" element={<Sales />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/documents" element={<Documents />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/help" element={<Help />} />
       </Routes>
     </div>
   );

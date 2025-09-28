@@ -1,3 +1,3 @@
 export default function Sales() {
-  return <div>sales page</div>;
+  return <div className="h-full">sales page</div>;
 }

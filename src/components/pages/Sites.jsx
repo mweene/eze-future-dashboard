@@ -1,3 +1,3 @@
 export default function Sites() {
-  return <div>sites page</div>;
+  return <div className="h-full">sites page</div>;
 }

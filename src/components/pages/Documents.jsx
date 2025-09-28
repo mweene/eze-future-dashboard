@@ -1,3 +1,3 @@
 export default function Documents() {
-  return <div>documents page</div>;
+  return <div className="h-full">documents page</div>;
 }
