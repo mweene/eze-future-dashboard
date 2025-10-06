@@ -1,10 +1,15 @@
 import { useState } from "react";
+import axios from "axios";
 import { X } from "lucide-react";
 import InputWithLabel from "./InputWithLabel";
 
 const filters = [
   { id: 0, title: "presets", options: ["one", "two"] },
-  { id: 1, title: "payment status", options: ["fully paid", "owing"] },
+  {
+    id: 1,
+    title: "payment status",
+    options: ["paid", "partial", "pending", "overdue"],
+  },
   { id: 2, title: "allocated", options: ["yes", "no"] },
   { id: 3, title: "authorized", options: ["yes", "no"] },
   {
@@ -22,16 +27,29 @@ const filters = [
 export default function FilterOptions({ onClose }) {
   const [filtersState, setFiltersState] = useState({
     presets: "",
-    paymentStatus: "",
+    "payment status": "",
     allocated: "",
     authorized: "",
     location: "",
-    siteName: "",
+    "site name": "",
   });
 
   const handleChange = (e) => {
-    //setFiltersState((prev) => ({ ...prev, [id]: value }));
-    console.log(e.target.name, e.target.value);
+    const { name, value } = e.target;
+    setFiltersState((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleApplyFilters = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/clients/filter?status=${filtersState["payment status"]}`,
+      );
+
+      const clients = await response.data;
+      console.log(clients);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
   return (
     <>
@@ -44,7 +62,7 @@ export default function FilterOptions({ onClose }) {
                 <X size={20} />
               </button>
             </div>
-            <ul>
+            <ul className="p-2">
               {filters.map((filter) => (
                 <li key={filter.id} className="cursor-pointer">
                   <FilterDetails
@@ -58,7 +76,7 @@ export default function FilterOptions({ onClose }) {
             </ul>
             <div className="flex place-content-between border-t border-neutral-200">
               <button onClick={() => onClose((prev) => !prev)}>cancel</button>
-              <button>apply filters</button>
+              <button onClick={handleApplyFilters}>apply filters</button>
             </div>
           </div>
         </div>
