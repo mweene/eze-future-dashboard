@@ -19,7 +19,7 @@ export default function Navigation() {
     <nav className="border border-neutral-200 bg-white rounded-xl grid place-content-between place-items-start w-fit text-neutral-700">
       <div className="text-neutral-700 border-b border-neutral-200 p-4 w-full">
         <button onClick={() => setMinimize((prev) => !prev)} className="">
-          {minimize ? <PanelLeft size={21} /> : <PanelRight size={21} />}
+          <PanelLeft size={21} />
         </button>
       </div>
 
