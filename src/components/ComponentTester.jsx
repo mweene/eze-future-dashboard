@@ -10,7 +10,9 @@ export default function ComponentTester() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data.auth_letter[0]);
+  };
   return (
     <div className="my-8 w-1/2">
       <h1 className="text-2xl">Component Testing</h1>
@@ -32,6 +34,7 @@ export default function ComponentTester() {
         <InputField
           label="Authorization letter"
           type="file"
+          multiple="true"
           registration={register("auth_letter")}
           error={errors.auth_letter}
         />
