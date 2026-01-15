@@ -1,70 +1,9 @@
-.App {
-    gap: 0.75rem;
-}
-
-.overflow-hidden {
-    overflow: hidden;
-}
-
-.add-form {
-    grid-template-columns: 1fr 2fr;
-}
-
-table {
-    & tbody {
-        & .payment_status span {
-            border: 1px solid;
-            padding: 0.25rem;
-            border-radius: 0.25rem;
-        }
-        & .fully.paid {
-            color: #060;
-            border-color: #57c857;
-            background-color: #dfd;
-        }
-        & .partial {
-            color: #c13400;
-            border-color: #ffab10;
-            background-color: #fff1d7;
-        }
-        & .pending {
-            color: #555;
-            border-color: #bbb;
-            background-color: #eee;
-        }
-        & .overdue {
-            color: #d50000;
-            border-color: #ffb2b2;
-            background-color: #ffe9e9;
-        }
-    }
-}
-
-input[type="checkbox"] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 17px;
-    height: 17px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
+a,
+button {
     cursor: pointer;
-    position: relative;
 }
 
-input[type="checkbox"]:checked {
-    background-color: #0a0a0a;
-    border-color: #0a0a0a;
-}
-
-input[type="checkbox"]:checked::before {
-    content: "";
-    position: absolute;
-    left: 4px;
-    top: 0;
-    width: 6px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
+input, button {
+    border: 1px solid black;
+    padding: 0.5rem;
 }
