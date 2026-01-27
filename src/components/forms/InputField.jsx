@@ -1,6 +1,7 @@
 export default function InputField({
   label,
   type = "text",
+  value,
   multiple,
   pattern,
   placeholder,
@@ -15,6 +16,7 @@ export default function InputField({
       <input
         id={id}
         type={type}
+        value={value}
         multiple={multiple}
         placeholder={placeholder}
         pattern={pattern}

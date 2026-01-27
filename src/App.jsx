@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Search, Filter, ClientsTable } from "./components";
 import Form from "./components/forms/Forms";
 import Button from "./components/simple/Button";
-import ComponentTester from "./components/ComponentTester";
 import "./App.css";
 
 export default function App() {
@@ -14,7 +13,7 @@ export default function App() {
 
   useEffect(() => {
     async function load() {
-      const response = await fetch("http://localhost:4040/api/dashboard");
+      const response = await fetch("http://localhost:4400/api/v1/dashboard");
       const data = await response.json();
       console.log(data);
       setClients(data.data);
@@ -82,8 +81,6 @@ export default function App() {
           <p>something went wrong!</p>
         )}
       </div>
-
-      <ComponentTester />
     </div>
   );
 }

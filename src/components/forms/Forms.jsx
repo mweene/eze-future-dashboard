@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import InputField from "./InputField";
 import { SelectField } from "./SelectField";
@@ -10,7 +10,7 @@ import axios from "axios";
 
 export default function Froms({ onClose }) {
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 4;
+  const totalSteps = 3;
 
   const {
     handleSubmit,
@@ -21,7 +21,7 @@ export default function Froms({ onClose }) {
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
-        "http://localhost:4040/api/dashboard",
+        "http://localhost:4400/api/v1/dashboard",
         data,
       );
       console.log(response.data);
@@ -58,15 +58,11 @@ export default function Froms({ onClose }) {
         )}
 
         {currentStep === 2 && (
-          <WitnessDetails register={register} errors={errors} />
+          <SalesDetails register={register} errors={errors} />
         )}
 
         {currentStep === 3 && (
           <DocumentsDetails register={register} errors={errors} />
-        )}
-
-        {currentStep === 4 && (
-          <SalesDetails register={register} errors={errors} />
         )}
 
         <div className=" flex gap-4 place-content-between place-items-center mt-4">
@@ -193,61 +189,6 @@ function ClientDetails({ register, errors }) {
   );
 }
 
-function WitnessDetails({ register, errors }) {
-  return (
-    <>
-      <h1 className="text-xl">witness details</h1>
-      <section className="clients grid">
-        <div className="">
-          <InputField
-            label="Witness Name"
-            placeholder="enter witness name..."
-            registration={register("witness_name", {
-              required: "Name is required",
-            })}
-            error={errors.witness_name}
-          />
-
-          <InputField
-            label="Witness NRC"
-            placeholder="enter witness nrc..."
-            registration={register("witness_nrc", {
-              pattern: {
-                value: /^[0-9]{6}\/[0-9]{2}\/[0-9]$/,
-                message: "NRC must be in the format 123456/12/1",
-              },
-            })}
-            error={errors.witness_nrc}
-          />
-
-          <InputField
-            label="Witness Phone"
-            type="tel"
-            placeholder="enter witness phone..."
-            registration={register("witness_phone", {
-              pattern: {
-                value: /^[0-9]{4} [0-9]{3} [0-9]{3}$/,
-                message: "phone number must be in the format 0971 233 455",
-              },
-              required: "Phone number is required",
-            })}
-            error={errors.witness_phone}
-          />
-
-          <InputField
-            label="Relationship"
-            placeholder="enter relationship..."
-            registration={register("relationship", {
-              required: "Relationship is required",
-            })}
-            error={errors.relationship}
-          />
-        </div>
-      </section>
-    </>
-  );
-}
-
 function DocumentsDetails({ register, errors }) {
   return (
     <>
@@ -255,37 +196,11 @@ function DocumentsDetails({ register, errors }) {
       <section className="clients grid">
         <div className="">
           <InputField
-            label="Letter of sale"
+            label="Upload Client Files"
             type="file"
-            registration={register("letter_of_sale", {
-              required: "letter of sale is required",
-            })}
-            error={errors.letter_of_sale}
-          />
-
-          <InputField
-            label="Authorization letter"
-            type="file"
-            registration={register("authorization_letter", {})}
-            error={errors.authorization_letter}
-          />
-
-          <InputField
-            label="NRC file"
-            type="file"
-            registration={register("nrc_url", {
-              required: "nrc file is required",
-            })}
-            error={errors.nrc_url}
-          />
-
-          <InputField
-            label="Receipts file"
-            type="file"
-            registration={register("receipts", {
-              required: "receipts file is required",
-            })}
-            error={errors.receipts}
+            multiple={true}
+            registration={register("googledrive_url")}
+            error={errors.googledrive_url}
           />
         </div>
       </section>
@@ -294,6 +209,21 @@ function DocumentsDetails({ register, errors }) {
 }
 
 function SalesDetails({ register, errors }) {
+  const [siteNames, setSiteNames] = useState([]);
+  //add this in the parent app
+  useEffect(() => {
+    const getSiteNames = async () => {
+      try {
+        const response = await fetch("http://localhost:4400/api/v1/sitenames");
+        const data = await response.json();
+        console.log(data);
+        setSiteNames(data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getSiteNames();
+  }, []);
   return (
     <>
       <h1 className="text-xl">sales details</h1>
@@ -304,10 +234,7 @@ function SalesDetails({ register, errors }) {
             id="site_name"
             registration={register("site_name")}
             error={errors.site_name}
-            options={[
-              { id: 1, name: "A" },
-              { id: 2, name: "B" },
-            ]}
+            options={siteNames}
           />
 
           <SelectField
@@ -351,10 +278,7 @@ function SalesDetails({ register, errors }) {
           <InputField
             label="balance"
             type="number"
-            registration={register("balance", {
-              required: "balance is required",
-            })}
-            error={errors.balance}
+            registration={register("balance")}
           />
 
           <InputField

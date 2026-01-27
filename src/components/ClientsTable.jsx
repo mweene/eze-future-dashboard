@@ -1,8 +1,8 @@
 export default function ClientsTable({ clients }) {
   return (
-    <>
+    <div className="block overflow-x-scroll h-[79dvh] border-y border-neutral-400">
       <table className="border-collapse text-left w-full">
-        <thead className="border">
+        <thead className="">
           <tr className="[&>td]:border [&>td]:p-2 [&>td]:font-semibold [&>td]:uppercase [&>td]:text-[.93rem]">
             <td>
               <input type="checkbox" />
@@ -29,12 +29,23 @@ export default function ClientsTable({ clients }) {
               <td>{client.site_name}</td>
               <td>{client.plot_no}</td>
               <td>{client.plot_size}</td>
-              <td>{client.status}</td>
+              <td>
+                {convertToPaymentStatus(
+                  client.total_amount,
+                  client.amount_paid,
+                )}
+              </td>
               <td>...</td>
             </tr>
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
+
+const convertToPaymentStatus = (totalAmount, amountPaid) => {
+  if (totalAmount === amountPaid) return "fully paid";
+  if (amountPaid > totalAmount / 2) return "pending";
+  return "reserved";
+};

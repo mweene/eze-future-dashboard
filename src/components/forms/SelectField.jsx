@@ -1,7 +1,7 @@
 export const SelectField = ({ id, registration, error, options }) => {
   return (
     <div className="grid" key={id}>
-      <label htmlFor={id}>Choose {id}</label>
+      <label htmlFor={id}>{id}</label>
       <select
         name={id}
         id={id}
