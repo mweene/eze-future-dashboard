@@ -45,7 +45,7 @@ export default function Froms({ onClose }) {
   const isLastStep = currentStep === totalSteps;
 
   return (
-    <div className="p-6 absolute top-0 right-0 mt-14 w-2xl bg-neutral-100 border">
+    <div className="p-6 absolute top-0 right-0 mt-14 w-2xl bg-white border">
       <div className="flex place-content-between place-items-center">
         <Button onClick={onClose}>close</Button>
         <p>

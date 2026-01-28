@@ -3,9 +3,11 @@ import { Search, Filter, ClientsTable } from "./components";
 import Form from "./components/forms/Forms";
 import Button from "./components/simple/Button";
 import "./App.css";
+import axios from "axios";
 
 export default function App() {
   const [clients, setClients] = useState([]);
+  const [pagination, setPagination] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -13,10 +15,12 @@ export default function App() {
 
   useEffect(() => {
     async function load() {
-      const response = await fetch("http://localhost:4400/api/v1/dashboard");
-      const data = await response.json();
-      console.log(data);
+      const response = await axios.get(
+        "http://localhost:4400/api/v1/dashboard",
+      );
+      const data = await response.data;
       setClients(data.data);
+      setPagination(data.pagination);
       setFilteredClients(data.data);
     }
     load();
@@ -49,8 +53,42 @@ export default function App() {
 
   const handleCloseFilter = () => setIsOpen((prev) => !prev);
 
+  //handlers for previous and next buttons
+  const handlePrevious = async () => {
+    const currentPage = pagination.currentPage;
+
+    if (currentPage <= 1) return; // guard
+
+    const response = await axios.get(
+      `http://localhost:4400/api/v1/dashboard?page=${currentPage - 1}`,
+    );
+
+    const data = response.data;
+
+    setClients(data.data);
+    setFilteredClients(data.data); // IMPORTANT
+    setPagination(data.pagination); // IMPORTANT
+  };
+
+  const handleNext = async () => {
+    const nextPage = pagination.currentPage + 1;
+
+    if (nextPage > pagination.totalPages) return;
+
+    const response = await axios.get(
+      `http://localhost:4400/api/v1/dashboard?page=${nextPage}`,
+    );
+
+    const data = response.data;
+
+    setClients(data.data);
+    setFilteredClients(data.data);
+    setPagination(data.pagination);
+  };
+  /////////////////////////////////////////////
+
   return (
-    <div className="p-4 bg-neutral-100">
+    <div className="px-4 bg-neutral-100">
       <div className="flex place-content-between relative py-2">
         <div className="flex gap-4">
           <Search value={searchTerm} onChange={handleChange} />
@@ -74,12 +112,25 @@ export default function App() {
         )}
       </div>
 
-      <div className="table w-full">
+      <div className="table w-full bg-white">
         {clients ? (
           <ClientsTable clients={searchedClients} />
         ) : (
           <p>something went wrong!</p>
         )}
+      </div>
+      <div className="flex place-content-between place-items-baseline">
+        <p className="text-neutral-700">
+          Showing{" "}
+          <span className="text-black">
+            Page {pagination.currentPage} of {pagination.totalPages} pages
+          </span>
+        </p>
+
+        <div className="buttons flex gap-2 my-3">
+          <Button onClick={handlePrevious}>previous</Button>
+          <Button onClick={handleNext}>next</Button>
+        </div>
       </div>
     </div>
   );

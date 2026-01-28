@@ -10,7 +10,7 @@ export default function Search({ value, onChange }) {
             value={value}
             onChange={onChange}
             className="border p-1"
-            placeholder="search by name or id..."
+            placeholder="search clients by name or id..."
           />
         </label>
       </div>

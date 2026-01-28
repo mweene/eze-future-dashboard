@@ -1,9 +1,9 @@
 export default function ClientsTable({ clients }) {
   return (
-    <div className="block overflow-x-scroll h-[79dvh] border-y border-neutral-400">
+    <div className="block overflow-x-scroll h-[79dvh]">
       <table className="border-collapse text-left w-full">
         <thead className="">
-          <tr className="[&>td]:border [&>td]:p-2 [&>td]:font-semibold [&>td]:uppercase [&>td]:text-[.93rem]">
+          <tr className="[&>td]:border [&>td]:border-neutral-500 [&>td]:p-2 [&>td]:font-semibold [&>td]:uppercase [&>td]:text-[.93rem]">
             <td>
               <input type="checkbox" />
             </td>
@@ -19,7 +19,10 @@ export default function ClientsTable({ clients }) {
         </thead>
         <tbody className="">
           {clients.map((client) => (
-            <tr key={client.client_id} className="[&>td]:border [&>td]:p-2">
+            <tr
+              key={client.client_id}
+              className="[&>td]:border [&>td]:border-neutral-500 [&>td]:p-2"
+            >
               <td>
                 <input type="checkbox" />
               </td>
@@ -30,12 +33,16 @@ export default function ClientsTable({ clients }) {
               <td>{client.plot_no}</td>
               <td>{client.plot_size}</td>
               <td>
-                {convertToPaymentStatus(
-                  client.total_amount,
-                  client.amount_paid,
-                )}
+                <span className="border border-neutral-500 p-1">
+                  {convertToPaymentStatus(
+                    client.total_amount,
+                    client.amount_paid,
+                  )}
+                </span>
               </td>
-              <td>...</td>
+              <td>
+                <Actions />
+              </td>
             </tr>
           ))}
         </tbody>
@@ -44,8 +51,19 @@ export default function ClientsTable({ clients }) {
   );
 }
 
+//helper function
 const convertToPaymentStatus = (totalAmount, amountPaid) => {
   if (totalAmount === amountPaid) return "fully paid";
   if (amountPaid > totalAmount / 2) return "pending";
   return "reserved";
 };
+
+//make into seperate component
+function Actions() {
+  return (
+    <div className="flex gap-3">
+      <p>edit</p>
+      <p>delete</p>
+    </div>
+  );
+}
