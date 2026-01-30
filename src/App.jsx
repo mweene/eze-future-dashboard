@@ -8,7 +8,6 @@ import axios from "axios";
 export default function App() {
   const [clients, setClients] = useState([]);
   const [pagination, setPagination] = useState([]);
-  const [filteredClients, setFilteredClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isClientFormOpen, setIsClientFormOpen] = useState(false);
@@ -21,7 +20,6 @@ export default function App() {
       const data = await response.data;
       setClients(data.data);
       setPagination(data.pagination);
-      setFilteredClients(data.data);
     }
     load();
   }, []);
@@ -30,7 +28,7 @@ export default function App() {
     setSearchTerm(e.target.value);
   };
 
-  const searchedClients = filteredClients.filter(
+  const searchedClients = clients.filter(
     (client) =>
       client.client_name
         .toLocaleLowerCase()
@@ -38,51 +36,28 @@ export default function App() {
       client.client_id === Number(searchTerm),
   );
 
-  const handleFilter = (e, location) => {
-    e.preventDefault();
-    if (!location) {
-      setFilteredClients(clients);
-      return;
-    }
-    const temp = clients.filter(
-      (client) =>
-        client.siteName.toLocaleLowerCase() === location.toLocaleLowerCase(),
-    );
-    setFilteredClients(temp);
-  };
-
   const handleCloseFilter = () => setIsOpen((prev) => !prev);
 
   //handlers for previous and next buttons
   const handlePrevious = async () => {
-    const currentPage = pagination.currentPage;
+    if (pagination.currentPage <= 1) return;
 
-    if (currentPage <= 1) return; // guard
-
-    const response = await axios.get(
-      `http://localhost:4400/api/v1/dashboard?page=${currentPage - 1}`,
+    const { data } = await axios.get(
+      `http://localhost:4400/api/v1/dashboard?page=${pagination.currentPage - 1}`,
     );
 
-    const data = response.data;
-
     setClients(data.data);
-    setFilteredClients(data.data); // IMPORTANT
-    setPagination(data.pagination); // IMPORTANT
+    setPagination(data.pagination);
   };
 
   const handleNext = async () => {
-    const nextPage = pagination.currentPage + 1;
+    if (pagination.currentPage >= pagination.totalPages) return;
 
-    if (nextPage > pagination.totalPages) return;
-
-    const response = await axios.get(
-      `http://localhost:4400/api/v1/dashboard?page=${nextPage}`,
+    const { data } = await axios.get(
+      `http://localhost:4400/api/v1/dashboard?page=${pagination.currentPage + 1}`,
     );
 
-    const data = response.data;
-
     setClients(data.data);
-    setFilteredClients(data.data);
     setPagination(data.pagination);
   };
   /////////////////////////////////////////////
@@ -96,8 +71,6 @@ export default function App() {
             isOpen={isOpen}
             onClose={handleCloseFilter}
             onClick={() => setIsOpen(!isOpen)}
-            onFilter={handleFilter}
-            onClearFilter={() => setFilteredClients(clients)}
           />
         </div>
         <Button

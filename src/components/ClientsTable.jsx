@@ -1,4 +1,10 @@
+import { Edit, FileUser, Trash2 } from "lucide-react";
+import UpdateForm from "./forms/UpdateForm";
+import Button from "./simple/Button";
+import { useState } from "react";
+
 export default function ClientsTable({ clients }) {
+  const [isFormOpen, setIsFormOpen] = useState(false);
   return (
     <div className="block overflow-x-scroll h-[79dvh]">
       <table className="border-collapse text-left w-full">
@@ -41,12 +47,14 @@ export default function ClientsTable({ clients }) {
                 </span>
               </td>
               <td>
-                <Actions />
+                <Actions onEdit={() => setIsFormOpen((prev) => !prev)} />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {isFormOpen && <UpdateForm />}
     </div>
   );
 }
@@ -59,11 +67,18 @@ const convertToPaymentStatus = (totalAmount, amountPaid) => {
 };
 
 //make into seperate component
-function Actions() {
+function Actions({ onEdit }) {
   return (
     <div className="flex gap-3">
-      <p>edit</p>
-      <p>delete</p>
+      <Button className="border-0 p-0.5" onClick={onEdit}>
+        <Edit size={19} />
+      </Button>
+      <Button className="border-0 p-0.5">
+        <Trash2 size={19} />
+      </Button>
+      <Button className="border-0 p-0.5">
+        <FileUser size={19} />
+      </Button>
     </div>
   );
 }

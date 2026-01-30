@@ -3,14 +3,14 @@ export default function Button({
   disabled,
   onClick,
   children,
-  className,
+  className = "",
 }) {
   return (
     <button
       type={type}
       disabled={disabled}
       onClick={onClick}
-      className={`py-1 px-4 hover:bg-neutral-200 ${className}`}
+      className={`p-1 border hover:bg-neutral-300 ${className}`}
     >
       {children}
     </button>

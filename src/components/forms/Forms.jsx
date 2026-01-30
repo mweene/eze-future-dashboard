@@ -240,8 +240,8 @@ function SalesDetails({ register, errors }) {
             registration={register("plot_size")}
             error={errors.plot_size}
             options={[
-              { id: 1, name: "20x20" },
-              { id: 2, name: "25x20" },
+              { id: 1, name: "25x20" },
+              { id: 2, name: "30x20" },
             ]}
           />
 
@@ -250,8 +250,11 @@ function SalesDetails({ register, errors }) {
             registration={register("plot_no")}
             error={errors.plot_no}
             options={[
-              { id: 1, name: 2 },
-              { id: 2, name: 4 },
+              { id: 1, name: 18 },
+              { id: 2, name: 19 },
+              { id: 2, name: 20 },
+              { id: 2, name: 21 },
+              { id: 2, name: 22 },
             ]}
           />
 
