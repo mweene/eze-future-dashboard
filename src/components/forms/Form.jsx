@@ -8,7 +8,7 @@ import axios from "axios";
 //change the plot_id in PlotDetails and the backend
 //the plot_id should be selected and not created
 
-export default function Froms({ onClose }) {
+export default function Form({ onClose, formType }) {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 3;
 
@@ -52,48 +52,52 @@ export default function Froms({ onClose }) {
           {currentStep} of {totalSteps} fields
         </p>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-1">
-        {currentStep === 1 && (
-          <ClientDetails register={register} errors={errors} />
-        )}
-
-        {currentStep === 2 && (
-          <SalesDetails register={register} errors={errors} />
-        )}
-
-        {currentStep === 3 && (
-          <DocumentsDetails register={register} errors={errors} />
-        )}
-
-        <div className=" flex gap-4 place-content-between place-items-center mt-4">
-          <div className="flex gap-1">
-            <Button
-              type="button"
-              onClick={handlePrev}
-              disabled={isFirstStep}
-              className=""
-            >
-              prev
-            </Button>
-            <Button
-              type="button"
-              onClick={handleNext}
-              disabled={isLastStep}
-              className=""
-            >
-              next
-            </Button>
-          </div>
-
-          {isLastStep ? (
-            <Button type="submit">submit form</Button>
-          ) : (
-            <Button type="button" disabled={isLastStep}>
-              finish form
-            </Button>
+      {formType === "update" ? (
+        <h1 className="text-5xl">update form</h1>
+      ) : (
+        <form onSubmit={handleSubmit(onSubmit)} className="grid gap-1">
+          {currentStep === 1 && (
+            <ClientDetails register={register} errors={errors} />
           )}
-        </div>
-      </form>
+
+          {currentStep === 2 && (
+            <SalesDetails register={register} errors={errors} />
+          )}
+
+          {currentStep === 3 && (
+            <DocumentsDetails register={register} errors={errors} />
+          )}
+
+          <div className=" flex gap-4 place-content-between place-items-center mt-4">
+            <div className="flex gap-1">
+              <Button
+                type="button"
+                onClick={handlePrev}
+                disabled={isFirstStep}
+                className=""
+              >
+                prev
+              </Button>
+              <Button
+                type="button"
+                onClick={handleNext}
+                disabled={isLastStep}
+                className=""
+              >
+                next
+              </Button>
+            </div>
+
+            {isLastStep ? (
+              <Button type="submit">submit form</Button>
+            ) : (
+              <Button type="button" disabled={isLastStep}>
+                finish form
+              </Button>
+            )}
+          </div>
+        </form>
+      )}
     </div>
   );
 }

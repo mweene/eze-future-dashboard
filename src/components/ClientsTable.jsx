@@ -1,10 +1,11 @@
-import { Edit, FileUser, Trash2 } from "lucide-react";
-import UpdateForm from "./forms/UpdateForm";
-import Button from "./simple/Button";
 import { useState } from "react";
+import Form from "./forms/Form";
+import { Edit, FileUser, Trash2 } from "lucide-react";
+import Button from "./simple/Button";
 
 export default function ClientsTable({ clients }) {
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isFromOpen, setIsFormOpen] = useState(false);
+
   return (
     <div className="block overflow-x-scroll h-[79dvh]">
       <table className="border-collapse text-left w-full">
@@ -47,14 +48,16 @@ export default function ClientsTable({ clients }) {
                 </span>
               </td>
               <td>
-                <Actions onEdit={() => setIsFormOpen((prev) => !prev)} />
+                <Actions onEdit={() => setIsFormOpen(true)} />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {isFormOpen && <UpdateForm />}
+      {isFromOpen && (
+        <Form formType="update" onClose={() => setIsFormOpen(false)} />
+      )}
     </div>
   );
 }
@@ -67,17 +70,17 @@ const convertToPaymentStatus = (totalAmount, amountPaid) => {
 };
 
 //make into seperate component
-function Actions({ onEdit }) {
+function Actions({ onDetails, onEdit, onDelete }) {
   return (
     <div className="flex gap-3">
+      <Button className="border-0 p-0.5" onClick={onDetails}>
+        <FileUser size={19} />
+      </Button>
       <Button className="border-0 p-0.5" onClick={onEdit}>
         <Edit size={19} />
       </Button>
-      <Button className="border-0 p-0.5">
+      <Button className="border-0 p-0.5" onClick={onDelete}>
         <Trash2 size={19} />
-      </Button>
-      <Button className="border-0 p-0.5">
-        <FileUser size={19} />
       </Button>
     </div>
   );

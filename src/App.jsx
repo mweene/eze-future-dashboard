@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Search, Filter, ClientsTable } from "./components";
-import Form from "./components/forms/Forms";
+import Form from "./components/forms/Form";
 import Button from "./components/simple/Button";
 import "./App.css";
 import axios from "axios";

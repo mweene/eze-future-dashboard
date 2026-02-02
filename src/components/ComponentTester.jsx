@@ -1,58 +1,41 @@
-import { SelectField } from "./forms/SelectField";
-import InputField from "./forms/InputField";
-import Button from "./simple/Button";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 
-export default function ComponentTester() {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
+export default function Testing() {
+  const [activeName, setActiveName] = useState(null);
 
-  const onSubmit = (data) => {
-    console.log(data.auth_letter[0]);
-  };
   return (
-    <div className="my-8 w-1/2">
-      <h1 className="text-2xl">Component Testing</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="my-8">
-        <SelectField
-          id="site"
-          registration={register("site")}
-          error={errors.site}
-          options={sites}
-        />
-        <InputField
-          label="plot number"
-          type="number"
-          placeholder="enter plot number"
-          registration={register("plot_no")}
-          error={errors.plot_no}
-        />
+    <div className="m-16 p-8 border">
+      <div className="flex gap-4 m-2">
+        <button className="p-2 border" onClick={() => setActiveName("james")}>
+          greet james
+        </button>
+        <button className="p-2 border" onClick={() => setActiveName("holland")}>
+          greet holland
+        </button>
+      </div>
 
-        <InputField
-          label="Authorization letter"
-          type="file"
-          multiple="true"
-          registration={register("auth_letter")}
-          error={errors.auth_letter}
-        />
-
-        <Button type="submit" className="my-4">
-          submit form
-        </Button>
-      </form>
+      {activeName && (
+        <Card name={activeName} onClose={() => setActiveName(null)} />
+      )}
     </div>
   );
 }
 
-const sites = [
-  { id: 1, name: "A" },
-  { id: 2, name: "A+" },
-  { id: 3, name: "B" },
-  { id: 4, name: "C" },
-  { id: 5, name: "D" },
-  { id: 6, name: "F" },
-  { id: 7, name: "G" },
-];
+function Card({ name, onClose }) {
+  const bgMap = {
+    james: "bg-green-300",
+    holland: "bg-red-300",
+  };
+  const bg = bgMap[name] ?? "bg-green-300";
+
+  return (
+    <div className={`${bg} grid gap-2`}>
+      <button className="p-2 border" onClick={onClose}>
+        close
+      </button>
+      <p className="p-4">
+        greetings from <span className="text-2xl font-semibold">{name}</span>
+      </p>
+    </div>
+  );
+}
