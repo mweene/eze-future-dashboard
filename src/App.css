@@ -6,3 +6,24 @@ button {
 input {
     padding: 0.45rem;
 }
+
+.fully {
+    background-color: #dfd;
+    color: #005700;
+    border: 1px solid #005700;
+    font-size: 0.95rem;
+}
+
+.reserved {
+    background-color: #e3e3e3;
+    color: #444;
+    border: 1px solid #888;
+    font-size: 0.95rem;
+}
+
+.pending {
+    background-color: #ffece3;
+    color: #953000;
+    border: 1px solid #953000;
+    font-size: 0.95rem;
+}

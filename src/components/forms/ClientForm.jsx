@@ -12,7 +12,7 @@ import InputField from "./InputField";
 import SelectField from "./SelectField";
 import { X, File } from "lucide-react";
 
-export default function ClientForm({ onClose, fileType }) {
+export default function ClientForm({ onClose, formType }) {
   const {
     handleSubmit,
     register,
@@ -24,7 +24,7 @@ export default function ClientForm({ onClose, fileType }) {
       <div className="bg-neutral-50 rounded-xl m-8 w-[77dvw]">
         <div className="border-b border-neutral-400 p-4 flex place-content-between">
           <h2 className="capitalize text-xl font-semibold">
-            {fileType === "update" ? "add client" : "update client"}
+            {formType === "update" ? "update client" : "add client"}
           </h2>
           <button type="text" onClick={onClose}>
             <X size={20} />
@@ -113,7 +113,7 @@ function PersonalDetails({ register }) {
 function DocumentsDetails({ register }) {
   return (
     <div className="border-2 border-dashed border-neutral-400 rounded-xl h-40 p-4 mt-2 text-center">
-      <File size={55} className="border-neutral-400" />
+      <File size={55} color="lightgray" />
       <input
         type="file"
         multiple
@@ -163,17 +163,18 @@ function SalesDetails({ register }) {
                 registration={register("amount")}
               />
               <InputField
-                label="paid"
-                type="number"
-                registration={register("paid")}
-              />
-            </section>
-            <section className="">
-              <InputField
                 label="balance"
                 type="number"
                 registration={register("balance")}
               />
+            </section>
+            <section className="">
+              <InputField
+                label="paid amount"
+                type="number"
+                registration={register("paid")}
+              />
+
               <InputField
                 label="payment date"
                 type="date"

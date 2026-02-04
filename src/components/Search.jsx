@@ -9,7 +9,7 @@ export default function Search({ value, onChange }) {
             name="search"
             value={value}
             onChange={onChange}
-            className="border p-1"
+            className="border border-neutral-400 rounded-xl p-2"
             placeholder="search clients by name or id..."
           />
         </label>

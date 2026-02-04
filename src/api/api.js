@@ -6,13 +6,13 @@ export async function getClientsTableData() {
   try {
     const response = await axios.get(`${baseUrl}/dashboard`);
     const data = await response.data;
-    console.log(data);
+    return data;
   } catch (error) {
     console.error(error.message);
   }
 }
 
-export async function addNewClient(clientData) {
+export async function addClient(clientData) {
   try {
     const response = axios.post(`${baseUrl}/dashboard`, clientData);
     const data = (await response).data;

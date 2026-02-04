@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Search, Filter, ClientsTable } from "./components";
 import Button from "./components/simple/Button";
 import ClientForm from "./components/forms/ClientForm";
-import axios from "axios";
+import * as api from "./api/api";
 import "./App.css";
 
 export default function App() {
@@ -14,10 +14,7 @@ export default function App() {
 
   useEffect(() => {
     async function load() {
-      const response = await axios.get(
-        "http://localhost:4400/api/v1/dashboard",
-      );
-      const data = await response.data;
+      const data = await api.getClientsTableData();
       setClients(data.data);
       setPagination(data.pagination);
     }
@@ -79,7 +76,7 @@ export default function App() {
           className="p-1 border"
           data-cell="addclient"
         >
-          add new client
+          add client
         </Button>
       </div>
 

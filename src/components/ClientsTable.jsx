@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Form from "./forms/Form";
+import ClientForm from "./forms/ClientForm";
 import { Edit, FileUser, Trash2 } from "lucide-react";
 import Button from "./simple/Button";
 
@@ -40,7 +40,12 @@ export default function ClientsTable({ clients }) {
               <td>{client.plot_no}</td>
               <td>{client.plot_size}</td>
               <td>
-                <span className="border border-neutral-500 p-1">
+                <span
+                  className={`${convertToPaymentStatus(
+                    client.total_amount,
+                    client.amount_paid,
+                  )} border rounded-xl py-1 px-2`}
+                >
                   {convertToPaymentStatus(
                     client.total_amount,
                     client.amount_paid,
@@ -56,7 +61,7 @@ export default function ClientsTable({ clients }) {
       </table>
 
       {isFromOpen && (
-        <Form formType="update" onClose={() => setIsFormOpen(false)} />
+        <ClientForm formType="update" onClose={() => setIsFormOpen(false)} />
       )}
     </div>
   );
@@ -73,15 +78,15 @@ const convertToPaymentStatus = (totalAmount, amountPaid) => {
 function Actions({ onDetails, onEdit, onDelete }) {
   return (
     <div className="flex gap-3">
-      <Button className="border-0 p-0.5" onClick={onDetails}>
+      <button className="border-0 p-0.5" onClick={onDetails}>
         <FileUser size={19} />
-      </Button>
-      <Button className="border-0 p-0.5" onClick={onEdit}>
+      </button>
+      <button className="border-0 p-0.5" onClick={onEdit}>
         <Edit size={19} />
-      </Button>
-      <Button className="border-0 p-0.5" onClick={onDelete}>
+      </button>
+      <button className="border-0 p-0.5" onClick={onDelete}>
         <Trash2 size={19} />
-      </Button>
+      </button>
     </div>
   );
 }
